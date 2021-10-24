@@ -1,11 +1,9 @@
 /**
- * File: matrix.c
- * Tanggal: 2021/09/29
- * NIM / Nama: 13520024 / Hilya Fadhilah Imania
- *
- * wordmachine.c
- * 
+ * File: wordmachine.c
+ * Implementasi wordmachine
  */
+#include <stdio.h>
+#include <ctype.h>
 #include "charmachine.h"
 #include "wordmachine.h"
 
@@ -13,37 +11,40 @@ char currentChar;
 Word currentWord;
 boolean endWord;
 
+static boolean isBlank(char c)
+{
+  /* Menunjukkan apakah suatu karakter termasuk blank atau tidak */
+  /* ALGORITMA */
+  return isspace(c);
+}
+
 void ignoreBlank()
 {
   /* Mengabaikan satu atau beberapa BLANK
     I.S. : currentChar sembarang 
-    F.S. : currentChar ≠ BLANK atau currentChar = MARK */
+    F.S. : currentChar ≠ BLANK atau EOT = true */
 
   /* ALGORITMA */
-  while (currentChar == BLANK)
+  while (!eot && isBlank(currentChar))
   {
     adv();
   }
 }
 
-void startWord()
+void startWord(FILE *tape)
 {
   /* I.S. : currentChar sembarang 
-    F.S. : endWord = true, dan currentChar = MARK; 
+    F.S. : endWord = true, dan EOT = true; 
             atau endWord = false, currentWord adalah kata yang sudah diakuisisi,
             currentChar karakter pertama sesudah karakter terakhir kata */
 
   /* ALGORITMA */
-  start();
+  start(tape);
   ignoreBlank();
 
-  if (currentChar == MARK)
+  endWord = eot;
+  if (!endWord)
   {
-    endWord = true;
-  }
-  else
-  {
-    endWord = false;
     copyWord();
   }
 
@@ -55,17 +56,14 @@ void advWord()
   /* I.S. : currentChar adalah karakter pertama kata yang akan diakuisisi 
     F.S. : currentWord adalah kata terakhir yang sudah diakuisisi, 
             currentChar adalah karakter pertama dari kata berikutnya, mungkin MARK
-            Jika currentChar = MARK, endWord = true.		  
+            Jika EOT = true, endWord = true.		  
     Proses : Akuisisi kata menggunakan procedure copyWord */
 
   /* ALGORITMA */
   ignoreBlank();
 
-  if (currentChar == MARK)
-  {
-    endWord = true;
-  }
-  else
+  endWord = eot;
+  if (!endWord)
   {
     copyWord();
   }
@@ -78,7 +76,7 @@ void copyWord()
   /* Mengakuisisi kata, menyimpan dalam currentWord
     I.S. : currentChar adalah karakter pertama dari kata
     F.S. : currentWord berisi kata yang sudah diakuisisi; 
-            currentChar = BLANK atau currentChar = MARK; 
+            currentChar = BLANK atau EOT = true; 
             currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
             Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong */
   /* KAMUS */
@@ -86,11 +84,11 @@ void copyWord()
 
   /* ALGORITMA */
   i = 0;
-  do
+  while (!eot && !isBlank(currentChar) && i < WORD_CAPACITY)
   {
     currentWord.contents[i] = currentChar;
     adv();
     i++;
-  } while (currentChar != MARK && currentChar != BLANK && i < CAPACITY);
+  }
   currentWord.length = i;
 }
