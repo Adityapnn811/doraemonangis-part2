@@ -17,8 +17,8 @@
 //     printf("\n");
 // }
 #include <stdio.h>
-#include "listpointdin.c"
-#include "../adt/matrix.c"
+#include "listpointdin.h"
+#include "../adt/matrix.h"
 
 void showMap(Matrix *m, ListPointDin l, ListElType val) {
     int i, j;
@@ -71,8 +71,10 @@ int main(){
         KOORY(val) = i+1;
         insertLast(&l, val);
     }
+    displayList(l);
     readCustomMatrix(&m,10,10); // fill matrix with border and blank space
     displayMatrix(m);
+    printf("\n");
     showMap(&m,l,val); // menampilkan koordinat pada matriks
     displayMatrix(m);
     return 0;
