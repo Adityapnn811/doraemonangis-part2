@@ -1,18 +1,18 @@
 #include <stdio.h>
-#include "listpointdin.h"
+#include "listpointdin.c"
 
 int main(){
     ListPointDin l;
-    ElType val;
+    ListElType val; // list
     int i;
     CreateListDin(&l, 5);
     if (isEmpty(l)){
         printf("List masih kosong\n");
     }
     for (i = 0; i < 5; i++){
-        LABEL(val) = 'A';
+        LABEL(val) = 'A'+i;
         KOORX(val) = i;
-        KOORY(val) = i;
+        KOORY(val) = i+1;
         insertLast(&l, val);
     }
     if (isFull(l)){

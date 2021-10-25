@@ -112,7 +112,7 @@ void displayMatrix(Matrix m)
   {
     for (j = 0; j <= lastCol; j++)
     {
-      printf("%d%s", ELMT(m, i, j), (j == lastCol ? "" : " "));
+      printf("%c%s", ELMT(m, i, j), (j == lastCol ? "" : " "));
     }
     printf("%s", (i == lastRow ? "" : "\n"));
   }

@@ -15,10 +15,10 @@ typedef struct
 {
     char label;
     POINT p;
-} ElType;
+} ListElType;
 typedef int IdxType;
 typedef struct {
-    ElType *buffer;
+    ListElType *buffer;
     int Neff;
     int capacity;
 } ListPointDin;
@@ -26,7 +26,7 @@ typedef struct {
 /* ***** SELEKTOR ***** */
 #define NEFF(l) (l).Neff
 #define BUFFER(l) (l).buffer
-#define ELMT(l, i) (l).buffer[i]
+#define LISTELMT(l, i) (l).buffer[i]
 #define ELMTX(l, i) (l).buffer[i].p.X
 #define ELMTY(l, i) (l).buffer[i].p.Y
 #define ELMTLABEL(l, i) (l).buffer[i].label
@@ -77,12 +77,12 @@ void displayList(ListPointDin l);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListPointDin *l, ElType val);
+void insertLast(ListPointDin *l, ListElType val);
 /* Proses: Menambahkan val sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast(ListPointDin *l, ElType *val);
+void deleteLast(ListPointDin *l, ListElType *val);
 /* Proses : Menghapus elemen terakhir list */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
@@ -104,5 +104,7 @@ void compactList(ListPointDin *l);
 /* Proses : Mengurangi capacity sehingga nEff = capacity */
 /* I.S. List tidak kosong */
 /* F.S. Ukuran nEff = capacity */
+
+
 
 #endif

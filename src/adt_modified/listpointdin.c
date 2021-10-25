@@ -11,7 +11,7 @@ void CreateListDin(ListPointDin *l, int capacity){
     /* ALGORITMA */
     CAPACITY(*l) = capacity;
     NEFF(*l) = 0;
-    BUFFER(*l) = (ElType*) malloc (capacity * sizeof(ElType));
+    BUFFER(*l) = (ListElType*) malloc (capacity * sizeof(ListElType));
 }
 
 void dealocate(ListPointDin *l){
@@ -63,16 +63,16 @@ void displayList(ListPointDin l){
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListPointDin *l, ElType val){
+void insertLast(ListPointDin *l, ListElType val){
     /* KAMUS LOKAL */
     /* ALGORITMA */
-    ELMT(*l, NEFF(*l)) = val;
+    LISTELMT(*l, NEFF(*l)) = val;
     NEFF(*l) += 1;
 }
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast(ListPointDin *l, ElType *val){
+void deleteLast(ListPointDin *l, ListElType *val){
     /* KAMUS LOKAL */
     /* ALGORITMA */
-    *val = ELMT(*l, NEFF(*l) - 1);
+    *val = LISTELMT(*l, NEFF(*l) - 1);
     NEFF(*l) -= 1;
 }
