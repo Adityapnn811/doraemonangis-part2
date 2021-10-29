@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "wordmachine.h"
+#include "game_header.h"
 
 boolean endWord;
 Word currentWord;
