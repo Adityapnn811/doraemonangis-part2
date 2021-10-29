@@ -76,3 +76,16 @@ void deleteLast(ListPointDin *l, ListElType *val){
     *val = LISTELMT(*l, NEFF(*l) - 1);
     NEFF(*l) -= 1;
 }
+
+// mendpatkan indeks point dari list of point
+int getIdxPoint(ListPointDin l, POINT p)
+{
+    boolean found = false;
+    int i=0;
+    while (!(found) && (i<NEFF(l))) {
+        if (Absis(p) == ELMTX(l, i) && (Ordinat(p) == ELMTY(l,i))) {
+            return i;
+        }
+        i += 1;
+    }
+}

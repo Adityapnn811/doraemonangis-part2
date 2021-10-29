@@ -1,24 +1,7 @@
-// #include <stdio.h>
-// #include "listpointdin.c"
-// #include "../adt/matrix.c"
-
-// int main() {
-//     ListPointDin l;
-//     ElType val;
-//     int i;
-//     CreateListDin(&l, 5);
-//     for (i = 0; i < 5; i++){
-//         LABEL(val) = 'A';
-//         KOORX(val) = i;
-//         KOORY(val) = i;
-//         insertLast(&l, val);
-//     }
-//     displayList(l);
-//     printf("\n");
-// }
 #include <stdio.h>
-#include "listpointdin.h"
-#include "../adt/matrix.h"
+#include "listpointdin.c"
+#include "../adt/matrix.c"
+#include "../adt/point.c"
 
 void showMap(Matrix *m, ListPointDin l, ListElType val) {
     int i, j;
@@ -55,28 +38,78 @@ void readCustomMatrix(Matrix *m, int nRow, int nCol)
         }
     }
   }
+  ELMT(*m, 1, 1) = 178; // ini HQ nya
+}
+
+void readAdjacencyMatrix(Matrix *m) {
+    ElType el;
+    int i, j;
+    CreateMatrix(4,4,m);
+    for (i=0;i<4;i++) {
+        for (j=0;j<4;j++) {
+            ELMT(*m, i, j) = 0;
+        }
+    }
+    ELMT(*m, 0, 2) = 1;
+    ELMT(*m, 2, 0) = 1;
+    ELMT(*m, 0, 3) = 1;
+    ELMT(*m, 3, 0) = 1;
+    ELMT(*m, 2, 3) = 1;
+    ELMT(*m, 3, 2) = 1;
+}
+
+ListPointDin showRelation(Matrix m, ListPointDin l, POINT p) {
+    int counter = getIdxPoint(l, p);
+    for(int i=counter;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
+        if (ELMT(m,counter,i) == 1) {
+            // printf("\nx y yg sama: %d %d\n",ELMTX(l,i), ELMTY(l,i));
+            printf("\nmap terkait: %c\n", ELMTLABEL(l,i));
+        }
+    }  
 }
 
 
 
 int main(){
-    Matrix m;
+    Matrix m, adj;
     ListPointDin l; // point di dalam list
     ListElType val; // list
+    ListElType hqval;
     int i;
-    CreateListDin(&l, 5); // create dummy list
-    for (i = 0; i < 5; i++){
+    CreateListDin(&l, 3); // create dummy list
+    LABEL(hqval) = 'Z';
+    KOORX(hqval) = 0;
+    KOORY(hqval) = 0;
+    insertLast(&l, hqval);
+    for (i = 0; i < 3; i++){
         LABEL(val) = 'A'+i;
-        KOORX(val) = i;
+        KOORX(val) = i+2;
         KOORY(val) = i+1;
         insertLast(&l, val);
     }
     displayList(l);
     readCustomMatrix(&m,10,10); // fill matrix with border and blank space
-    displayMatrix(m);
+    // displayMatrix(m);
     printf("\n");
     showMap(&m,l,val); // menampilkan koordinat pada matriks
-    displayMatrix(m);
+    displayMatrixLabel(m);
+    printf("\n");
+    // Matrix adj;
+    // readMatrix(&adj, 4, 4);
+    // printf("printed adj:\n");
+    // displayMatrix(adj);
+
+    POINT hq = MakePOINT(0,0);
+    printf("sb x: %d\n", Absis(hq));
+    printf("sb y: %d\n", Ordinat(hq));
+
+    readAdjacencyMatrix(&adj);
+    displayMatrix(adj);printf("\n");
+    printf("indeks point posisi move di listdin: %d", getIdxPoint(l, hq));printf("\n");
+    showRelation(adj, l, hq);
+    
+    
+
     return 0;
 }
 
