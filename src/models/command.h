@@ -4,22 +4,20 @@
 #include "boolean.h"
 
 /* berisi command-command yang akan digunakan */
-boolean move();
+boolean move(char current[], int length);
 
-boolean pick_up();
+boolean pick_up(char current[], int length);
 
-boolean drop_off();
+boolean drop_off(char current[], int length);
 
-boolean map();
+boolean map(char current[], int length);
 
-boolean to_do();
+boolean to_do(char current[], int length);
 
-boolean in_progress();
+boolean in_progress(char current[], int length);
 
-boolean buy();
+boolean buy(char current[], int length);
 
-boolean inventory();
-
-boolean help();
+boolean inventory(char current[], int length);
 
 #endif
