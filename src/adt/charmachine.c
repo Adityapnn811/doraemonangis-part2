@@ -7,33 +7,32 @@
 char currentChar;
 boolean eot;
 
-static FILE * tape;
+static FILE *stream;
 static int retval;
 
-void start() {
-/* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
+void start(FILE *tape)
+{
+  /* Mesin siap dioperasikan. Pita disiapkan untuk dibaca.
    Karakter pertama yang ada pada pita posisinya adalah pada jendela.
    I.S. : sembarang
    F.S. : currentChar adalah karakter pertama pada pita
-          Jika currentChar != MARK maka EOP akan padam (false)
-          Jika currentChar = MARK maka EOP akan menyala (true) */
+          Jika EOF = false maka EOT akan padam (false)
+          Jika EOF = true maka EOT akan menyala (true) */
 
-	/* Algoritma */
-	tape = stdin;
-	adv();
+  /* Algoritma */
+  stream = tape;
+  adv();
 }
 
-void adv() {
-/* Pita dimajukan satu karakter. 
-   I.S. : Karakter pada jendela = currentChar, currentChar != MARK
+void adv()
+{
+  /* Pita dimajukan satu karakter. 
+   I.S. : Karakter pada jendela = currentChar, EOF = false
    F.S. : currentChar adalah karakter berikutnya dari currentChar yang lama, 
-          currentChar mungkin = MARK
-		      Jika  currentChar = MARK maka EOP akan menyala (true) */
+          currentChar mungkin EOF
+		      Jika EOF = true maka EOT akan menyala (true) */
 
-	/* Algoritma */
-	retval = fscanf(tape,"%c",&currentChar);
-	eot = (currentChar == MARK);
-	if (eot) {
-       fclose(tape);
- 	}
+  /* Algoritma */
+  retval = fscanf(stream, "%c", &currentChar);
+  eot = (feof(stream));
 }
