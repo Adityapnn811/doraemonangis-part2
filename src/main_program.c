@@ -6,10 +6,9 @@
 
 boolean endWord;
 Word currentWord;
-/* jangan include header di sini, tapi include di game_header.h */
+/* jangan include header di sini, tapi include di game header */
 
 int main(){
-    boolean start = true;
     boolean valid = false;
     printf("********* Selamat datang di game Mobilita! *********\n");
     printf("\n");
@@ -25,33 +24,29 @@ int main(){
         while(!endWord){
             startWord();
                 /* pengaturan kondisi pilihan user */
-            if(currentWord.contents[0] == 'i' && endWord == true && currentWord.length == 1){
-                    /* konfigurasi new game */
-
-
-                    /* fungsi */
-            }else if(currentWord.contents[0] == 'i' && currentWord.contents[1] == 'i' && currentWord.length == 2 && endWord == true){
-                    /* fungsi load */
-
-
-                    /* fungsi */
-            }else if(currentWord.contents[0] == 'i' && currentWord.contents[1] == 'i' && currentWord.contents[2] == 'i' && endWord == true && currentWord.length == 3){
-                /* keluar */
-                
-                valid = !valid;
-                printf("Selamat bertemu kembali!\n");
-                exit(0);
-            }else if(endWord){
-                /* ini masi infinity loop nanti mau dipikir ulang gimana caranya biar ga infinity loop */
-                /* printf("Input salah. Silahkan ulangi input hingga sesuai.\n");
-                endWord = !endWord;
-                startWord(); */
-                if(currentWord.contents[0] == 'i' && currentWord.contents[1] == 'v' && currentWord.length == 2){
+            if(endWord){
+                if(help(currentWord.contents, currentWord.length)){
                     printf("\n");
                     show_help();
                     /* ini nantinya bakal ngulang inputnya sampe dia milih salah satu di atas. Tapi untuk sementara
                     diberentiin dulu krn ku masih make wordmachine yang lama (infinity loop) */
                     valid = !valid;
+                }else if(new_game(currentWord.contents, currentWord.length)){
+                   /* new game */
+
+
+                   /* isi fungsi */
+                
+                }else if(load_game(currentWord.contents, currentWord.length)){
+                    /* load game disini */
+
+
+                    /* isi fungsi */
+                
+                }else if(exit_2(currentWord.contents, currentWord.length)){
+                    valid = !valid;
+                    printf("\nSelamat bertemu kembali!\n");
+                    exit(0);
                 }else{
                     endWord = !endWord;
                     startWord();
@@ -59,6 +54,5 @@ int main(){
             }
         }
     }
-
     return 0;
 }
