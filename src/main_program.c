@@ -35,13 +35,13 @@ int main(){
                    /* new game */
 
 
-                   /* isi fungsi */
+                   /* isi fungsi buat new game */
                 
                 }else if(load_game(currentWord.contents, currentWord.length)){
                     /* load game disini */
 
 
-                    /* isi fungsi */
+                    /* isi fungsi buat load game */
                 
                 }else if(exit_2(currentWord.contents, currentWord.length)){
                     valid = !valid;
