@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "listpointdin.c"
-#include "../adt/matrix.c"
-#include "../adt/point.c"
+#include "listpointdin.h"
+#include "../adt/matrix.h"
+#include "../adt/point.h"
 
 void showMap(Matrix *m, ListPointDin l, ListElType val) {
     int i, j;
@@ -76,7 +76,7 @@ int main(){
     ListElType val; // list
     ListElType hqval;
     int i;
-    CreateListDin(&l, 3); // create dummy list
+    CreateListDin(&l, 4); // create dummy list
     LABEL(hqval) = 'Z';
     KOORX(hqval) = 0;
     KOORY(hqval) = 0;
