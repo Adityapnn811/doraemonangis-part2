@@ -4,6 +4,13 @@
 #include "boolean.h"
 
 /* berisi command-command yang akan digunakan */
+
+boolean new_game(char current[], int length);
+
+boolean load_game(char current[], int length);
+
+boolean exit_2(char current[], int length);
+
 boolean move(char current[], int length);
 
 boolean pick_up(char current[], int length);
