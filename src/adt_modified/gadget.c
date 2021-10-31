@@ -61,7 +61,7 @@ boolean isFullInv(Inventory inv){
             ctr++;
         }
     }
-    if(ctr>5){
+    if(ctr>4){
         flag = true;
     }else{
         flag = false;
