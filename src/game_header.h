@@ -1,9 +1,9 @@
 #ifndef GAMEHEADER_H
 #define GAMEHEADER_H
 
-#include "command.h"
-#include "help.h"
-#include "wordmachine.h"
+#include "./include/command.h"
+#include "./include/help.h"
+#include "./src/wordmachine.h"
 
 /* include header masing - masing di sini */
 
