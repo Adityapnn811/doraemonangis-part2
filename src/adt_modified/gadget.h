@@ -1,7 +1,7 @@
 #ifndef GADGET_H_INCLUDED
 #define GADGET_H_INCLUDED
 
-#include "src/models/boolean.h"
+#include "../models/boolean.h"
 #define CAPACITY_INV 5
 
 
@@ -21,11 +21,11 @@ typedef struct {
 #define HARGA(l,i) (l).daftar[(i)].harga
 #define KEY(l,i) (l).daftar[(i)].key
 
-const NamaGadget Kain;
-const NamaGadget Senter;
-const NamaGadget Pintu;
-const NamaGadget Mesin;
-const NamaGadget Pengecil;
+#define Kain {"Kain Pembungkus Waktu",800,'a'}
+#define Senter {"Senter Pembesar",1200,'b'}
+#define Pintu {"Pintu Kemana Saja",1500,'c'}
+#define Mesin {"Mesin Waktu",3000,'d'}
+#define Pengecil {"Senter Pengecil",800,'e'}
 
 NamaGadget DaftarGadget[5];
 
