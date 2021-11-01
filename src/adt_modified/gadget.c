@@ -2,14 +2,7 @@
 #include <stdlib.h>
 #include "gadget.h"
 
-const NamaGadget Kain = {"Kain Pembungkus Waktu",800,'a'};
-const NamaGadget Senter = {"Senter Pembesar",1200,'b'};
-const NamaGadget Pintu = {"Pintu Kemana Saja",1500,'c'};
-const NamaGadget Mesin = {"Mesin Waktu",3000,'d'};
-const NamaGadget Pengecil = {"Senter Pengecil",800,'e'};
-
 NamaGadget DaftarGadget[5] = {Kain,Senter,Pintu,Mesin,Pengecil};
-
 
 void CreateInv(Inventory *inv){
     for(int i=0;i<CAPACITY_INV;i++){
@@ -136,4 +129,3 @@ void UseGadget(NamaGadget gdg){
 
     }
 }
-
