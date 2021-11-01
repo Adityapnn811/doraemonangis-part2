@@ -3,7 +3,7 @@ TARGET := game.exe
 MAIN_SRC := main_program.c
 
 # compile macros
-DIRS := include src
+DIRS := adt adt_modified models
 OBJS := 
 
 # intermedia compile macros
