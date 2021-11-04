@@ -108,6 +108,11 @@ boolean loadGame(char *filename, Config *conf)
     }
   }
 
+  if (!isSymmetric(conf->adjMatrix))
+  {
+    return false;
+  }
+
   // Pesanan
 
   // Jumlah pesanan
