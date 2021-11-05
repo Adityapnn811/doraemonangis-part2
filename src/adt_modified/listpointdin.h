@@ -4,20 +4,17 @@
 #define LISTPOINTDIN_H
 
 #include "../models/boolean.h"
-#include "../adt/point.h"
+#include "../models/bangunan.h"
 
 /*  Kamus Umum */
 #define IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan tipe data */
-typedef struct 
-{
-    char label;
-    POINT p;
-} ListElType;
+typedef Bangunan ListElType;
 typedef int IdxType;
-typedef struct {
+typedef struct
+{
     ListElType *buffer;
     int Neff;
     int capacity;
@@ -27,13 +24,13 @@ typedef struct {
 #define NEFF(l) (l).Neff
 #define BUFFER(l) (l).buffer
 #define LISTELMT(l, i) (l).buffer[i]
-#define ELMTX(l, i) (l).buffer[i].p.X // getter
-#define ELMTY(l, i) (l).buffer[i].p.Y // getter
+#define ELMTX(l, i) (l).buffer[i].position.X // getter
+#define ELMTY(l, i) (l).buffer[i].position.Y // getter
 #define POINT(l, i) (l).buffer[i].p
 #define ELMTLABEL(l, i) (l).buffer[i].label
 #define CAPACITY(l) (l).capacity
-#define KOORX(val) (val).p.X // setter
-#define KOORY(val) (val).p.Y // setter
+#define KOORX(val) (val).position.X // setter
+#define KOORY(val) (val).position.Y // setter
 #define LABEL(val) (val).label
 
 /* ***** KONSTRUKTOR ***** */
@@ -107,7 +104,5 @@ void compactList(ListPointDin *l);
 /* F.S. Ukuran nEff = capacity */
 
 int getIdxPoint(ListPointDin l, POINT p);
-
-
 
 #endif
