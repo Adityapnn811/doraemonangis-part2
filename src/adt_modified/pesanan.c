@@ -65,11 +65,11 @@ void enqueuePsn(DaftarPesanan *dft, Pesanan pt){
           IDX_TAIL(*dft) -= head;
         }
 
-        ++IDX_TAIL(*dft);
+        IDX_TAIL(*dft)++;
         TAIL(*dft) = pt;
         int i = IDX_TAIL(*dft);
         Pesanan temp2;
-        while((*dft).daftar[i].TimeIn >= (*dft).daftar[i].TimeIn && i>=0){
+        while((*dft).daftar[i].TimeIn <= (*dft).daftar[i-1].TimeIn && i>=0){
                 temp2 = (*dft).daftar[i];
                 (*dft).daftar[i] = (*dft).daftar[i-1];
                 (*dft).daftar[i-1] = temp2;
@@ -80,14 +80,10 @@ void enqueuePsn(DaftarPesanan *dft, Pesanan pt){
 
 
 void dequeuePsn(DaftarPesanan *dft){
-    if(IDX_HEAD(*dft)==IDX_TAIL(*dft)){
+    if(isEmptyDftr(*dft)){
         IDX_HEAD(*dft) = IDX_UNDEF;
         IDX_TAIL(*dft) = IDX_UNDEF;
     }else{
         IDX_HEAD(*dft)++;
     }
 }
-
-
-
-
