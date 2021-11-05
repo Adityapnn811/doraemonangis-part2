@@ -31,7 +31,7 @@ boolean isFullDftr(DaftarPesanan p){
 
 int lengthDftr(DaftarPesanan q)
 {
-  if (isEmpty(q))
+  if (isEmptyDftr(q))
   {
     return 0;
   }
@@ -42,7 +42,7 @@ int lengthDftr(DaftarPesanan q)
 
 void enqueuePsn(DaftarPesanan *dft, Pesanan pt){
     int head;
-    if (isEmpty(*dft))
+    if (isEmptyDftr(*dft))
     {
         IDX_HEAD(*dft) = 0;
         IDX_TAIL(*dft) = 0;
