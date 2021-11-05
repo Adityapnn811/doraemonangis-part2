@@ -4,6 +4,8 @@
 
 NamaGadget DaftarGadget[5] = {Kain,Senter,Pintu,Mesin,Pengecil};
 
+
+
 void CreateInv(Inventory *inv){
     for(int i=0;i<CAPACITY_INV;i++){
         GADGET(*inv,i)="UNDEF";
@@ -80,7 +82,7 @@ void AddGadget(Inventory *inv, NamaGadget gdg){
 }
 
 // Display gadget pada inventory
-void DisplayGadget(Inventory *inv){
+void DisplayGadget(Inventory *inv,int *waktu, Tas *tas){
     //inventory gadget
     int a;
     for(int i=0; i<5;i++){
@@ -97,7 +99,7 @@ void DisplayGadget(Inventory *inv){
     if(a>0){
         if(KEY(*inv,a-1)!='z'){
             printf("%s berhasil digunakan\n", GADGET(*inv,a-1));
-            UseGadget((*inv).daftar[a-1]);
+            UseGadget((*inv).daftar[a-1],waktu,tas);
 
             deleteGadget(inv,a-1);
         }else{
@@ -116,15 +118,18 @@ void deleteGadget(Inventory *inv, int i){
     KEY(*inv,i)='z';
 }
 
-void UseGadget(NamaGadget gdg){
+void UseGadget(NamaGadget gdg,int *waktu, Tas *tas){
     if(gdg.key=='a'){
 
     }else if(gdg.key=='b'){
-
+        maxTas*=2;
     }else if(gdg.key=='c'){
 
     }else if(gdg.key=='d'){
-
+        (*waktu)-=50;
+        if(*waktu<0){
+            (*waktu)=0;
+        }
     }else if(gdg.key=='e'){
 
     }

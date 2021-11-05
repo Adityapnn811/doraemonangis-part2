@@ -3,7 +3,7 @@
 
 #include "../models/boolean.h"
 #define CAPACITY_INV 5
-
+#include "tas.h"
 
 typedef char *name;
 
@@ -30,11 +30,12 @@ typedef struct {
 NamaGadget DaftarGadget[5];
 
 
+
 boolean isFullInv(Inventory inv);
 void CreateInv(Inventory *inv);
 void Buy(Inventory *inv, int *uang);
-void DisplayGadget(Inventory *inv);
-void UseGadget(NamaGadget gdg);
+void DisplayGadget(Inventory *inv,int *waktu, Tas *tas);
+void UseGadget(NamaGadget gdg,int *waktu, Tas *tas);
 void AddGadget(Inventory *inv,NamaGadget gdg);
 NamaGadget isGadget(Inventory inv, char key);
 void deleteGadget(Inventory *inv, int i);
