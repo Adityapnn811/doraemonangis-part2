@@ -7,6 +7,7 @@
 #include "../adt/wordmachine.h"
 #include "../adt/point.h"
 #include "../adt_modified/listpointdin.h"
+#include "../adt_modified/pesanan.h"
 
 boolean loadGame(char *filename, Config *conf)
 {
@@ -45,8 +46,13 @@ boolean loadGame(char *filename, Config *conf)
   }
   advWord();
 
-  conf->hq.label = '~';
-  conf->hq.position = MakePOINT(x, y);
+  CreateListDin(&(conf->bangunans), n);
+
+  Bangunan b;
+  b.label = '8';
+  b.position = MakePOINT(x, y);
+
+  insertLast(&(conf->bangunans), b);
 
   // Lokasi
 
@@ -57,13 +63,9 @@ boolean loadGame(char *filename, Config *conf)
   }
   advWord();
 
-  CreateListDin(&(conf->bangunans), n);
-
   // List lokasi
   for (i = 0; i < n; i++)
   {
-    Bangunan b;
-
     if (endWord || currentWord.length != 1)
     {
       return false;
@@ -123,9 +125,15 @@ boolean loadGame(char *filename, Config *conf)
   advWord();
 
   // List pesanan
+
+  CreateDaftar(&(conf->pesanans));
   for (i = 0; i < n; i++)
   {
-    if (endWord || !wordToInt(currentWord, &x))
+    Pesanan p;
+    int tIn, tPerish;
+    char pickUp, dropOff, itemType;
+
+    if (endWord || !wordToInt(currentWord, &tIn))
     {
       return false;
     }
@@ -135,19 +143,34 @@ boolean loadGame(char *filename, Config *conf)
     {
       return false;
     }
+    pickUp = currentWord.contents[0];
     advWord();
 
     if (endWord || currentWord.length != 1)
     {
       return false;
     }
+    dropOff = currentWord.contents[0];
     advWord();
 
     if (endWord || currentWord.length != 1)
     {
       return false;
     }
+    itemType = currentWord.contents[0];
     advWord();
+
+    if (itemType == 'P')
+    {
+      if (endWord || !wordToInt(currentWord, &tIn))
+      {
+        return false;
+      }
+      advWord();
+    }
+
+    CreatePesanan(&p, tIn, pickUp, dropOff, itemType, tPerish);
+    enqueuePsn(&(conf->pesanans), p);
   }
 
   if (!endWord)
