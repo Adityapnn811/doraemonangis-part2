@@ -55,7 +55,7 @@ boolean loadGame(char *filename, Config *conf)
 
   Bangunan b;
   b.label = 'Z';
-  b.position = MakePOINT(0, 0); // sementara pake koordinat HQ (0,0)
+  b.position = MakePOINT(1,1); // sementara pake koordinat HQ (1,1)
 
   insertLast(&(conf->bangunans), b);
 
