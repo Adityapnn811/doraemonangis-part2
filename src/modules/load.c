@@ -12,6 +12,14 @@
 boolean loadGame(char *filename, Config *conf)
 {
   FILE *fp = fopen(filename, "r");
+  if (fp == NULL)
+  {
+    printf("load gagal\n");
+  }
+  else
+  {
+    printf("load sukses\n");
+  }
 
   int x, y, n, i, j;
 
@@ -48,8 +56,8 @@ boolean loadGame(char *filename, Config *conf)
   CreateListDin(&(conf->bangunans), n);
 
   Bangunan b;
-  b.label = '8';
-  b.position = MakePOINT(x, y);
+  b.label = 'Z';
+  b.position = MakePOINT(1, 1); // sementara pake koordinat HQ (1,1)
 
   insertLast(&(conf->bangunans), b);
 
@@ -123,7 +131,7 @@ boolean loadGame(char *filename, Config *conf)
   }
 
   // List pesanan
-
+  // printf("n pesanan %d", n); // cek n pesanan
   CreateDaftar(&(conf->pesanans));
   for (i = 0; i < n; i++)
   {
@@ -175,8 +183,7 @@ boolean loadGame(char *filename, Config *conf)
   {
     return false;
   }
-
-  fclose(fp);
+  // fclose(fp);
   return true;
 }
 
