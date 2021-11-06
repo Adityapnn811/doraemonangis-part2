@@ -49,13 +49,9 @@ boolean loadGame(char *filename, Config *conf)
     return false;
   }
 
-  CreateListDin(&(conf->bangunans), n);
-
   Bangunan b;
   b.label = '8';
   b.position = MakePOINT(0, 0); // sementara pake koordinat HQ (0,0)
-
-  insertLast(&(conf->bangunans), b);
 
   // Lokasi
 
@@ -65,6 +61,10 @@ boolean loadGame(char *filename, Config *conf)
   {
     return false;
   }
+
+  // Insert HQ dulu
+  CreateListDin(&(conf->bangunans), n);
+  insertLast(&(conf->bangunans), b);
 
   // List lokasi
   for (i = 0; i < n; i++)
@@ -180,10 +180,6 @@ boolean loadGame(char *filename, Config *conf)
 
   conf->pesanans = pesanans;
 
-  if (!endWord)
-  {
-    return false;
-  }
   fclose(fp);
   return true;
 }
