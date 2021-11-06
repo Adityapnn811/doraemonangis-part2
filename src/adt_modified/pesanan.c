@@ -80,10 +80,14 @@ void enqueuePsn(DaftarPesanan *dft, Pesanan pt){
 
 
 void dequeuePsn(DaftarPesanan *dft){
-    if(isEmptyDftr(*dft)){
+    if(IDX_HEAD(*dft)==IDX_TAIL(*dft)){
         IDX_HEAD(*dft) = IDX_UNDEF;
         IDX_TAIL(*dft) = IDX_UNDEF;
     }else{
         IDX_HEAD(*dft)++;
     }
 }
+
+
+
+
