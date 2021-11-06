@@ -14,11 +14,7 @@ boolean loadGame(char *filename, Config *conf)
   FILE *fp = fopen(filename, "r");
   if (fp == NULL)
   {
-    printf("load gagal\n");
-  }
-  else
-  {
-    printf("load sukses\n");
+    return false;
   }
 
   int x, y, n, i, j;
@@ -56,8 +52,8 @@ boolean loadGame(char *filename, Config *conf)
   CreateListDin(&(conf->bangunans), n);
 
   Bangunan b;
-  b.label = 'Z';
-  b.position = MakePOINT(1, 1); // sementara pake koordinat HQ (1,1)
+  b.label = '8';
+  b.position = MakePOINT(0, 0); // sementara pake koordinat HQ (0,0)
 
   insertLast(&(conf->bangunans), b);
 
@@ -99,7 +95,8 @@ boolean loadGame(char *filename, Config *conf)
   // Adjacency matrix
 
   int matSize = n + 1;
-  CreateMatrix(matSize, matSize, &(conf->adjMatrix));
+  Matrix matrix;
+  CreateMatrix(matSize, matSize, &matrix);
 
   for (i = 0; i < matSize; i++)
   {
@@ -110,16 +107,18 @@ boolean loadGame(char *filename, Config *conf)
       {
         return false;
       }
-      advWord();
 
-      ELMT(conf->adjMatrix, i, j) = x;
+      ELMT(matrix, i, j) = x;
+      advWord();
     }
   }
 
-  if (!isSymmetric(conf->adjMatrix))
+  if (!isSymmetric(matrix))
   {
     return false;
   }
+
+  conf->adjMatrix = matrix;
 
   // Pesanan
 
@@ -131,8 +130,8 @@ boolean loadGame(char *filename, Config *conf)
   }
 
   // List pesanan
-  // printf("n pesanan %d", n); // cek n pesanan
-  CreateDaftar(&(conf->pesanans));
+  DaftarPesanan pesanans;
+  CreateDaftar(&pesanans);
   for (i = 0; i < n; i++)
   {
     Pesanan p;
@@ -166,24 +165,26 @@ boolean loadGame(char *filename, Config *conf)
     }
     itemType = currentWord.contents[0];
 
-    advWord();
     if (itemType == 'P')
     {
-      if (endWord || !wordToInt(currentWord, &tIn))
+      advWord();
+      if (endWord || !wordToInt(currentWord, &tPerish))
       {
         return false;
       }
     }
 
     CreatePesanan(&p, tIn, pickUp, dropOff, itemType, tPerish);
-    enqueuePsn(&(conf->pesanans), p);
+    enqueuePsn(&pesanans, p);
   }
+
+  conf->pesanans = pesanans;
 
   if (!endWord)
   {
     return false;
   }
-  // fclose(fp);
+  fclose(fp);
   return true;
 }
 
