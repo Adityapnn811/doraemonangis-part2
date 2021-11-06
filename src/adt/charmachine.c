@@ -33,6 +33,7 @@ void adv()
 		      Jika EOF = true maka EOT akan menyala (true) */
 
   /* Algoritma */
-  retval = fscanf(stream, "%c", &currentChar);
-  eot = (feof(stream));
+  currentChar = fgetc(stream);
+
+  eot = (feof(stream)) || currentChar == CHARMACHINE_MARK;
 }

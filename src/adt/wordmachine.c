@@ -3,7 +3,6 @@
  * Implementasi wordmachine
  */
 #include <stdio.h>
-#include <ctype.h>
 #include "charmachine.h"
 #include "wordmachine.h"
 
@@ -15,7 +14,7 @@ static boolean isBlank(char c)
 {
   /* Menunjukkan apakah suatu karakter termasuk blank atau tidak */
   /* ALGORITMA */
-  return isspace(c);
+  return c == ' ' || c == '\t' || c == '\v' || c == '\r';
 }
 
 void ignoreBlank()

@@ -14,37 +14,36 @@ boolean loadGame(char *filename, Config *conf)
   FILE *fp = fopen(filename, "r");
 
   int x, y, n, i, j;
-  startWord(fp);
 
   // Ukuran map
 
+  startWord(fp);
   if (endWord || !wordToInt(currentWord, &(conf->mapRows)) ||
       conf->mapRows < 10 || conf->mapRows > 20)
   {
     return false;
   }
-  advWord();
 
+  advWord();
   if (endWord || !wordToInt(currentWord, &(conf->mapCols)) ||
       conf->mapCols < 10 || conf->mapCols > 30)
   {
     return false;
   }
-  advWord();
 
   // Koordinat HQ
 
+  startWord(fp);
   if (endWord || !wordToInt(currentWord, &x))
   {
     return false;
   }
-  advWord();
 
+  advWord();
   if (endWord || !wordToInt(currentWord, &y))
   {
     return false;
   }
-  advWord();
 
   CreateListDin(&(conf->bangunans), n);
 
@@ -57,37 +56,35 @@ boolean loadGame(char *filename, Config *conf)
   // Lokasi
 
   // Jumlah lokasi
+  startWord(fp);
   if (endWord || !wordToInt(currentWord, &n))
   {
     return false;
   }
-  advWord();
 
   // List lokasi
   for (i = 0; i < n; i++)
   {
+    startWord(fp);
     if (endWord || currentWord.length != 1)
     {
       return false;
     }
-    advWord();
-
     b.label = currentWord.contents[0];
 
+    advWord();
     if (endWord || !wordToInt(currentWord, &x))
     {
       return false;
     }
-    advWord();
 
+    advWord();
     if (endWord || !wordToInt(currentWord, &y))
     {
       return false;
     }
-    advWord();
 
     b.position = MakePOINT(x, y);
-
     insertLast(&(conf->bangunans), b);
   }
 
@@ -98,6 +95,7 @@ boolean loadGame(char *filename, Config *conf)
 
   for (i = 0; i < matSize; i++)
   {
+    startWord(fp);
     for (j = 0; j < matSize; j++)
     {
       if (endWord || !wordToInt(currentWord, &x))
@@ -118,11 +116,11 @@ boolean loadGame(char *filename, Config *conf)
   // Pesanan
 
   // Jumlah pesanan
+  startWord(fp);
   if (endWord || !wordToInt(currentWord, &n))
   {
     return false;
   }
-  advWord();
 
   // List pesanan
 
@@ -133,40 +131,40 @@ boolean loadGame(char *filename, Config *conf)
     int tIn, tPerish;
     char pickUp, dropOff, itemType;
 
+    startWord(fp);
     if (endWord || !wordToInt(currentWord, &tIn))
     {
       return false;
     }
-    advWord();
 
+    advWord();
     if (endWord || currentWord.length != 1)
     {
       return false;
     }
     pickUp = currentWord.contents[0];
-    advWord();
 
+    advWord();
     if (endWord || currentWord.length != 1)
     {
       return false;
     }
     dropOff = currentWord.contents[0];
-    advWord();
 
+    advWord();
     if (endWord || currentWord.length != 1)
     {
       return false;
     }
     itemType = currentWord.contents[0];
-    advWord();
 
+    advWord();
     if (itemType == 'P')
     {
       if (endWord || !wordToInt(currentWord, &tIn))
       {
         return false;
       }
-      advWord();
     }
 
     CreatePesanan(&p, tIn, pickUp, dropOff, itemType, tPerish);
