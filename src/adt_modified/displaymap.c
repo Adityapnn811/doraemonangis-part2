@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include "listpointdin.h"
+#include "../adt/matrix.h"
+#include "../adt/point.h"
 #include "displaymap.h"
 
 void showMap(Matrix *m, ListPointDin l, ListElType val) {
@@ -66,6 +69,39 @@ void showRelation(Matrix m, ListPointDin l, POINT p) {
     }  
 }
 
+ListPointDin mShowRelation(Matrix m, ListPointDin l, POINT p) {
+    /* KAMUS LOKAL */
+    ListPointDin l_adj;
+    Bangunan B;
+    /* ALGORITMA */
+    CreateListPointDin(&l_adj, COLS(m));
+    int counter = getIdxPoint(l, p);
+    for(int i=counter;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
+        if (ELMT(m,counter,i) == 1) {
+            B.label = ELMTLABEL(l,i);
+            B.position = POINT(l, i);
+            insertLastListPoint(&l_adj, B);
+        }
+    }
+    return l_adj;
+}
+
+boolean pointInListPoint(float x, float y, ListPointDin l_adj) {
+    /* KAMUS LOKAL */
+    boolean found = false;
+    int i = 0;
+    POINT p;
+    /* ALGORITMA */
+    p = MakePOINT(x, y);
+    while (!found && i < NEFF(l_adj)) {
+        if (Absis(p) == ELMTX(l_adj, i) && Ordinat(p) == ELMTY(l_adj, i)) {
+            found = true;
+        } else {
+            i += 1;
+        }
+    }
+    return found;
+}
 
 
 int main(){
@@ -74,23 +110,32 @@ int main(){
     ListElType val; // list
     ListElType hqval;
     int i;
-    CreateListDin(&l, 4); // create dummy list
+    Player cur_player;
+    Tas tas;
+    Item item;
+
+    CreateItem(&item, 4, 'B', 'C', 'h', 8);
+    CreateTas(&tas);
+    addItem(&tas, item);
+    CreatePlayer(&cur_player);
+    CreateListPointDin(&l, 4); // create dummy list
     LABEL(hqval) = 'Z';
     KOORX(hqval) = 0;
     KOORY(hqval) = 0;
-    insertLast(&l, hqval);
+    insertLastListPoint(&l, hqval);
     for (i = 0; i < 3; i++){
         LABEL(val) = 'A'+i;
         KOORX(val) = i+2;
         KOORY(val) = i+1;
-        insertLast(&l, val);
+        insertLastListPoint(&l, val);
     }
-    displayList(l);
+    displayListPoint(l);
     readCustomMatrix(&m,10,10); // fill matrix with border and blank space
     // displayMatrix(m);
     printf("\n");
     showMap(&m,l,val); // menampilkan koordinat pada matriks
-    displayMatrixLabel(m);
+    readAdjacencyMatrix(&adj);
+    displayMatrixLabel(m, adj, l, cur_player, tas);
     printf("\n");
     // Matrix adj;
     // readMatrix(&adj, 4, 4);
@@ -101,10 +146,9 @@ int main(){
     printf("sb x: %d\n", Absis(hq));
     printf("sb y: %d\n", Ordinat(hq));
 
-    readAdjacencyMatrix(&adj);
     displayMatrix(adj);printf("\n");
     printf("indeks point posisi move di listdin: %d", getIdxPoint(l, hq));printf("\n");
-    showRelation(adj, l, hq);
+    displayListPoint(mShowRelation(adj, l, hq));
     
     
 

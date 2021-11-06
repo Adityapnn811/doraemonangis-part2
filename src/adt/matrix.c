@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include "matrix.h"
 #include "../models/boolean.h"
+#include "../models/pcolor.h"
+#include "../adt/player.h"
+#include "../adt_modified/listpointdin.h"
+#include "../adt_modified/displaymap.h"
 
 /* ********** DEFINISI PROTOTIPE PRIMITIF ********** */
 /* *** Konstruktor membentuk Matrix *** */
@@ -15,7 +19,7 @@ void CreateMatrix(int nRow, int nCol, Matrix *m)
 }
 
 /* *** Selektor "DUNIA Matrix" *** */
-boolean isIdxValidMatrixMatrix(int i, int j)
+boolean isIdxValidMatrix(int i, int j)
 {
   /* Mengirimkan true jika i, j adalah Index yang valid untuk matriks apa pun */
   /* ALGORITMA */
@@ -110,7 +114,7 @@ void displayMatrix(Matrix m)
   }
 }
 
-void displayMatrixLabel(Matrix m)
+void displayMatrixLabel(Matrix m, Matrix m_adj, ListPointDin l_bangunan, Player p, Tas tas)
 {
   /* I.S. m terdefinisi */
   /* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
@@ -123,15 +127,26 @@ void displayMatrixLabel(Matrix m)
   */
   /* KAMUS */
   int i, j, lastRow, lastCol;
+  ListPointDin l_adj;
 
   /* ALGORITMA */
+  l_adj = mShowRelation(m_adj, l_bangunan, CUR_LOC(p));
   lastRow = getLastIdxRow(m);
   lastCol = getLastIdxCol(m);
   for (i = 0; i <= lastRow; i++)
   {
     for (j = 0; j <= lastCol; j++)
     {
-      print_green((char) ELMT(m, i, j));
+      // Cek Apakah i, j merupakan koordinat mobita
+      if (CUR_LOCX(p) == i && CUR_LOCY(p) == j) {
+        print_orange((char) ELMT(m, i, j));
+      } else if (TOP(tas).DropOff == (char) ELMT(m, i, j)) { // Lokasi drop off, tp harusnya ada lokasi pick up duls
+        print_blue((char) ELMT(m, i, j));
+      } else if (pointInListPoint(i, j, l_adj)) { // Cek adjacency dari player
+        print_green((char) ELMT(m, i, j));
+      } else {
+        printf("%c", ELMT(m, i, j));
+      }
       printf("%s", (j == lastCol ? "" : " "));
     }
     printf("%s", (i == lastRow ? "" : "\n"));
@@ -273,7 +288,7 @@ boolean isNotEqualMatrix(Matrix m1, Matrix m2)
   /* ALGORITMA */
   return !isEqualMatrix(m1, m2);
 }
-boolean isSizeEqualMatrixMatrix(Matrix m1, Matrix m2)
+boolean isSizeEqualMatrix(Matrix m1, Matrix m2)
 {
   /* Mengirimkan true jika ukuran efektif matriks m1 sama dengan ukuran efektif m2 */
   /* ALGORITMA */

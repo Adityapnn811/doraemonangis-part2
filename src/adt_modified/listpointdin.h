@@ -26,7 +26,7 @@ typedef struct
 #define LISTELMT(l, i) (l).buffer[i]
 #define ELMTX(l, i) (l).buffer[i].position.X // getter
 #define ELMTY(l, i) (l).buffer[i].position.Y // getter
-#define POINT(l, i) (l).buffer[i].p
+#define POINT(l, i) (l).buffer[i].position
 #define ELMTLABEL(l, i) (l).buffer[i].label
 #define CAPACITY(l) (l).capacity
 #define KOORX(val) (val).position.X // setter

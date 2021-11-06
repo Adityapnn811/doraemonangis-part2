@@ -22,6 +22,9 @@ void showRelation(Matrix m, ListPointDin l, POINT p);
 /* I.S. Matrix m, List l, dan Point p terdefinisi */
 /* F.S. Menampilkan adjacency dari point p berdasarkan data l dan m */
 
-ListPointDin mshowRelation(Matrix m, ListPointDin l, POINT p);
-/* FUNGSI mengembalikan adjacency dari Point p */
+ListPointDin mShowRelation(Matrix m, ListPointDin l, POINT p);
+/* FUNGSI mengembalikan adjacency dari Point p (Posisi Player) */
+
+boolean pointInListPoint(float x, float y, ListPointDin l_adj);
+/* Fungsi mengembalikan true jika titik (x,y) ada di list */
 #endif

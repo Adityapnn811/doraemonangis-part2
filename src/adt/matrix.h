@@ -5,6 +5,9 @@
 
 #include "../models/boolean.h"
 #include "../models/pcolor.h"
+#include "../adt/player.h"
+#include "../adt_modified/listpointdin.h"
+#include "../adt_modified/tas.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -74,16 +77,13 @@ void displayMatrix(Matrix m);
 8 9 10
 */
 
-void displayMatrixLabel(Matrix m);
-/* I.S. m terdefinisi */
+void displayMatrixLabel(Matrix m, Matrix m_adj, ListPointDin l_bangunan, Player p, Tas tas);
+/* I.S. m terdefinisi, m_adj adalah adjacency matriks yg terdefinisi
+l_bangunan adalah list point yg berisi semua bangunan, Player p adalah
+data current player, Tas tas digunakan untuk mencari item yg hrs di drop off
+ */
 /* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
    dipisahkan sebuah spasi */
-/* Proses: Menulis nilai setiap elemen m ke layar dengan traversal per baris dan per kolom */
-/* Contoh: Menulis matriks 3x3 (ingat di akhir tiap baris, tidak ada spasi)
-1 2 3
-4 5 6
-8 9 10
-*/
 
 /* ********** KELOMPOK OPERASI ARITMATIKA TERHADAP TYPE ********** */
 Matrix addMatrix(Matrix m1, Matrix m2);

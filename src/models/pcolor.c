@@ -37,3 +37,8 @@ void print_cyan(char c) {
     printf("%s%c", MAGENTA, c);
     printf("%s", NORMAL);
 }
+
+void print_orange(char c) {
+    printf("%s%c", ORANGE, c);
+    printf("%s", NORMAL);
+}
