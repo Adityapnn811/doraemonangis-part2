@@ -1,7 +1,5 @@
 #include <stdio.h>
-#include "listpointdin.h"
-#include "../adt/matrix.h"
-#include "../adt/point.h"
+#include "displaymap.h"
 
 void showMap(Matrix *m, ListPointDin l, ListElType val) {
     int i, j;
@@ -58,7 +56,7 @@ void readAdjacencyMatrix(Matrix *m) {
     ELMT(*m, 3, 2) = 1;
 }
 
-ListPointDin showRelation(Matrix m, ListPointDin l, POINT p) {
+void showRelation(Matrix m, ListPointDin l, POINT p) {
     int counter = getIdxPoint(l, p);
     for(int i=counter;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
         if (ELMT(m,counter,i) == 1) {

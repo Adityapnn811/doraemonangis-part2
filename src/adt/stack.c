@@ -20,13 +20,13 @@ void CreateStack(Stack *s)
 }
 
 /* ************ Prototype ************ */
-boolean isEmpty(Stack s)
+boolean isEmptyStack(Stack s)
 {
   /* Mengirim true jika s kosong: lihat definisi di atas */
   /* ALGORITMA */
   return IDX_TOP(s) == IDX_UNDEF;
 }
-boolean isFull(Stack s)
+boolean isFullStack(Stack s)
 {
   /* Mengirim true jika tabel penampung nilai s stack penuh */
   /* ALGORITMA */

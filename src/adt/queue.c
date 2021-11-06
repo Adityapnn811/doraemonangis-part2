@@ -23,24 +23,24 @@ void CreateQueue(Queue *q)
 }
 
 /* ********* Prototype ********* */
-boolean isEmpty(Queue q)
+boolean isEmptyQueue(Queue q)
 {
   /* Mengirim true jika q kosong: lihat definisi di atas */
   /* ALGORITMA */
   return IDX_HEAD(q) == IDX_UNDEF && IDX_TAIL(q) == IDX_UNDEF;
 }
-boolean isFull(Queue q)
+boolean isFullQueue(Queue q)
 {
   /* Mengirim true jika tabel penampung elemen q sudah penuh */
   /* yaitu jika index head bernilai 0 dan index tail bernilai CAPACITY-1 */
   /* ALGORITMA */
   return IDX_HEAD(q) == 0 && IDX_TAIL(q) == (CAPACITY - 1);
 }
-int length(Queue q)
+int lengthQueue(Queue q)
 {
   /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
   /* ALGORITMA */
-  if (isEmpty(q))
+  if (isEmptyQueue(q))
   {
     return 0;
   }
@@ -60,7 +60,7 @@ void enqueue(Queue *q, ElType val)
   int head;
 
   /* ALGORITMA */
-  if (isEmpty(*q))
+  if (isEmptyQueue(*q))
   {
     IDX_HEAD(*q) = 0;
     IDX_TAIL(*q) = 0;
@@ -95,7 +95,7 @@ void dequeue(Queue *q, ElType *val)
   /* F.S. val = nilai elemen HEAD pd I.S., HEAD dan IDX_HEAD "mundur"; 
           q mungkin kosong */
   /* ALGORITMA */
-  if (!isEmpty(*q))
+  if (!isEmptyQueue(*q))
   {
     *val = HEAD(*q);
     ++IDX_HEAD(*q);
@@ -122,7 +122,7 @@ void displayQueue(Queue q)
   int i;
   /* ALGORITMA */
   printf("[");
-  if (!isEmpty(q))
+  if (!isEmptyQueue(q))
   {
     while (IDX_HEAD(q) <= IDX_TAIL(q))
     {

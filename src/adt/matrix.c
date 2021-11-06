@@ -1,11 +1,3 @@
-/**
- * File: matrix.c
- * Tanggal: 2021/09/22
- * NIM / Nama: 13520024 / Hilya Fadhilah Imania
- *
- * matrix.c
- * Implementasi ADT Matrix
- */
 #include <stdio.h>
 #include "matrix.h"
 #include "../models/boolean.h"
@@ -23,7 +15,7 @@ void CreateMatrix(int nRow, int nCol, Matrix *m)
 }
 
 /* *** Selektor "DUNIA Matrix" *** */
-boolean isIdxValid(int i, int j)
+boolean isIdxValidMatrixMatrix(int i, int j)
 {
   /* Mengirimkan true jika i, j adalah Index yang valid untuk matriks apa pun */
   /* ALGORITMA */
@@ -43,11 +35,11 @@ Index getLastIdxCol(Matrix m)
   /* ALGORITMA */
   return COLS(m) - 1;
 }
-boolean isIdxEff(Matrix m, Index i, Index j)
+boolean isIdxEffMatrix(Matrix m, Index i, Index j)
 {
   /* Mengirimkan true jika i, j adalah Index efektif bagi m */
   /* ALGORITMA */
-  return isIdxValid(i, j) && (i <= getLastIdxRow(m)) && (j <= getLastIdxCol(m));
+  return isIdxValidMatrix(i, j) && (i <= getLastIdxRow(m)) && (j <= getLastIdxCol(m));
 }
 ElType getElmtDiagonal(Matrix m, Index i)
 {
@@ -67,7 +59,7 @@ void copyMatrix(Matrix mIn, Matrix *mRes)
 /* ********** KELOMPOK BACA/TULIS ********** */
 void readMatrix(Matrix *m, int nRow, int nCol)
 {
-  /* I.S. isIdxValid(nRow,nCol) */
+  /* I.S. isIdxValidMatrix(nRow,nCol) */
   /* F.S. m terdefinisi nilai elemen efektifnya, berukuran nRow x nCol */
   /* Proses: Melakukan CreateMatrix(m,nRow,nCol) dan mengisi nilai efektifnya */
   /* Selanjutnya membaca nilai elemen per baris dan kolom */
@@ -139,7 +131,8 @@ void displayMatrixLabel(Matrix m)
   {
     for (j = 0; j <= lastCol; j++)
     {
-      printf("%c%s", ELMT(m, i, j), (j == lastCol ? "" : " "));
+      print_green((char) ELMT(m, i, j));
+      printf("%s", (j == lastCol ? "" : " "));
     }
     printf("%s", (i == lastRow ? "" : "\n"));
   }
@@ -247,7 +240,7 @@ void pMultiplyConst(Matrix *m, ElType k)
 }
 
 /* ********** KELOMPOK OPERASI RELASIONAL TERHADAP Matrix ********** */
-boolean isEqual(Matrix m1, Matrix m2)
+boolean isEqualMatrix(Matrix m1, Matrix m2)
 {
   /* Mengirimkan true jika m1 = m2, yaitu count(m1) = count(m2) dan */
   /* untuk setiap i,j yang merupakan Index baris dan kolom m1(i,j) = m2(i,j) */
@@ -259,7 +252,7 @@ boolean isEqual(Matrix m1, Matrix m2)
   /* ALGORITMA */
   flag = true;
 
-  if (!isSizeEqual(m1, m2))
+  if (!isSizeEqualMatrix(m1, m2))
   {
     flag = false;
   }
@@ -274,13 +267,13 @@ boolean isEqual(Matrix m1, Matrix m2)
 
   return flag;
 }
-boolean isNotEqual(Matrix m1, Matrix m2)
+boolean isNotEqualMatrix(Matrix m1, Matrix m2)
 {
   /* Mengirimkan true jika m1 tidak sama dengan m2 */
   /* ALGORITMA */
-  return !isEqual(m1, m2);
+  return !isEqualMatrix(m1, m2);
 }
-boolean isSizeEqual(Matrix m1, Matrix m2)
+boolean isSizeEqualMatrixMatrix(Matrix m1, Matrix m2)
 {
   /* Mengirimkan true jika ukuran efektif matriks m1 sama dengan ukuran efektif m2 */
   /* ALGORITMA */
@@ -288,7 +281,7 @@ boolean isSizeEqual(Matrix m1, Matrix m2)
 }
 
 /* ********** Operasi lain ********** */
-int count(Matrix m)
+int countMatrix(Matrix m)
 {
   /* Mengirimkan banyaknya elemen m */
   /* ALGORITMA */
@@ -370,7 +363,7 @@ boolean isSparse(Matrix m)
   /* ALGORITMA */
   flag = true;
   fillCount = 0;
-  maxFilled = 0.05 * count(m);
+  maxFilled = 0.05 * countMatrix(m);
 
   for (i = 0; i <= getLastIdxRow(m) && flag; i++)
   {
