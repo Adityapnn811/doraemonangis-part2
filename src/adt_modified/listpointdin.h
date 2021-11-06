@@ -4,20 +4,17 @@
 #define LISTPOINTDIN_H
 
 #include "../models/boolean.h"
-#include "../adt/point.h"
+#include "../models/bangunan.h"
 
 /*  Kamus Umum */
 #define IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan tipe data */
-typedef struct 
-{
-    char label;
-    POINT p;
-} ListElType;
+typedef Bangunan ListElType;
 typedef int IdxType;
-typedef struct {
+typedef struct
+{
     ListElType *buffer;
     int Neff;
     int capacity;
@@ -27,36 +24,36 @@ typedef struct {
 #define NEFF(l) (l).Neff
 #define BUFFER(l) (l).buffer
 #define LISTELMT(l, i) (l).buffer[i]
-#define ELMTX(l, i) (l).buffer[i].p.X // getter
-#define ELMTY(l, i) (l).buffer[i].p.Y // getter
+#define ELMTX(l, i) (l).buffer[i].position.X // getter
+#define ELMTY(l, i) (l).buffer[i].position.Y // getter
 #define POINT(l, i) (l).buffer[i].p
 #define ELMTLABEL(l, i) (l).buffer[i].label
 #define CAPACITY(l) (l).capacity
-#define KOORX(val) (val).p.X // setter
-#define KOORY(val) (val).p.Y // setter
+#define KOORX(val) (val).position.X // setter
+#define KOORY(val) (val).position.Y // setter
 #define LABEL(val) (val).label
 
 /* ***** KONSTRUKTOR ***** */
 /* Konstruktor : create list kosong  */
-void CreateListDin(ListPointDin *l, int capacity);
+void CreateListPointDin(ListPointDin *l, int capacity);
 /* I.S. l sembarang, capacity > 0 */
 /* F.S. Terbentuk list dinamis l kosong dengan kapasitas capacity */
 
-void dealocate(ListPointDin *l);
+void dealocateListPoint(ListPointDin *l);
 /* I.S. l terdefinisi; */
 /* F.S. (l) dikembalikan ke system, CAPACITY(l)=0; NEFF(l)=0 */
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
-boolean isEmpty(ListPointDin l);
+boolean isEmptyListPoint(ListPointDin l);
 /* Mengirimkan true jika list l kosong, mengirimkan false jika tidak */
 /* *** Test list penuh *** */
-boolean isFull(ListPointDin l);
+boolean isFullListPoint(ListPointDin l);
 /* Mengirimkan true jika list l penuh, mengirimkan false jika tidak */
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi list dari pembacaan *** */
-void readList(ListPointDin *l);
+void readListPoint(ListPointDin *l);
 /* I.S. l sembarang dan sudah dialokasikan sebelumnya */
 /* F.S. List l terdefinisi */
 /* Proses : membaca banyaknya elemen l dan mengisi nilainya */
@@ -67,7 +64,7 @@ void readList(ListPointDin *l);
       0 satu per satu diakhiri enter */
 /*    Jika N = 0; hanya terbentuk l kosong */
 
-void displayList(ListPointDin l);
+void displayListPoint(ListPointDin l);
 /* Proses : Menuliskan isi list dengan traversal, list ditulis di antara kurung siku;
    antara dua elemen dipisahkan dengan separator "koma", tanpa tambahan karakter di depan,
    di tengah, atau di belakang, termasuk spasi dan enter */
@@ -78,36 +75,18 @@ void displayList(ListPointDin l);
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListPointDin *l, ListElType val);
+void insertLastListPoint(ListPointDin *l, ListElType val);
 /* Proses: Menambahkan val sebagai elemen terakhir list */
 /* I.S. List l boleh kosong, tetapi tidak penuh */
 /* F.S. val adalah elemen terakhir l yang baru */
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast(ListPointDin *l, ListElType *val);
+void deleteLastListPoint(ListPointDin *l, ListElType *val);
 /* Proses : Menghapus elemen terakhir list */
 /* I.S. List tidak kosong */
 /* F.S. val adalah nilai elemen terakhir l sebelum penghapusan, */
 /*      Banyaknya elemen list berkurang satu */
 /*      List l mungkin menjadi kosong */
 
-/* ********* MENGUBAH UKURAN ARRAY ********* */
-void growList(ListPointDin *l, int num);
-/* Proses : Menambahkan capacity l sebanyak num */
-/* I.S. List sudah terdefinisi */
-/* F.S. Ukuran list bertambah sebanyak num */
-
-void shrinkList(ListPointDin *l, int num);
-/* Proses : Mengurangi capacity sebanyak num */
-/* I.S. List sudah terdefinisi, ukuran capacity > num, dan nEff < capacity - num. */
-/* F.S. Ukuran list berkurang sebanyak num. */
-
-void compactList(ListPointDin *l);
-/* Proses : Mengurangi capacity sehingga nEff = capacity */
-/* I.S. List tidak kosong */
-/* F.S. Ukuran nEff = capacity */
-
 int getIdxPoint(ListPointDin l, POINT p);
-
-
 
 #endif

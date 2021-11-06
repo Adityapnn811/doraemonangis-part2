@@ -4,6 +4,7 @@
 #define Matrix_H
 
 #include "../models/boolean.h"
+#include "../models/pcolor.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -34,7 +35,7 @@ void CreateMatrix(int nRow, int nCol, Matrix *m);
 #define ELMT(M, i, j) (M).contents[(i)][(j)]
 
 /* *** Selektor "DUNIA Matrix" *** */
-boolean isIdxValid(int i, int j);
+boolean isIdxValidMatrix(int i, int j);
 /* Mengirimkan true jika i, j adalah Index yang valid untuk matriks apa pun */
 
 /* *** Selektor: Untuk sebuah matriks m yang terdefinisi: *** */
@@ -42,7 +43,7 @@ Index getLastIdxRow(Matrix m);
 /* Mengirimkan Index baris terbesar m */
 Index getLastIdxCol(Matrix m);
 /* Mengirimkan Index kolom terbesar m */
-boolean isIdxEff(Matrix m, Index i, Index j);
+boolean isIdxEffMatrix(Matrix m, Index i, Index j);
 /* Mengirimkan true jika i, j adalah Index efektif bagi m */
 ElType getElmtDiagonal(Matrix m, Index i);
 /* Mengirimkan elemen m(i,i) */
@@ -101,17 +102,17 @@ void pMultiplyConst(Matrix *m, ElType k);
 /* F.S. Mengalikan setiap elemen m dengan k */
 
 /* ********** KELOMPOK OPERASI RELASIONAL TERHADAP Matrix ********** */
-boolean isEqual(Matrix m1, Matrix m2);
+boolean isEqualMatrix(Matrix m1, Matrix m2);
 /* Mengirimkan true jika m1 = m2, yaitu count(m1) = count(m2) dan */
 /* untuk setiap i,j yang merupakan Index baris dan kolom m1(i,j) = m2(i,j) */
 /* Juga merupakan strong eq karena getLastIdxCol(m1) = getLastIdxCol(m2) */
-boolean isNotEqual(Matrix m1, Matrix m2);
+boolean isNotEqualMatrix(Matrix m1, Matrix m2);
 /* Mengirimkan true jika m1 tidak sama dengan m2 */
-boolean isSizeEqual(Matrix m1, Matrix m2);
+boolean isSizeEqualMatrix(Matrix m1, Matrix m2);
 /* Mengirimkan true jika ukuran efektif matriks m1 sama dengan ukuran efektif m2 */
 
 /* ********** Operasi lain ********** */
-int count(Matrix m);
+int countMatrix(Matrix m);
 /* Mengirimkan banyaknya elemen m */
 
 /* ********** KELOMPOK TEST TERHADAP Matrix ********** */

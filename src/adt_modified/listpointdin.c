@@ -6,7 +6,7 @@
 
 /* ***** KONSTRUKTOR ***** */
 /* Konstruktor : create list kosong  */
-void CreateListDin(ListPointDin *l, int capacity){
+void CreateListPointDin(ListPointDin *l, int capacity){
     /* KAMUS LOKAL */
     /* ALGORITMA */
     CAPACITY(*l) = capacity;
@@ -14,7 +14,7 @@ void CreateListDin(ListPointDin *l, int capacity){
     BUFFER(*l) = (ListElType*) malloc (capacity * sizeof(ListElType));
 }
 
-void dealocate(ListPointDin *l){
+void dealocateListPoint(ListPointDin *l){
     /* KAMUS LOKAL */
     /* ALGORITMA */
     CAPACITY(*l) = 0;
@@ -24,13 +24,13 @@ void dealocate(ListPointDin *l){
 
 /* ********** TEST KOSONG/PENUH ********** */
 /* *** Test list kosong *** */
-boolean isEmpty(ListPointDin l){
+boolean isEmptyListPoint(ListPointDin l){
     /* KAMUS LOKAL */
     /* ALGORITMA */
     return NEFF(l) == 0;
 }
 
-boolean isFull(ListPointDin l){
+boolean isFullListPoint(ListPointDin l){
     /* KAMUS LOKAL */
     /* ALGORITMA */
     return NEFF(l) == CAPACITY(l);
@@ -38,12 +38,12 @@ boolean isFull(ListPointDin l){
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
 /* *** Mendefinisikan isi list dari pembacaan *** */
-void readList(ListPointDin *l){
+void readListPoint(ListPointDin *l){
     /* KAMUS LOKAL */
     /* ALGORITMA */
 }
 
-void displayList(ListPointDin l){
+void displayListPoint(ListPointDin l){
     /* KAMUS LOKAL */
     int i;
     /* ALGORITMA */
@@ -63,14 +63,14 @@ void displayList(ListPointDin l){
 
 /* ********** MENAMBAH DAN MENGHAPUS ELEMEN DI AKHIR ********** */
 /* *** Menambahkan elemen terakhir *** */
-void insertLast(ListPointDin *l, ListElType val){
+void insertLastListPoint(ListPointDin *l, ListElType val){
     /* KAMUS LOKAL */
     /* ALGORITMA */
     LISTELMT(*l, NEFF(*l)) = val;
     NEFF(*l) += 1;
 }
 /* ********** MENGHAPUS ELEMEN ********** */
-void deleteLast(ListPointDin *l, ListElType *val){
+void deleteLastListPoint(ListPointDin *l, ListElType *val){
     /* KAMUS LOKAL */
     /* ALGORITMA */
     *val = LISTELMT(*l, NEFF(*l) - 1);

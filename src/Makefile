@@ -3,7 +3,7 @@ TARGET := game.exe
 MAIN_SRC := main_program.c
 
 
-DIRS := adt adt_modified models
+DIRS := adt adt_modified models modules
 OBJS := 
 
 ALL_OBJS := 
