@@ -7,6 +7,7 @@
 boolean endWord;
 Word currentWord;
 /* jangan include header di sini, tapi include di game header */
+FILE *tape;
 
 int main(){
     boolean valid = false;
@@ -22,7 +23,7 @@ int main(){
         printf("\n");
         printf("Silahkan input opsi yang di atas: ");
         while(!endWord){
-            startWord();
+            startWord(tape);
                 /* pengaturan kondisi pilihan user */
             if(endWord){
                 if(help(currentWord.contents, currentWord.length)){
@@ -33,8 +34,7 @@ int main(){
                     valid = !valid;
                 }else if(new_game(currentWord.contents, currentWord.length)){
                    /* new game */
-
-
+                    newgame();
                    /* isi fungsi buat new game */
                 
                 }else if(load_game(currentWord.contents, currentWord.length)){
@@ -49,7 +49,7 @@ int main(){
                     exit(0);
                 }else{
                     endWord = !endWord;
-                    startWord();
+                    startWord(tape);
                 }
             }
         }

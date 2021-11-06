@@ -70,8 +70,4 @@ void newgame() {
     pickup(p, newgame);enter;
 }
 
-int main() {
-    newgame();
-}
-
 

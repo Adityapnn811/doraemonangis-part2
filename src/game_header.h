@@ -4,7 +4,8 @@
 #include "./models/command.h"
 #include "./models/help.h"
 #include "./adt/wordmachine.h"
-#include "./models/bangunan.h"
+#include "./models/newgame.c"
+
 
 /* include header masing - masing di sini */
 
