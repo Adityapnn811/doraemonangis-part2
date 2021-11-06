@@ -16,11 +16,11 @@
 
 void showMap(Matrix *m, ListPointDin l) {
     int i, j;
-    for (i = 1; i <= ROWS(*m); i++)
+    for (i = 0; i <= ROWS(*m); i++)
     {
-        for (j = 1; j <= COLS(*m); j++)
+        for (j = 0; j <= COLS(*m); j++)
         {
-            for(int k=0;k<=CAPACITY(l);k++) {
+            for(int k=0;k<=17;k++) {
                 if ((i==ELMTX(l,k)) && (j==ELMTY(l,k))) {
                     ELMT(*m, i, j) = ELMTLABEL(l,k);
                 }

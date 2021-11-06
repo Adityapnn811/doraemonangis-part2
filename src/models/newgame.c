@@ -43,7 +43,7 @@ void newgame() {
 
     Matrix m;
     readCustomMatrix(&m,13,18);
-    printf("capcity bangunan %d\n",newgame.bangunans.capacity);
+    printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity); // capacity blom diassign di load
     showMap(&m,newgame.bangunans);
     displayMatrixLabel(m);enter;
 
