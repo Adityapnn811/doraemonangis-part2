@@ -1,30 +1,9 @@
-#include "boolean.h"
-#include "config.h"
-#include "bangunan.h"
-#include "../modules/load.h"
-#include "../adt/player.h"
-#include "../adt_modified/pesanan.h"
-#include "../adt/charmachine.h"
-#include "../adt/wordmachine.h"
-#include "../adt/point.h"
-#include "../adt_modified/listpointdin.h"
-#include "../adt/matrix.h"
 #include <stdio.h>
+#include "../game_header.h"
 #include "cmd1.c" // command move, pickup, dropoff
 
 #define enter printf("\n");
 #define border printf("----------- END OF INFO CONFIG.TXT------------\n\n");
-
-/* dont delete, for compiler */
-#include "../modules/load.c"
-#include "../adt/player.c"
-#include "../adt_modified/pesanan.c"
-#include "../adt/charmachine.c"
-#include "../adt/wordmachine.c"
-#include "../adt/point.c"
-#include "../adt_modified/listpointdin.c"
-#include "../adt/matrix.c"
-#include "bangunan.c"
 
 void newgame() {
     Config newgame;
@@ -63,16 +42,19 @@ void newgame() {
     printf("Uang player sebesar %d\n", UANG(p));
     printf("Waktu player sebesar %d\n", WAKTU(p));
     printf("Lokaso player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
+
     border;
 
     /* COMMAND MOVE, PICK UP */
     printf("Waktu: %d\n", WAKTU(p));
-    move(p, newgame);enter;
-    pickup(p, newgame);enter;
+    movecmd(p, newgame);enter;
+    pickupcmd(p, newgame);enter;
+    // displayMatrixLabel(m, newgame.adjMatrix, l, cur_player, tas);
 }
 
-int main(){
-    newgame();
-}
+// int main(){
+//     newgame();
+// }
+
 
 

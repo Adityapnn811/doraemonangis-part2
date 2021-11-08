@@ -19,7 +19,7 @@ typedef int IdxType;
 typedef struct
 {
    ElType *buffer; /* memori tempat penyimpan elemen (container) */
-   int nEff;       /* >=0, banyaknya elemen efektif */
+   int nEffListDin;       /* >=0, banyaknya elemen efektif */
    int capacity;   /* ukuran elemen */
 } ListDin;
 /* Indeks yang digunakan [0..capacity-1] */
@@ -35,10 +35,10 @@ typedef struct
   Definisi elemen terakhir yang terdefinisi: l.buffer[i] dengan i=l.capacity */
 
 /* ********** SELEKTOR ********** */
-#define NEFF(l) (l).nEff
+#define NEFFListDin(l) (l).nEffListDin
 #define BUFFER(l) (l).buffer
-#define ELMT(l, i) (l).buffer[i]
-#define CAPACITY(l) (l).capacity
+#define ELMTListDin(l, i) (l).buffer[i]
+#define CAPACITYListDin(l) (l).capacity
 
 /* ********** KONSTRUKTOR ********** */
 /* Konstruktor : create list kosong  */

@@ -15,15 +15,15 @@
 void CreateListPos(ListPos *l)
 {
   /* I.S. l sembarang */
-  /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITY */
+  /* F.S. Terbentuk List l kosong dengan kapasitas CAPACITYListPos */
   /* Proses: Inisialisasi semua elemen List l dengan VAL_UNDEF */
   /* KAMUS */
   int i;
 
   /* ALGORITMA */
-  for (i = 0; i < CAPACITY; i++)
+  for (i = 0; i < CAPACITYListPos; i++)
   {
-    ELMT(*l, i) = VAL_UNDEF;
+    ELMTListPos(*l, i) = VAL_UNDEF;
   }
 }
 
@@ -38,7 +38,7 @@ int lengthListPos(ListPos l)
   int i;
 
   /* ALGORITMA */
-  for (i = 0; ELMT(l, i) != VAL_UNDEF && i < CAPACITY; i++)
+  for (i = 0; ELMTListPos(l, i) != VAL_UNDEF && i < CAPACITYListPos; i++)
     continue;
 
   return i;
@@ -51,7 +51,7 @@ boolean isIdxValidListPos(ListPos l, int i)
   /* Mengirimkan true jika i adalah indeks yang valid utk kapasitas List l */
   /* yaitu antara indeks yang terdefinisi utk container*/
   /* ALGORITMA */
-  return (i > 0) && (i < CAPACITY);
+  return (i > 0) && (i < CAPACITYListPos);
 }
 
 boolean isIdxEffListPos(ListPos l, int i)
@@ -59,13 +59,13 @@ boolean isIdxEffListPos(ListPos l, int i)
   /* Mengirimkan true jika i adalah indeks yang terdefinisi utk List l */
   /* yaitu antara 0..lengthListPos(l)-1 */
   /* ALGORITMA */
-  return (isIdxValidListPos(l, i)) && (ELMT(l, i) != VAL_UNDEF);
+  return (isIdxValidListPos(l, i)) && (ELMTListPos(l, i) != VAL_UNDEF);
 }
 
 /* ********** TEST KOSONG/PENUH ********** */
 
 /* *** Test List kosong *** */
-boolean isEmptyListPosListPos(ListPos l)
+boolean isEmptyListPos(ListPos l)
 {
   /* Mengirimkan true jika List l kosong, mengirimkan false jika tidak */
   /* ALGORITMA */
@@ -77,7 +77,7 @@ boolean isFullListPos(ListPos l)
 {
   /* Mengirimkan true jika List l penuh, mengirimkan false jika tidak */
   /* ALGORITMA */
-  return lengthListPos(l) == CAPACITY;
+  return lengthListPos(l) == CAPACITYListPos;
 }
 
 /* ********** BACA dan TULIS dengan INPUT/OUTPUT device ********** */
@@ -89,9 +89,9 @@ void readListPos(ListPos *l)
   /* F.S. List l terdefinisi */
   /* Proses: membaca banyaknya elemen l dan mengisi nilainya */
   /* 1. Baca banyaknya elemen diakhiri enter, misalnya n */
-  /*    Pembacaan diulangi sampai didapat n yang benar yaitu 0 <= n <= CAPACITY */
+  /*    Pembacaan diulangi sampai didapat n yang benar yaitu 0 <= n <= CAPACITYListPos */
   /*    Jika n tidak valid, tidak diberikan pesan kesalahan */
-  /* 2. Jika 0 < n <= CAPACITY Lakukan n kali: 
+  /* 2. Jika 0 < n <= CAPACITYListPos Lakukan n kali: 
             Baca elemen mulai dari indeks 0 satu per satu diakhiri enter */
   /*    Jika n = 0 hanya terbentuk List kosong */
   /* KAMUS */
@@ -101,12 +101,12 @@ void readListPos(ListPos *l)
   do
   {
     scanf("%d", &len);
-  } while (len < 0 || len > CAPACITY);
+  } while (len < 0 || len > CAPACITYListPos);
 
   CreateListPos(l);
   for (i = 0; i < len; i++)
   {
-    scanf("%d", &(ELMT(*l, i)));
+    scanf("%d", &(ELMTListPos(*l, i)));
   }
 }
 
@@ -127,7 +127,7 @@ void displayListPos(ListPos l)
   len = lengthListPos(l);
   for (i = 0; i < len; i++)
   {
-    printf("%d%s", ELMT(l, i), (i + 1 != len) ? "," : "");
+    printf("%d%s", ELMTListPos(l, i), (i + 1 != len) ? "," : "");
   }
   printf("]");
 }
@@ -150,9 +150,9 @@ ListPos plusMinusTab(ListPos l1, ListPos l2, boolean plus)
   for (i = 0, len = lengthListPos(l1); i < len; i++)
   {
     if (plus)
-      ELMT(l, i) = ELMT(l1, i) + ELMT(l2, i);
+      ELMTListPos(l, i) = ELMTListPos(l1, i) + ELMTListPos(l2, i);
     else
-      ELMT(l, i) = ELMT(l1, i) - ELMT(l2, i);
+      ELMTListPos(l, i) = ELMTListPos(l1, i) - ELMTListPos(l2, i);
   }
 
   return l;
@@ -180,7 +180,7 @@ boolean isListPosEqual(ListPos l1, ListPos l2)
     boolean isEqual = true;
     while (isEqual && (i < len))
     {
-      if (ELMT(l1, i) != ELMT(l2, i))
+      if (ELMTListPos(l1, i) != ELMTListPos(l2, i))
         isEqual = false;
       else
         i++;
@@ -196,7 +196,7 @@ boolean isListPosEqual(ListPos l1, ListPos l2)
 int indexOfListPos(ListPos l, ElType val)
 {
   /* Search apakah ada elemen List l yang bernilai val */
-  /* Jika ada, menghasilkan indeks i terkecil, dengan ELMT(l,i) = val */
+  /* Jika ada, menghasilkan indeks i terkecil, dengan ELMTListPos(l,i) = val */
   /* Jika tidak ada atau jika l kosong, mengirimkan IDX_UNDEF */
   /* Skema Searching yang digunakan bebas */
   /* KAMUS */
@@ -214,7 +214,7 @@ int indexOfListPos(ListPos l, ElType val)
     boolean isFound = false;
     while (!isFound && (i < len))
     {
-      if (ELMT(l, i) == val)
+      if (ELMTListPos(l, i) == val)
         isFound = true;
       else
         i++;
@@ -235,14 +235,14 @@ void extremesListPos(ListPos l, ElType *max, ElType *min)
   int i, len;
 
   /* ALGORITMA */
-  *max = ELMT(l, 0);
-  *min = ELMT(l, 0);
+  *max = ELMTListPos(l, 0);
+  *min = ELMTListPos(l, 0);
   for (i = 1, len = lengthListPos(l); i < len; i++)
   {
-    if (ELMT(l, i) > *max)
-      *max = ELMT(l, i);
-    if (ELMT(l, i) < *min)
-      *min = ELMT(l, i);
+    if (ELMTListPos(l, i) > *max)
+      *max = ELMTListPos(l, i);
+    if (ELMTListPos(l, i) < *min)
+      *min = ELMTListPos(l, i);
   }
 }
 
@@ -266,7 +266,7 @@ boolean isAllEvenListPos(ListPos l)
     boolean isEven = true;
     while (isEven && (i < len))
     {
-      if (ELMT(l, i) % 2 != 0)
+      if (ELMTListPos(l, i) % 2 != 0)
         isEven = false;
       else
         i++;
@@ -299,14 +299,14 @@ void sortListPos(ListPos *l, boolean asc)
       int iSwap = pass, i = pass + 1;
       for (; i < len; i++)
       {
-        if ((asc && ELMT(*l, i) < ELMT(*l, iSwap)) ||
-            (!asc && ELMT(*l, i) > ELMT(*l, iSwap)))
+        if ((asc && ELMTListPos(*l, i) < ELMTListPos(*l, iSwap)) ||
+            (!asc && ELMTListPos(*l, i) > ELMTListPos(*l, iSwap)))
           iSwap = i;
       }
 
-      ElType tmp = ELMT(*l, pass);
-      ELMT(*l, pass) = ELMT(*l, iSwap);
-      ELMT(*l, iSwap) = tmp;
+      ElType tmp = ELMTListPos(*l, pass);
+      ELMTListPos(*l, pass) = ELMTListPos(*l, iSwap);
+      ELMTListPos(*l, iSwap) = tmp;
     }
   }
 }
@@ -320,7 +320,7 @@ void insertLastListPos(ListPos *l, ElType val)
   /* I.S. List l boleh kosong, tetapi tidak penuh */
   /* F.S. val adalah elemen terakhir l yang baru */
   /* ALGORITMA */
-  ELMT(*l, lengthListPos(*l)) = val;
+  ELMTListPos(*l, lengthListPos(*l)) = val;
 }
 
 /* ********** MENGHAPUS ELEMEN ********** */
@@ -333,6 +333,6 @@ void deleteLastListPos(ListPos *l, ElType *val)
   /*      Banyaknya elemen List berkurang satu */
   /*      List l mungkin menjadi kosong */
   /* ALGORITMA */
-  *val = ELMT(*l, lengthListPos(*l) - 1);
-  ELMT(*l, lengthListPos(*l) - 1) = VAL_UNDEF;
+  *val = ELMTListPos(*l, lengthListPos(*l) - 1);
+  ELMTListPos(*l, lengthListPos(*l) - 1) = VAL_UNDEF;
 }

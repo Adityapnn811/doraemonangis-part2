@@ -7,23 +7,23 @@
 #include "../models/boolean.h"
 
 #define IDX_UNDEF -1
-#define CAPACITY 100
+#define CAPACITYQueue 100
 
 /* Definisi elemen dan address */
 typedef int ElType;
 typedef struct
 {
-        ElType buffer[CAPACITY];
+        ElType buffer[CAPACITYQueue];
         int idxHead;
         int idxTail;
 } Queue;
 
 /* ********* AKSES (Selektor) ********* */
 /* Jika q adalah Queue, maka akses elemen : */
-#define IDX_HEAD(q) (q).idxHead
-#define IDX_TAIL(q) (q).idxTail
-#define HEAD(q) (q).buffer[(q).idxHead]
-#define TAIL(q) (q).buffer[(q).idxTail]
+#define IDX_HEADQueue(q) (q).idxHead
+#define IDX_TAILQueue(q) (q).idxTail
+#define HEADQueue(q) (q).buffer[(q).idxHead]
+#define TAILQueue(q) (q).buffer[(q).idxTail]
 
 /* *** Kreator *** */
 void CreateQueue(Queue *q);
@@ -38,7 +38,7 @@ boolean isEmptyQueue(Queue q);
 /* Mengirim true jika q kosong: lihat definisi di atas */
 boolean isFullQueue(Queue q);
 /* Mengirim true jika tabel penampung elemen q sudah penuh */
-/* yaitu jika index head bernilai 0 dan index tail bernilai CAPACITY-1 */
+/* yaitu jika index head bernilai 0 dan index tail bernilai CAPACITYQueue-1 */
 int lengthQueue(Queue q);
 /* Mengirimkan banyaknya elemen queue. Mengirimkan 0 jika q kosong. */
 
@@ -46,14 +46,14 @@ int lengthQueue(Queue q);
 void enqueue(Queue *q, ElType val);
 /* Proses: Menambahkan val pada q dengan aturan FIFO */
 /* I.S. q mungkin kosong, tabel penampung elemen q TIDAK penuh */
-/* F.S. val menjadi TAIL yang baru, IDX_TAIL "mundur".
+/* F.S. val menjadi TAIL yang baru, IDX_TAILQueue "mundur".
         Jika q penuh semu, maka perlu dilakukan aksi penggeseran "maju" elemen-elemen q
         menjadi rata kiri untuk membuat ruang kosong bagi TAIL baru  */
 
 void dequeue(Queue *q, ElType *val);
 /* Proses: Menghapus val pada q dengan aturan FIFO */
 /* I.S. q tidak mungkin kosong */
-/* F.S. val = nilai elemen HEAD pd I.S., HEAD dan IDX_HEAD "mundur"; 
+/* F.S. val = nilai elemen HEAD pd I.S., HEAD dan IDX_HEADQueue "mundur"; 
         q mungkin kosong */
 
 /* *** Display Queue *** */

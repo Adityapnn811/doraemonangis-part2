@@ -10,7 +10,7 @@
 #include "list_linked.h"
 
 /****************** PEMBUATAN LIST KOSONG ******************/
-void CreateListLinkedLinked(List *l)
+void CreateListLinked(List *l)
 {
   /* I.S. sembarang             */
   /* F.S. Terbentuk list kosong */
@@ -19,7 +19,7 @@ void CreateListLinkedLinked(List *l)
 }
 
 /****************** TEST LIST KOSONG ******************/
-boolean isEmptyListLinkedListLinked(List l)
+boolean isEmptyListLinked(List l)
 {
   /* Mengirim true jika list kosong */
   /* Algoritma */
@@ -68,7 +68,7 @@ int indexOfListLinked(List l, ElType val)
   /* I.S. l, val terdefinisi */
   /* F.S. Mencari apakah ada elemen list l yang bernilai val */
   /* Jika ada, mengembalikan indeks elemen pertama l yang bernilai val */
-  /* Mengembalikan IDX_UNDEF jika tidak ditemukan */
+  /* Mengembalikan IDX_UNDEFListLinked jika tidak ditemukan */
   /* Kamus */
   Address p;
   int i;
@@ -82,12 +82,12 @@ int indexOfListLinked(List l, ElType val)
     p = NEXT(p);
   }
 
-  return p != NULL ? i : IDX_UNDEF;
+  return p != NULL ? i : IDX_UNDEFListLinked;
 }
 
 /****************** PRIMITIF BERDASARKAN NILAI ******************/
 /*** PENAMBAHAN ELEMEN ***/
-void insertFirstListLinkedListLinked(List *l, ElType val)
+void insertFirstListLinked(List *l, ElType val)
 {
   /* I.S. l mungkin kosong */
   /* F.S. Melakukan alokasi sebuah elemen dan */
@@ -112,7 +112,7 @@ void insertFirstListLinkedListLinked(List *l, ElType val)
   }
 }
 
-void insertLastListLinkedListLinked(List *l, ElType val)
+void insertLastListLinked(List *l, ElType val)
 {
   /* I.S. l mungkin kosong */
   /* F.S. Melakukan alokasi sebuah elemen dan */
@@ -174,7 +174,7 @@ void insertAtListLinked(List *l, ElType val, int idx)
 }
 
 /*** PENGHAPUSAN ELEMEN ***/
-void deleteFirstListLinkedListLinked(List *l, ElType *val)
+void deleteFirstListLinked(List *l, ElType *val)
 {
   /* I.S. List l tidak kosong  */
   /* F.S. Elemen pertama list dihapus: nilai info disimpan pada x */

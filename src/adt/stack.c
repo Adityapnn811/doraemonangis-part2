@@ -16,7 +16,7 @@ void CreateStack(Stack *s)
   /* - Index top bernilai IDX_UNDEF */
   /* Proses : Melakukan alokasi, membuat sebuah s kosong */
   /* ALGORITMA */
-  IDX_TOP(*s) = IDX_UNDEF;
+  IDX_TOPStack(*s) = IDX_UNDEF;
 }
 
 /* ************ Prototype ************ */
@@ -24,40 +24,40 @@ boolean isEmptyStack(Stack s)
 {
   /* Mengirim true jika s kosong: lihat definisi di atas */
   /* ALGORITMA */
-  return IDX_TOP(s) == IDX_UNDEF;
+  return IDX_TOPStack(s) == IDX_UNDEF;
 }
 boolean isFullStack(Stack s)
 {
   /* Mengirim true jika tabel penampung nilai s stack penuh */
   /* ALGORITMA */
-  return IDX_TOP(s) == CAPACITY - 1;
+  return IDX_TOPStack(s) == CAPACITYStack - 1;
 }
 
 /* ************ Menambahkan sebuah elemen ke Stack ************ */
-void push(Stack *s, ElType val)
+void pushStack(Stack *s, ElType val)
 {
   /* Menambahkan val sebagai elemen Stack s */
   /* I.S. s mungkin kosong, tabel penampung elemen stack TIDAK penuh */
-  /* F.S. val menjadi TOP yang baru,IDX_TOP bertambah 1 */
+  /* F.S. val menjadi TOPStack yang baru,IDX_TOPStack bertambah 1 */
   /* ALGORITMA */
-  ++IDX_TOP(*s);
-  TOP(*s) = val;
+  ++IDX_TOPStack(*s);
+  TOPStack(*s) = val;
 }
 
 /* ************ Menghapus sebuah elemen Stack ************ */
-void pop(Stack *s, ElType *val)
+void popStack(Stack *s, ElType *val)
 {
   /* Menghapus val dari Stack s */
   /* I.S. s tidak mungkin kosong */
-  /* F.S. val adalah nilai elemen TOP yang lama, IDX_TOP berkurang 1 */
+  /* F.S. val adalah nilai elemen TOPStack yang lama, IDX_TOPStack berkurang 1 */
   /* ALGORITMA */
-  *val = TOP(*s);
-  if (IDX_TOP(*s) == 0)
+  *val = TOPStack(*s);
+  if (IDX_TOPStack(*s) == 0)
   {
-    IDX_TOP(*s) = IDX_UNDEF;
+    IDX_TOPStack(*s) = IDX_UNDEF;
   }
   else
   {
-    --IDX_TOP(*s);
+    --IDX_TOPStack(*s);
   }
 }

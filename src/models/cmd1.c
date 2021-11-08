@@ -31,60 +31,60 @@
 //     }
 // }
 
-void readCustomMatrix(Matrix *m, int nRow, int nCol)
-{
-  /* KAMUS */
-  ElType el;
-  int i, j;
+// void readCustomMatrix(Matrix *m, int nRow, int nCol)
+// {
+//   /* KAMUS */
+//   ElType el;
+//   int i, j;
 
-  /* ALGORITMA */
-  CreateMatrix(nRow, nCol, m);
-  for (i = 0; i < nRow; i++)
-  {
-    for (j = 0; j < nCol; j++)
-    {
-        if ((i==0) || (j==0) || (i==getLastIdxRow(*m) || (j==getLastIdxCol(*m)))) {
-            ELMT(*m, i, j) = 42; // isi dengan * sebagai border 
-        }
-        else {
-            ELMT(*m, i, j) = 32; // isi dengan karakter kosong
-        }
-    }
-  }
-  ELMT(*m, 1, 1) = 178; // ini HQ nya
-}
+//   /* ALGORITMA */
+//   CreateMatrix(nRow, nCol, m);
+//   for (i = 0; i < nRow; i++)
+//   {
+//     for (j = 0; j < nCol; j++)
+//     {
+//         if ((i==0) || (j==0) || (i==getLastIdxRow(*m) || (j==getLastIdxCol(*m)))) {
+//             ELMT(*m, i, j) = 42; // isi dengan * sebagai border 
+//         }
+//         else {
+//             ELMT(*m, i, j) = 32; // isi dengan karakter kosong
+//         }
+//     }
+//   }
+//   ELMT(*m, 1, 1) = 178; // ini HQ nya
+// }
 
-void readAdjacencyMatrix(Matrix *m) {
-    ElType el;
-    int i, j;
-    CreateMatrix(4,4,m);
-    for (i=0;i<4;i++) {
-        for (j=0;j<4;j++) {
-            ELMT(*m, i, j) = 0;
-        }
-    }
-    ELMT(*m, 0, 2) = 1;
-    ELMT(*m, 2, 0) = 1;
-    ELMT(*m, 0, 3) = 1;
-    ELMT(*m, 3, 0) = 1;
-    ELMT(*m, 2, 3) = 1;
-    ELMT(*m, 3, 2) = 1;
-}
+// void readAdjacencyMatrix(Matrix *m) {
+//     ElType el;
+//     int i, j;
+//     CreateMatrix(4,4,m);
+//     for (i=0;i<4;i++) {
+//         for (j=0;j<4;j++) {
+//             ELMT(*m, i, j) = 0;
+//         }
+//     }
+//     ELMT(*m, 0, 2) = 1;
+//     ELMT(*m, 2, 0) = 1;
+//     ELMT(*m, 0, 3) = 1;
+//     ELMT(*m, 3, 0) = 1;
+//     ELMT(*m, 2, 3) = 1;
+//     ELMT(*m, 3, 2) = 1;
+// }
 
-void showRelation(Matrix m, ListPointDin l, POINT p) {
-    // CreateListDin(&r, 10);
-    int counter = getIdxPoint(l, p);
-    int nPos=0;
-    for(int i=counter;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
-        if (ELMT(m,counter,i) == 1) {
-            nPos += 1;
-            // insertLast(&r, LISTELMT(l, i));
-            // displayList(r);
-            // printf("\nx y yg sama: %d %d\n",ELMTX(l,i), ELMTY(l,i));
-            printf("%d. %c (%d,%d)\n", nPos % 27, ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
-        }
-    } 
-}
+// void showRelation(Matrix m, ListPointDin l, POINT p) {
+//     // CreateListDin(&r, 10);
+//     int counter = getIdxPoint(l, p);
+//     int nPos=0;
+//     for(int i=counter;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
+//         if (ELMT(m,counter,i) == 1) {
+//             nPos += 1;
+//             // insertLast(&r, LISTELMT(l, i));
+//             // displayList(r);
+//             // printf("\nx y yg sama: %d %d\n",ELMTX(l,i), ELMTY(l,i));
+//             printf("%d. %c (%d,%d)\n", nPos % 27, ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
+//         }
+//     } 
+// }
 
 void getRelation(Matrix m, ListPointDin l, POINT p, Player plyr) {
     // CreateListDin(&r, 10);
@@ -138,7 +138,7 @@ ListPointDin MakeRelationList(ListPointDin x) {
 //     return inputPost;
 // }
 
-void move(Player p, Config newgame) {
+void movecmd(Player p, Config newgame) {
     printf("COMMAND MOVE\n");
     int inputPos;
     printf("*INFO* current label %c\n", curLocLabel(p, newgame));
@@ -159,7 +159,7 @@ void move(Player p, Config newgame) {
 
 
 
-void pickup(Player p, Config newgame) {
+void pickupcmd(Player p, Config newgame) {
     printf("COMMAND PICK UP\n");
     // mengambil pesanan yang terdapat di current label
     // masih pakai dummy karena enter command blom work

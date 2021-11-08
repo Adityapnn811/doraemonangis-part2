@@ -51,7 +51,7 @@ boolean loadGame(char *filename, Config *conf)
 
   Bangunan b;
   b.label = '8';
-  b.position = MakePOINT(0, 0); // sementara pake koordinat HQ (0,0)
+  b.position = MakePOINT(1, 1); // sementara pake koordinat HQ (0,0)
 
   // Lokasi
 
