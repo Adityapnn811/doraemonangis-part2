@@ -122,7 +122,7 @@ void UseGadget(NamaGadget gdg,int *waktu, Tas *tas){
     if(gdg.key=='a'){
 
     }else if(gdg.key=='b'){
-        maxTas*=2;
+        (*tas).maxTas*=2;
     }else if(gdg.key=='c'){
 
     }else if(gdg.key=='d'){
