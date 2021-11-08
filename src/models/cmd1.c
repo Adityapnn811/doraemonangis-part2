@@ -86,26 +86,58 @@
 //     } 
 // }
 
-void getRelation(Matrix m, ListPointDin l, POINT p, Player plyr) {
+boolean getRelation(Matrix m, ListPointDin l, POINT pt, Player *plyr) {
     // CreateListDin(&r, 10);
-    int counter = getIdxPoint(l, p);
+    int counter = getIdxPoint(l, pt);
     int nPos=0;
-    for(int i=counter;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
+
+    char input[30];
+    printf("\nENTER COMMAND: ");
+    fgets(input,30,stdin);
+    // printf("inputnya %s\n", input);
+    // if (strcmp(input, "30")) {
+    //     printf("if nya bisa\n");
+    // }
+    int inputInt = atoi(input);
+    // printf("nilai inputInt %d", inputInt);
+    int i=counter;
+    boolean found = false;
+    while((i<COLS(m) && !found)) {
+    // for(int i=counter;i<COLS(m);i++) { 
+        // iterasi dimulai dari baris ke-index list
         if (ELMT(m,counter,i) == 1) {
             nPos += 1;
             // insertLast(&r, LISTELMT(l, i));
             // displayList(r);
             // printf("\nx y yg sama: %d %d\n",ELMTX(l,i), ELMTY(l,i));
             // int num = atoi(inputPos);
-            if (1 == (nPos % 27)) { // misal pilih pos 1
+
+            if (inputInt == (nPos % 27)) { // misal pilih pos 1
                 // printf("npos %d\n", nPos);
                 // CUR_LOC(plyr) = MakePOINT(ELMTX(l,i),ELMTY(l,i));
-                printf("Mobita sekarang berada di titik %c (%d,%d)!\n", ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
+                setPlayerPrevLoc(plyr,CUR_LOCX(*plyr),CUR_LOCX(*plyr));
+                printf("\nMobita sekarang berada di titik %c (%d,%d)!\n", ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
+                setPlayerLoc(plyr,ELMTX(l,i),ELMTY(l,i));
+                found = true;
+                return true;
+                break;
+            } 
+            else if (inputInt == 0) {
+                // printf("\nMobita sekarang berada di titik %c (%d,%d)!\n", ELMTLABEL(l,i), PREV_LOCX(*plyr), PREV_LOCX(*plyr));
+                // setPlayerLoc(plyr,PREV_LOCX(*plyr),PREV_LOCY(*plyr));
+                return false;
                 break;
             }
             // printf("%d. %c (%d,%d)\n", nPos % 27, ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
         }
-    } 
+        i += 1;
+    }
+    if (inputInt != 0) {
+        if (found == false) {
+            printf("Masukkan pilihan posisi yang benar!\n");
+            return false;
+        }
+    }
 }
 
 char curLocLabel(Player p, Config newgame) {
@@ -138,48 +170,41 @@ ListPointDin MakeRelationList(ListPointDin x) {
 //     return inputPost;
 // }
 
-void movecmd(Player p, Config newgame) {
-    printf("COMMAND MOVE\n");
+void movecmd(Player *p, Config newgame) {
+    // move cmd ngeset curlock sama prevloc
+    printf("-----COMMAND MOVE-----\n");
     int inputPos;
-    printf("*INFO* current label %c\n", curLocLabel(p, newgame));
+    // printf("*INFO* current label %c\n", curLocLabel(p, newgame));
     printf("Posisi yang dapat dicapai:\n");
 
     
-    showRelation(newgame.adjMatrix, newgame.bangunans, p.currentLoc);
+    showRelation(newgame.adjMatrix, newgame.bangunans, CUR_LOC(*p));
     printf("Posisi yang dipilih? (ketik 0 jika ingin kembali)\n");
 
-    // char choosePos[5];
-    // printf("***input move\n");
-    // fgets(choosePos,5,stdin);
-    // printf("***input move %s\n", choosePos);
-    getRelation(newgame.adjMatrix, newgame.bangunans, p.currentLoc, p); // misal ambil lokasi bangunan no. 1
-    setWaktu(&p, (WAKTU(p)-1));
-    printf("Waktu: %d\n", WAKTU(p));
+    if (getRelation(newgame.adjMatrix, newgame.bangunans, CUR_LOC(*p), p)) {
+        setWaktu(p, (WAKTU(*p)-1));
+    } // misal ambil lokasi bangunan no. 1
+    
+    // printf("Waktu cmd1: %d", WAKTU(*p));
+
 }
 
 
 
 void pickupcmd(Player p, Config newgame) {
-    printf("COMMAND PICK UP\n");
-    // mengambil pesanan yang terdapat di current label
-    // masih pakai dummy karena enter command blom work
+    // printf("COMMAND PICK UP\n");
+    // // mengambil pesanan yang terdapat di current label
+    // // masih pakai dummy karena enter command blom work
 
-    // printf("label %c", CUR_LOCL);
+    // // printf("label %c", CUR_LOCL);
 
-    for(int j=0;j<20;j++) {
-        if (curLocLabel(p, newgame) == newgame.pesanans.daftar[j].PickUp) {
-            char tipe_pesanan = newgame.pesanans.daftar[j].ItemType;
-            if (tipe_pesanan = 'H') {
-                printf("Pesanan berupa Heavy Item berhasil diambil!\n");
-            }
-            printf("Tujuan Pesanan: %c\n", newgame.pesanans.daftar[j].DropOff);
-        }
-    }
-}
-
-void readprint() {
-    char a[10];
-    scanf(" %d", &a);
-    fgets(a,10,stdin);
-    printf("print readprint: %s\n", a);
+    // for(int j=0;j<20;j++) {
+    //     if (curLocLabel(p, newgame) == newgame.pesanans.daftar[j].PickUp) {
+    //         char tipe_pesanan = newgame.pesanans.daftar[j].ItemType;
+    //         if (tipe_pesanan = 'H') {
+    //             printf("Pesanan berupa Heavy Item berhasil diambil!\n");
+    //         }
+    //         printf("Tujuan Pesanan: %c\n", newgame.pesanans.daftar[j].DropOff);
+    //     }
+    // }
 }

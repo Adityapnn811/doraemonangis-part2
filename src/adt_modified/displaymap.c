@@ -4,7 +4,7 @@
 #include "../adt/point.h"
 #include "displaymap.h"
 
-void showMap(Matrix *m, ListPointDin l, ListElType val) {
+void showMap(Matrix *m, ListPointDin l) {
     int i, j;
     for (i = 0; i < ROWS(*m); i++)
     {
@@ -60,13 +60,21 @@ void readAdjacencyMatrix(Matrix *m) {
 }
 
 void showRelation(Matrix m, ListPointDin l, POINT p) {
+    int n=0;
     int counter = getIdxPoint(l, p);
-    for(int i=counter;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
-        if (ELMT(m,counter,i) == 1) {
-            // printf("\nx y yg sama: %d %d\n",ELMTX(l,i), ELMTY(l,i));
-            printf("\nmap terkait: %c\n", ELMTLABEL(l,i));
-        }
-    }  
+    for(int i=0;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
+            if ((ELMT(m,counter,i) == 1)) {
+                n += 1;
+                printf("%d. %c (%d,%d)\n", n, ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
+            }
+
+    }
+    // for(int j=counter;j<ROWS(m);j++) {
+    //     if ((ELMT(m,counter,j) == 1)) {
+    //         n += 1;
+    //         printf("%d. %c (%d,%d)\n", n, ELMTLABEL(l,j), ELMTX(l,j), ELMTY(l,j));
+    //     }
+    // }  
 }
 
 ListPointDin mShowRelation(Matrix m, ListPointDin l, POINT p) {
@@ -104,59 +112,59 @@ boolean pointInListPoint(float x, float y, ListPointDin l_adj) {
 }
 
 
-int main(){
-    Matrix m, adj;
-    ListPointDin l; // point di dalam list
-    ListElType val; // list
-    ListElType hqval;
-    int i;
-    Player cur_player;
-    Tas tas;
-    Item item;
-    DaftarPesanan daf_pes;
-    Pesanan pes;
+// int main(){
+//     Matrix m, adj;
+//     ListPointDin l; // point di dalam list
+//     ListElType val; // list
+//     ListElType hqval;
+//     int i;
+//     Player cur_player;
+    // Tas tas;
+    // Item item;
+//     DaftarPesanan daf_pes;
+//     Pesanan pes;
 
-    CreateItem(&item, 4, 'B', 'B', 'h', 8);
-    CreateTas(&tas);
-    addItem(&tas, item);
-    CreatePlayer(&cur_player);
-    CreateDaftar(&daf_pes);
-    CreatePesanan(&pes, 3, 'A', 'A', 'n', 20);
-    enqueuePsn(&daf_pes, pes);
-    CreateListPointDin(&l, 4); // create dummy list
-    LABEL(hqval) = 'Z';
-    KOORX(hqval) = 0;
-    KOORY(hqval) = 0;
-    insertLastListPoint(&l, hqval);
-    for (i = 0; i < 3; i++){
-        LABEL(val) = 'A'+i;
-        KOORX(val) = i+2;
-        KOORY(val) = i+1;
-        insertLastListPoint(&l, val);
-    }
-    displayListPoint(l);
-    readCustomMatrix(&m,10,10); // fill matrix with border and blank space
-    // displayMatrix(m);
-    printf("\n");
-    showMap(&m,l,val); // menampilkan koordinat pada matriks
-    readAdjacencyMatrix(&adj);
-    displayMatrixLabel(m, adj, l, cur_player, tas, daf_pes);
-    printf("\n");
-    // Matrix adj;
-    // readMatrix(&adj, 4, 4);
-    // printf("printed adj:\n");
-    // displayMatrix(adj);
+    // CreateItem(&item, 4, 'B', 'B', 'h', 8);
+    // CreateTas(&tas);
+    // addItem(&tas, item);
+//     CreatePlayer(&cur_player);
+//     CreateDaftar(&daf_pes);
+//     CreatePesanan(&pes, 3, 'A', 'A', 'n', 20);
+//     enqueuePsn(&daf_pes, pes);
+//     CreateListPointDin(&l, 4); // create dummy list
+//     LABEL(hqval) = 'Z';
+//     KOORX(hqval) = 0;
+//     KOORY(hqval) = 0;
+//     insertLastListPoint(&l, hqval);
+//     for (i = 0; i < 3; i++){
+//         LABEL(val) = 'A'+i;
+//         KOORX(val) = i+2;
+//         KOORY(val) = i+1;
+//         insertLastListPoint(&l, val);
+//     }
+//     displayListPoint(l);
+//     readCustomMatrix(&m,10,10); // fill matrix with border and blank space
+//     // displayMatrix(m);
+//     printf("\n");
+//     showMap(&m,l,val); // menampilkan koordinat pada matriks
+//     readAdjacencyMatrix(&adj);
+//     displayMatrixLabel(m, adj, l, cur_player, tas, daf_pes);
+//     printf("\n");
+//     // Matrix adj;
+//     // readMatrix(&adj, 4, 4);
+//     // printf("printed adj:\n");
+//     // displayMatrix(adj);
 
-    POINT hq = MakePOINT(0,0);
-    printf("sb x: %d\n", Absis(hq));
-    printf("sb y: %d\n", Ordinat(hq));
+//     POINT hq = MakePOINT(0,0);
+//     printf("sb x: %d\n", Absis(hq));
+//     printf("sb y: %d\n", Ordinat(hq));
 
-    displayMatrix(adj);printf("\n");
-    printf("indeks point posisi move di listdin: %d", getIdxPoint(l, hq));printf("\n");
-    displayListPoint(mShowRelation(adj, l, hq));
+//     displayMatrix(adj);printf("\n");
+//     printf("indeks point posisi move di listdin: %d", getIdxPoint(l, hq));printf("\n");
+//     displayListPoint(mShowRelation(adj, l, hq));
     
     
 
-    return 0;
-}
+//     return 0;
+// }
 

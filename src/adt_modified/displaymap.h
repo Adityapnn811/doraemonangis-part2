@@ -6,7 +6,7 @@
 #include "../adt/matrix.h"
 #include "../adt/point.h"
 
-void showMap(Matrix *m, ListPointDin l, ListElType val);
+void showMap(Matrix *m, ListPointDin l);
 /* I.S. Elemen matrix m sembarang */
 /* F.S. Elemen matrix m berisi label dari list */
 

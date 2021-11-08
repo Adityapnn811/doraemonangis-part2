@@ -21,10 +21,10 @@ void newgame() {
     printf("length pesanan %d", lengthDftr(newgame.pesanans));enter;
 
     Matrix m;
-    readCustomMatrix(&m,13,18);
+    readCustomMatrix(&m,15,20);
     printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity); // capacity blom diassign di load
-    // showMap(&m,newgame.bangunans);
-    // displayMatrixLabel(m);enter;
+
+    
     displayMatrix(m);
 
     /* STATE NEW PLAYER */
@@ -38,23 +38,42 @@ void newgame() {
     printf("\n");
     setUang(&p, 1000);
     setWaktu(&p, 20);
-    setPlayerLoc(&p, 1, 15);
+    setPlayerLoc(&p, 1, 1);
     printf("Uang player sebesar %d\n", UANG(p));
     printf("Waktu player sebesar %d\n", WAKTU(p));
     printf("Lokaso player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
 
     border;
 
+    Tas tas;
+    Item item;
+    CreateItem(&item, 4, 'B', 'G', 'H', 8);
+    CreateTas(&tas);
+    addItem(&tas, item);
+
+    showMap(&m,newgame.bangunans);
+    displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,newgame.pesanans);enter;enter;
+
     /* COMMAND MOVE, PICK UP */
     printf("Waktu: %d\n", WAKTU(p));
-    movecmd(p, newgame);enter;
-    pickupcmd(p, newgame);enter;
+    /* ini nanti dipanggil dari main program di command MOVE */
+    while (true) {
+        movecmd(&p, newgame);
+        printf("Waktu new game: %d", WAKTU(p));
+        enter;enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,newgame.pesanans);enter;enter;   
+    }
+
+    enter;
+    // pickupcmd(p, newgame);enter;
     // displayMatrixLabel(m, newgame.adjMatrix, l, cur_player, tas);
+    printf("Lokaso player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
+
+
 }
 
-// int main(){
-//     newgame();
-// }
+int main(){
+    newgame();
+}
 
 
 
