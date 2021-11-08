@@ -47,7 +47,7 @@ void displayListPoint(ListPointDin l){
     /* KAMUS LOKAL */
     int i;
     /* ALGORITMA */
-    if (isEmpty(l)){
+    if (isEmptyListPoint(l)){
         printf("[]");
     } else {
         printf("[");
