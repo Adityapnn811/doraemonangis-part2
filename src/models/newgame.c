@@ -47,7 +47,7 @@ void newgame() {
 
     Tas tas;
     Item item;
-    CreateItem(&item, 4, 'B', 'G', 'H', 8);
+    CreateItem(&item, 4, 'N', 'I', 'H', 8);
     CreateTas(&tas);
     addItem(&tas, item);
 
@@ -58,15 +58,16 @@ void newgame() {
     printf("Waktu: %d\n", WAKTU(p));
     /* ini nanti dipanggil dari main program di command MOVE */
     while (true) {
+        // pickupcmd(p, newgame, tas);enter;
         movecmd(&p, newgame);
         printf("Waktu new game: %d", WAKTU(p));
         enter;enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,newgame.pesanans);enter;enter;   
     }
 
     enter;
-    // pickupcmd(p, newgame);enter;
+    
     // displayMatrixLabel(m, newgame.adjMatrix, l, cur_player, tas);
-    printf("Lokaso player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
+    printf("Lokasi player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
 
 
 }

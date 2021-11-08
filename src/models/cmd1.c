@@ -89,8 +89,8 @@
 boolean getRelation(Matrix m, ListPointDin l, POINT pt, Player *plyr) {
     // CreateListDin(&r, 10);
     int counter = getIdxPoint(l, pt);
+    
     int nPos=0;
-
     char input[30];
     printf("\nENTER COMMAND: ");
     fgets(input,30,stdin);
@@ -99,10 +99,11 @@ boolean getRelation(Matrix m, ListPointDin l, POINT pt, Player *plyr) {
     //     printf("if nya bisa\n");
     // }
     int inputInt = atoi(input);
-    // printf("nilai inputInt %d", inputInt);
-    int i=counter;
+    printf("nilai inputInt %d", inputInt);
+    int i=0;
     boolean found = false;
-    while((i<COLS(m) && !found)) {
+    while((0<COLS(m) && !found)) {
+        
     // for(int i=counter;i<COLS(m);i++) { 
         // iterasi dimulai dari baris ke-index list
         if (ELMT(m,counter,i) == 1) {
@@ -191,20 +192,36 @@ void movecmd(Player *p, Config newgame) {
 
 
 
-void pickupcmd(Player p, Config newgame) {
+void pickupcmd(Player p, Config newgame, Tas tas) {
     // printf("COMMAND PICK UP\n");
     // // mengambil pesanan yang terdapat di current label
     // // masih pakai dummy karena enter command blom work
 
     // // printf("label %c", CUR_LOCL);
 
-    // for(int j=0;j<20;j++) {
-    //     if (curLocLabel(p, newgame) == newgame.pesanans.daftar[j].PickUp) {
-    //         char tipe_pesanan = newgame.pesanans.daftar[j].ItemType;
-    //         if (tipe_pesanan = 'H') {
-    //             printf("Pesanan berupa Heavy Item berhasil diambil!\n");
-    //         }
-    //         printf("Tujuan Pesanan: %c\n", newgame.pesanans.daftar[j].DropOff);
-    //     }
-    // }
+    for(int j=0;j<20;j++) {
+        if (curLocLabel(p, newgame) == newgame.pesanans.daftar[j].PickUp) {
+            char tipe_pesanan = newgame.pesanans.daftar[j].ItemType;
+            if (tipe_pesanan = 'H') {
+                printf("Pesanan berupa Heavy Item berhasil diambil!\n");
+            } else if (tipe_pesanan = 'N') {
+                printf("Pesanan berupa Normal Item berhasil diambil!\n");
+            }
+            printf("Tujuan Pesanan: %c\n", newgame.pesanans.daftar[j].DropOff);
+            Item item;
+            if (newgame.pesanans.daftar[j].ItemType != 'P') {
+                CreateItem(&item, newgame.pesanans.daftar[j].TimeIn, newgame.pesanans.daftar[j].PickUp, newgame.pesanans.daftar[j].DropOff, newgame.pesanans.daftar[j].ItemType, 0);
+                addItem(&tas, item);
+                printf("pickup berhasil\n");
+            } else {
+                CreateItem(&item, newgame.pesanans.daftar[j].TimeIn, newgame.pesanans.daftar[j].PickUp, newgame.pesanans.daftar[j].DropOff, newgame.pesanans.daftar[j].ItemType, newgame.pesanans.daftar[j].TimePerish);
+                addItem(&tas, item);
+                printf("pickup berhasil\n");
+            }
+
+        }
+        // else {
+        //     printf("bukan lokasi pick up\n");
+        // }
+    }
 }

@@ -32,6 +32,12 @@ void setPlayerLoc(Player *p, float x, float y) {
     CUR_LOC(*p) = MakePOINT(x, y);
 }
 
+void setPlayerPrevLoc(Player *p, float x, float y) {
+    /* KAMUS LOKAL */
+    /* ALGORITMA */
+    PREV_LOC(*p) = MakePOINT(x, y);
+}
+
 // //driver
 // int main(){
 //     Player p;

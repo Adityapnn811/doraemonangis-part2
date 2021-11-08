@@ -11,6 +11,7 @@ typedef struct
     int waktu; // Waktu player sekarang
     int uang; // Uang yang dimiliki player sekarang
     POINT currentLoc;
+    POINT prevLoc;
 } Player;
 
 /***** SELEKTOR *****/
@@ -19,6 +20,9 @@ typedef struct
 #define CUR_LOCX(p) (p).currentLoc.X
 #define CUR_LOCY(p) (p).currentLoc.Y
 #define CUR_LOC(p) (p).currentLoc
+#define PREV_LOCX(p) (p).prevLoc.X
+#define PREV_LOCY(p) (p).prevLoc.Y
+#define PREV_LOC(p) (p).prevLoc
 
 /***** KONSTRUKTOR *****/
 void CreatePlayer(Player *p);
@@ -37,5 +41,9 @@ void setUang(Player *p, int uang);
 void setPlayerLoc(Player *p, float x, float y);
 /* I.S. Player p terdefinisi */
 /* F.S. Player p memiliki currentLoc = loc */
+
+void setPlayerPrevLoc(Player *p, float x, float y);
+/* I.S. Player p terdefinisi */
+/* F.S. Player p memiliki prevLoc = sebelum currentLoc */
 
 #endif
