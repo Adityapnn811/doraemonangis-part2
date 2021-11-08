@@ -8,6 +8,7 @@
 #include "../adt/player.h"
 #include "../adt_modified/listpointdin.h"
 #include "../adt_modified/tas.h"
+#include "../adt_modified/pesanan.h"
 
 /* Ukuran minimum dan maksimum baris dan kolom */
 #define ROW_CAP 100
@@ -77,7 +78,7 @@ void displayMatrix(Matrix m);
 8 9 10
 */
 
-void displayMatrixLabel(Matrix m, Matrix m_adj, ListPointDin l_bangunan, Player p, Tas tas);
+void displayMatrixLabel(Matrix m, Matrix m_adj, ListPointDin l_bangunan, Player p, Tas tas, DaftarPesanan daf_pes);
 /* I.S. m terdefinisi, m_adj adalah adjacency matriks yg terdefinisi
 l_bangunan adalah list point yg berisi semua bangunan, Player p adalah
 data current player, Tas tas digunakan untuk mencari item yg hrs di drop off
