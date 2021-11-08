@@ -35,6 +35,6 @@ void deleteFirstTD(TDList *l, Pesanan *val);
 void deleteLastTD(TDList *l, Pesanan *val);
 void deleteAtTD(TDList *l, Address Tp);
 
-void DisplayListToDo(TDList l);
+void DisplayListToDo(DaftarPesanan psn);
 
 #endif // TODOLIST_H_INCLUDED

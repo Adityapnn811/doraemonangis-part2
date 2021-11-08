@@ -123,7 +123,10 @@ void CreateTDfromPSN(TDList *l,DaftarPesanan psn){
     }
 }
 
-void DisplayListToDo(TDList l){
+void DisplayListToDo(DaftarPesanan psn){
+    TDList l;
+    CreateListTD(&l);
+    CreateTDfromPSN(&l,psn);
     Address pt = FIRST(l);
     int a = 1;
     printf("Pesanan pada To Do List:\n");
