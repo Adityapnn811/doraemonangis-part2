@@ -7,27 +7,29 @@
 // #include "../adt/point.c"
 #include "../adt_modified/listpointdin.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 // #include "../adt/matrix.c"
-#define enter printf("\n");
-#define border printf("---------------------------------\n");
+// #define enter printf("\n");
+// #define border printf("---------------------------------\n");
 
 #include "../adt/player.h"
 #include "../adt_modified/pesanan.h"
 
-void showMap(Matrix *m, ListPointDin l) {
-    int i, j;
-    for (i = 0; i <= ROWS(*m); i++)
-    {
-        for (j = 0; j <= COLS(*m); j++)
-        {
-            for(int k=0;k<=17;k++) {
-                if ((i==ELMTX(l,k)) && (j==ELMTY(l,k))) {
-                    ELMT(*m, i, j) = ELMTLABEL(l,k);
-                }
-            }
-        }
-    }
-}
+// void showMap(Matrix *m, ListPointDin l) {
+//     int i, j;
+//     for (i = 0; i <= ROWS(*m); i++)
+//     {
+//         for (j = 0; j <= COLS(*m); j++)
+//         {
+//             for(int k=0;k<=17;k++) {
+//                 if ((i==ELMTX(l,k)) && (j==ELMTY(l,k))) {
+//                     ELMT(*m, i, j) = ELMTLABEL(l,k);
+//                 }
+//             }
+//         }
+//     }
+// }
 
 void readCustomMatrix(Matrix *m, int nRow, int nCol)
 {
@@ -84,7 +86,7 @@ void showRelation(Matrix m, ListPointDin l, POINT p) {
     } 
 }
 
-void getRelation(Matrix m, ListPointDin l, POINT p, int inputPos, Player plyr) {
+void getRelation(Matrix m, ListPointDin l, POINT p, Player plyr) {
     // CreateListDin(&r, 10);
     int counter = getIdxPoint(l, p);
     int nPos=0;
@@ -94,7 +96,8 @@ void getRelation(Matrix m, ListPointDin l, POINT p, int inputPos, Player plyr) {
             // insertLast(&r, LISTELMT(l, i));
             // displayList(r);
             // printf("\nx y yg sama: %d %d\n",ELMTX(l,i), ELMTY(l,i));
-            if (inputPos == (nPos % 27)) { // misal pilih pos 1
+            // int num = atoi(inputPos);
+            if (1 == (nPos % 27)) { // misal pilih pos 1
                 // printf("npos %d\n", nPos);
                 // CUR_LOC(plyr) = MakePOINT(ELMTX(l,i),ELMTY(l,i));
                 printf("Mobita sekarang berada di titik %c (%d,%d)!\n", ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
@@ -123,7 +126,7 @@ ListPointDin MakeRelationList(ListPointDin x) {
     z.label = 'X';
     z.position.X = 2;
     z.position.Y = 3;
-    insertLast(&x,z);
+    insertLastListPoint(&x,z);
     return x;
 }
 
@@ -144,7 +147,12 @@ void move(Player p, Config newgame) {
     
     showRelation(newgame.adjMatrix, newgame.bangunans, p.currentLoc);
     printf("Posisi yang dipilih? (ketik 0 jika ingin kembali)\n");
-    getRelation(newgame.adjMatrix, newgame.bangunans, p.currentLoc, 1, p); // misal ambil lokasi bangunan no. 1
+
+    // char choosePos[5];
+    // printf("***input move\n");
+    // fgets(choosePos,5,stdin);
+    // printf("***input move %s\n", choosePos);
+    getRelation(newgame.adjMatrix, newgame.bangunans, p.currentLoc, p); // misal ambil lokasi bangunan no. 1
     setWaktu(&p, (WAKTU(p)-1));
     printf("Waktu: %d\n", WAKTU(p));
 }
@@ -167,4 +175,11 @@ void pickup(Player p, Config newgame) {
             printf("Tujuan Pesanan: %c\n", newgame.pesanans.daftar[j].DropOff);
         }
     }
+}
+
+void readprint() {
+    char a[10];
+    scanf(" %d", &a);
+    fgets(a,10,stdin);
+    printf("print readprint: %s\n", a);
 }

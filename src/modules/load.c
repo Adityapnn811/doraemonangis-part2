@@ -63,8 +63,8 @@ boolean loadGame(char *filename, Config *conf)
   }
 
   // Insert HQ dulu
-  CreateListDin(&(conf->bangunans), n);
-  insertLast(&(conf->bangunans), b);
+  CreateListPointDin(&(conf->bangunans), n);
+  insertLastListPoint(&(conf->bangunans), b);
 
   // List lokasi
   for (i = 0; i < n; i++)
@@ -89,7 +89,7 @@ boolean loadGame(char *filename, Config *conf)
     }
 
     b.position = MakePOINT(x, y);
-    insertLast(&(conf->bangunans), b);
+    insertLastListPoint(&(conf->bangunans), b);
   }
 
   // Adjacency matrix

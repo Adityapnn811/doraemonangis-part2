@@ -16,15 +16,15 @@
 #define border printf("----------- END OF INFO CONFIG.TXT------------\n\n");
 
 /* dont delete, for compiler */
-// #include "../modules/load.c"
-// #include "../adt/player.c"
-// #include "../adt_modified/pesanan.c"
-// #include "../adt/charmachine.c"
-// #include "../adt/wordmachine.c"
-// #include "../adt/point.c"
-// #include "../adt_modified/listpointdin.c"
-// #include "../adt/matrix.c"
-// #include "bangunan.c"
+#include "../modules/load.c"
+#include "../adt/player.c"
+#include "../adt_modified/pesanan.c"
+#include "../adt/charmachine.c"
+#include "../adt/wordmachine.c"
+#include "../adt/point.c"
+#include "../adt_modified/listpointdin.c"
+#include "../adt/matrix.c"
+#include "bangunan.c"
 
 void newgame() {
     Config newgame;
@@ -38,14 +38,15 @@ void newgame() {
     }
 
     enter;displayMatrix(newgame.adjMatrix);enter;
-    displayList(newgame.bangunans);enter;
+    displayListPoint(newgame.bangunans);enter;
     printf("length pesanan %d", lengthDftr(newgame.pesanans));enter;
 
     Matrix m;
     readCustomMatrix(&m,13,18);
     printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity); // capacity blom diassign di load
-    showMap(&m,newgame.bangunans);
-    displayMatrixLabel(m);enter;
+    // showMap(&m,newgame.bangunans);
+    // displayMatrixLabel(m);enter;
+    displayMatrix(m);
 
     /* STATE NEW PLAYER */
     Player p;
@@ -68,6 +69,10 @@ void newgame() {
     printf("Waktu: %d\n", WAKTU(p));
     move(p, newgame);enter;
     pickup(p, newgame);enter;
+}
+
+int main(){
+    newgame();
 }
 
 
