@@ -113,11 +113,16 @@ int main(){
     Player cur_player;
     Tas tas;
     Item item;
+    DaftarPesanan daf_pes;
+    Pesanan pes;
 
-    CreateItem(&item, 4, 'B', 'C', 'h', 8);
+    CreateItem(&item, 4, 'B', 'B', 'h', 8);
     CreateTas(&tas);
     addItem(&tas, item);
     CreatePlayer(&cur_player);
+    CreateDaftar(&daf_pes);
+    CreatePesanan(&pes, 3, 'A', 'A', 'n', 20);
+    enqueuePsn(&daf_pes, pes);
     CreateListPointDin(&l, 4); // create dummy list
     LABEL(hqval) = 'Z';
     KOORX(hqval) = 0;
@@ -135,7 +140,7 @@ int main(){
     printf("\n");
     showMap(&m,l,val); // menampilkan koordinat pada matriks
     readAdjacencyMatrix(&adj);
-    displayMatrixLabel(m, adj, l, cur_player, tas);
+    displayMatrixLabel(m, adj, l, cur_player, tas, daf_pes);
     printf("\n");
     // Matrix adj;
     // readMatrix(&adj, 4, 4);

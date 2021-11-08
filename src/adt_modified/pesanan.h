@@ -36,7 +36,7 @@ typedef struct {
 
 void CreatePesanan(Pesanan *i, int TimeIn, char PickUp, char DropOff, char ItemType, int TimePerish);
 
-void CreateDaftar();
+void CreateDaftar(DaftarPesanan *dp);
 
 void enqueuePsn(DaftarPesanan *dft, Pesanan pt);
 void dequeuePsn(DaftarPesanan *dft);
