@@ -70,7 +70,6 @@
 #include "./adt_modified/tas.c"
 
 /* models */
-#include "./models/bangunan.c"
 // #include "./models/command.c"
 #include "./models/help.c"
 #include "./models/pcolor.c"

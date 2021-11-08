@@ -84,7 +84,7 @@ ListPointDin mShowRelation(Matrix m, ListPointDin l, POINT p) {
     /* ALGORITMA */
     CreateListPointDin(&l_adj, COLS(m));
     int counter = getIdxPoint(l, p);
-    for(int i=counter;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
+    for(int i=0;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
         if (ELMT(m,counter,i) == 1) {
             B.label = ELMTLABEL(l,i);
             B.position = POINT(l, i);
