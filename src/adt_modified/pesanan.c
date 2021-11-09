@@ -100,6 +100,23 @@ void dequeuePsn(DaftarPesanan *dft){
     }
 }
 
+void dequeuePsntoVal(DaftarPesanan *dft,Pesanan *pt){
+    *pt = HEAD(*dft);
+    if(IDX_HEAD(*dft)==IDX_TAIL(*dft)){
+        IDX_HEAD(*dft) = IDX_UNDEF;
+        IDX_TAIL(*dft) = IDX_UNDEF;
+    }else{
+        IDX_HEAD(*dft)++;
+    }
+}
 
+void PesananSelesai(DaftarPesanan *pt,Pesanan ps){
+    int i = 0;
+    while(!CmpPesanan((*pt).daftar[i],ps)){
+        i++;
+    }
+    DONE((*pt).daftar[i])=true;
+
+}
 
 
