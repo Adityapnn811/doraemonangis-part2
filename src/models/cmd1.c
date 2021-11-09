@@ -83,13 +83,13 @@ void movecmd(Player *p, Config newgame)
     }
 }
 
-void dropoffcmd(Player p, Config newgame, Tas *tas)
+void dropoffcmd(Player p, Config *newgame, Tas *tas)
 {
     Item droppeditem;
     int i;
     for(i=0;i<20;i++) {
-        if (curLocLabel(p, newgame) == newgame.pesanans.daftar[i].DropOff) {
-            char tipe_pesanan = newgame.pesanans.daftar[i].ItemType;
+        if (curLocLabel(p, *newgame) == (*newgame).pesanans.daftar[i].DropOff) {
+            char tipe_pesanan = (*newgame).pesanans.daftar[i].ItemType;
             if (tipe_pesanan == 'H') {
                 printf("Pesanan Heavy Item berhasil diantarkan\n");
             } else if (tipe_pesanan == 'N') {
@@ -101,7 +101,8 @@ void dropoffcmd(Player p, Config newgame, Tas *tas)
             }
         }
     }
-    dropItemToVal(tas,&droppeditem);
+    // dropItemToVal(tas,&droppeditem);
+    dequeuePsn(&(*newgame).pesanans);
     printf("Uang yang didapatkan: ___\n");
 }
 
