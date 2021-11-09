@@ -28,6 +28,8 @@ void ignoreBlank()
   {
     adv();
   }
+
+  endWord = eot;
 }
 
 void startWord(FILE *tape)
