@@ -40,11 +40,14 @@ void CreateDaftar(DaftarPesanan *dp);
 
 void enqueuePsn(DaftarPesanan *dft, Pesanan pt);
 void dequeuePsn(DaftarPesanan *dft);
+void dequeuePsntoVal(DaftarPesanan *dft,Pesanan *pt);
 boolean CmpPesanan(Pesanan P1, Pesanan P2);
 
 boolean isEmptyDftr(DaftarPesanan p);
 boolean isFullDftr(DaftarPesanan p);
 int lengthDftr(DaftarPesanan q);
+
+void PesananSelesai(DaftarPesanan *pt,Pesanan ps);
 
 
 
