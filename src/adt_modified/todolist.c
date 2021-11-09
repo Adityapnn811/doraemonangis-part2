@@ -5,20 +5,20 @@
 
 
 void CreateListTD(TDList *l){
-    FIRST(*l) = NULL;
-    LAST(*l) = NULL;
+    FIRSTTD(*l) = NULL;
+    LASTTD(*l) = NULL;
 }
 
 boolean isEmptyTD(TDList l){
-    return FIRST(l)==NULL && LAST(l)==NULL;
+    return FIRSTTD(l)==NULL && LASTTD(l)==NULL;
 }
 
-Address allocate(Pesanan val){
-    Address p = (Address) malloc(sizeof(Node));
+AddressTD allocate(Pesanan val){
+    AddressTD p = (AddressTD) malloc(sizeof(NodeTD));
     if(p!=NULL){
-        INFO(p)=val;
-        NEXT(p)=NULL;
-        PREV(p)=NULL;
+        INFOTD(p)=val;
+        NEXTTD(p)=NULL;
+        PREVTD(p)=NULL;
         return p;
     }else{
         return NULL;
@@ -27,14 +27,14 @@ Address allocate(Pesanan val){
 
 
 
-Address search(TDList l, Pesanan val){
-    Address p = FIRST(l);
+AddressTD search(TDList l, Pesanan val){
+    AddressTD p = FIRSTTD(l);
     boolean flag = false;
     while(!flag && p!=NULL){
-            if(CmpPesanan(INFO(p),val)){
+            if(CmpPesanan(INFOTD(p),val)){
                 flag = true;
             }else{
-                p = NEXT(p);
+                p = NEXTTD(p);
             }
     }
     if(flag){
@@ -44,70 +44,70 @@ Address search(TDList l, Pesanan val){
     }
 }
 void insertFirstTD(TDList *l, Pesanan val){
-    Address p = allocate(val);
-    Address loc = FIRST(*l);
+    AddressTD p = allocate(val);
+    AddressTD loc = FIRSTTD(*l);
     if(p!=NULL){
-        NEXT(p) = loc;
+        NEXTTD(p) = loc;
         if(!isEmptyTD(*l)){
-            PREV(loc) = p;
+            PREVTD(loc) = p;
         }else{
-            LAST(*l) = p;
+            LASTTD(*l) = p;
         }
 
-        FIRST(*l) = p;
+        FIRSTTD(*l) = p;
     }
 }
 void insertLastTD(TDList *l, Pesanan val){
-    Address p = allocate(val);
-    Address loc = LAST(*l);
+    AddressTD p = allocate(val);
+    AddressTD loc = LASTTD(*l);
     if(p!=NULL){
-        PREV(p) = loc;
+        PREVTD(p) = loc;
         if(!isEmptyTD(*l)){
-            NEXT(loc) = p;
+            NEXTTD(loc) = p;
         }else{
-            FIRST(*l) = p;
+            FIRSTTD(*l) = p;
         }
 
-        LAST(*l) = p;
+        LASTTD(*l) = p;
     }
 }
 
 
 void deleteFirstTD(TDList *l, Pesanan *val){
-    Address p = FIRST(*l);
-    *val = INFO(p);
-    if(FIRST(*l)==LAST(*l)){
-        LAST(*l) = NULL;
+    AddressTD p = FIRSTTD(*l);
+    *val = INFOTD(p);
+    if(FIRSTTD(*l)==LASTTD(*l)){
+        LASTTD(*l) = NULL;
     }else{
-        PREV(NEXT(FIRST(*l))) = NULL;
+        PREVTD(NEXTTD(FIRSTTD(*l))) = NULL;
     }
-    FIRST(*l) = NEXT(p);
+    FIRSTTD(*l) = NEXTTD(p);
     free(p);
 
 }
 void deleteLastTD(TDList *l, Pesanan *val){
-    Address p = LAST(*l);
-    *val = INFO(p);
-    if(FIRST(*l)==LAST(*l)){
-        FIRST(*l) = NULL;
+    AddressTD p = LASTTD(*l);
+    *val = INFOTD(p);
+    if(FIRSTTD(*l)==LASTTD(*l)){
+        FIRSTTD(*l) = NULL;
     }else{
-        NEXT(PREV(p)) = NULL;
+        NEXTTD(PREVTD(p)) = NULL;
     }
-    LAST(*l) = PREV(p);
+    LASTTD(*l) = PREVTD(p);
 }
-void deleteAtTD(TDList *l, Address Tp){
-    Address loc = FIRST(*l);
+void deleteAtTD(TDList *l, AddressTD Tp){
+    AddressTD loc = FIRSTTD(*l);
     boolean flag = false;
     while(loc!=NULL && !flag){
         if(loc==Tp){
-            if(NEXT(loc)==NULL){
+            if(NEXTTD(loc)==NULL){
             }else{
-                NEXT(PREV(loc)) = NEXT(loc);
-                PREV(NEXT(loc)) = PREV(loc);
+                NEXTTD(PREVTD(loc)) = NEXTTD(loc);
+                PREVTD(NEXTTD(loc)) = PREVTD(loc);
             }
             flag = true;
         }else{
-            loc = NEXT(loc);
+            loc = NEXTTD(loc);
         }
     }
     free(loc);
@@ -127,30 +127,30 @@ void DisplayListToDo(DaftarPesanan psn){
     TDList l;
     CreateListTD(&l);
     CreateTDfromPSN(&l,psn);
-    Address pt = FIRST(l);
+    AddressTD pt = FIRSTTD(l);
     int a = 1;
     printf("Pesanan pada To Do List:\n");
     while(pt!=NULL){
-        if(INFO(pt).done==false && a<10){
+        if(INFOTD(pt).done==false && a<10){
             printf("%d. ",a);
-            printf("%c -> %c",INFO(pt).PickUp,INFO(pt).DropOff,INFO(pt).ItemType);
-            if(INFO(pt).ItemType=='N'){
+            printf("%c -> %c",INFOTD(pt).PickUp,INFOTD(pt).DropOff,INFOTD(pt).ItemType);
+            if(INFOTD(pt).ItemType=='N'){
                 printf(" (Normal Item)");
-            }else if(INFO(pt).ItemType=='H'){
+            }else if(INFOTD(pt).ItemType=='H'){
                 printf(" (Heavy Item)");
-            }else if(INFO(pt).ItemType=='P'){
+            }else if(INFOTD(pt).ItemType=='P'){
                 printf(" (Perishable Item)");
             }else{
                 printf("VIP Item");
             }
-            if(INFO(pt).ItemType!='P'){
+            if(INFOTD(pt).ItemType!='P'){
                 printf("\n");
             }else{
-                printf(" %d\n",INFO(pt).TimePerish);
+                printf(" %d\n",INFOTD(pt).TimePerish);
             }
             a++;
         }
-        pt = NEXT(pt);
+        pt = NEXTTD(pt);
     }
 }
 

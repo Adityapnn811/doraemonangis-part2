@@ -4,36 +4,36 @@
 #include "pesanan.h"
 
 
-typedef struct node *Address;
-typedef struct node {
+typedef struct nodeTD *AddressTD;
+typedef struct nodeTD {
 	Pesanan info;
-	Address next;
-	Address prev;
-} Node;
+	AddressTD next;
+	AddressTD prev;
+} NodeTD;
 typedef struct {
-	Address first;
-	Address last;
+	AddressTD first;
+	AddressTD last;
 } TDList;
 
 /* Selektor */
-#define INFO(P) (P)->info
-#define NEXT(P) (P)->next
-#define PREV(P) (P)->prev
-#define FIRST(L) ((L).first)
-#define LAST(L) ((L).last)
+#define INFOTD(P) (P)->info
+#define NEXTTD(P) (P)->next
+#define PREVTD(P) (P)->prev
+#define FIRSTTD(L) ((L).first)
+#define LASTTD(L) ((L).last)
 
 void CreateTDfromPSN(TDList *l,DaftarPesanan psn);
 void CreateListTD(TDList *l);
 boolean isEmptyTD(TDList l);
-Address allocate(Pesanan val);
+AddressTD allocate(Pesanan val);
 
-Address search(TDList l, Pesanan val);
+AddressTD search(TDList l, Pesanan val);
 void insertFirstTD(TDList *l, Pesanan val);
 void insertLastTD(TDList *l, Pesanan val);
 
 void deleteFirstTD(TDList *l, Pesanan *val);
 void deleteLastTD(TDList *l, Pesanan *val);
-void deleteAtTD(TDList *l, Address Tp);
+void deleteAtTD(TDList *l, AddressTD Tp);
 
 void DisplayListToDo(DaftarPesanan psn);
 
