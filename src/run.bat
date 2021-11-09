@@ -1,0 +1,1 @@
+ gcc command.c charmachine.c wordmachine.c main_program.c help.c
