@@ -1,8 +1,8 @@
 #ifndef GAMEHEADER_H
 #define GAMEHEADER_H
 
-// #include "./models/command.h"
-// #include "./models/help.h"
+#include "./models/command.h"
+#include "./models/help.h"
 // #include "./adt/wordmachine.h"
 // #include "./models/newgame.c"
 
@@ -42,8 +42,8 @@
 
 /* include header masing - masing di sini */
 ////////////////////////////////
-// #include "./models/command.c"
-// #include "./models/help.c"
+#include "./models/command.c"
+#include "./models/help.c"
 // #include "./adt/wordmachine.c"
 // #include "./models/newgame.c"
 // #include "game_header.h"
@@ -69,10 +69,11 @@
 #include "./adt_modified/pesanan.c"
 #include "./adt_modified/stack_linked.c"
 #include "./adt_modified/tas.c"
+#include "./adt_modified/todolist.c"
 
 /* models */
 // #include "./models/command.c"
-#include "./models/help.c"
+// #include "./models/help.c"
 #include "./models/pcolor.c"
 
 /* modules */

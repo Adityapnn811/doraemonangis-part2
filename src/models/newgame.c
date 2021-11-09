@@ -21,7 +21,7 @@ void newgame() {
     printf("length pesanan %d", lengthDftr(newgame.pesanans));enter;
 
     Matrix m;
-    readCustomMatrix(&m,15,20);
+    readCustomMatrix(&m,newgame.mapRows+2,newgame.mapCols+2);
     printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity); // capacity blom diassign di load
 
     displayMatrix(m);
@@ -40,7 +40,7 @@ void newgame() {
     printf("\n");
     setUang(&p, 1000);
     setWaktu(&p, 20);
-    setPlayerLoc(&p, 1, 1);
+    setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
     printf("Uang player sebesar %d\n", UANG(p));
     printf("Waktu player sebesar %d\n", WAKTU(p));
     printf("Lokaso player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
@@ -50,9 +50,9 @@ void newgame() {
     /* TEST ADD ITEM TO TAS */
     Tas tas;
     Item item;
-    CreateItem(&item, 4, 'N', 'I', 'H', 8);
+    // CreateItem(&item, 4, 'N', 'I', 'H', 8);
     CreateTas(&tas);
-    addItem(&tas, item);
+    // addItem(&tas, item);
     /* END OF TEST */
 
     showMap(&m,newgame.bangunans);
@@ -62,8 +62,26 @@ void newgame() {
     printf("Waktu: %d\n", WAKTU(p));
     /* ini nanti dipanggil dari main program di command MOVE */
     while (true) {
+        char input[30];
+        printf("\nENTER COMMAND di newgame: ");
+        fgets(input,30,stdin);
+        if (strcmp(input, "MOVE\n") == 0) {
+            movecmd(&p, newgame);
+        } else if (strcmp(input, "PICK_UP\n") == 0) {
+            pickupcmd(p, newgame, &tas);
+        } else if (strcmp(input, "DROP_OFF\n") == 0) {
+            dropoffcmd(p, newgame, &tas);
+        } else if (strcmp(input, "IN_PROGRESS\n") == 0) {
+            DisplayInPrgs(tas);
+        } else if (strcmp(input, "TO_DO\n") == 0) {
+            DisplayListToDo(newgame.pesanans);
+        } 
+        
+        else {
+            printf("RWONG INPUT\n");
+        }
         // pickupcmd(p, newgame, tas);enter;
-        movecmd(&p, newgame);
+
         printf("Waktu new game: %d", WAKTU(p));
         enter;enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,newgame.pesanans);enter;enter;   
     }

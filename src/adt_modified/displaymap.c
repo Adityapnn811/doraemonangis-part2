@@ -7,7 +7,7 @@ void showMap(Matrix *m, ListPointDin l) {
     {
         for (j = 0; j < COLS(*m); j++)
         {
-            for(int k=0;k<CAPACITY(l);k++) {
+            for(int k=0;k<CAPACITY(l)+1;k++) {
                 if ((i==ELMTX(l,k)) && (j==ELMTY(l,k))) {
                     ELMT(*m, i, j) = ELMTLABEL(l,k);
                 }
@@ -36,7 +36,7 @@ void readCustomMatrix(Matrix *m, int nRow, int nCol)
         }
     }
   }
-  ELMT(*m, 1, 1) = 178; // ini HQ nya
+//   ELMT(*m, 1, 1) = 178; // ini HQ nya
 }
 
 void readAdjacencyMatrix(Matrix *m) {
