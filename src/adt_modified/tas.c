@@ -20,11 +20,7 @@ boolean isEmptyTas(Tas s){
 
 void addItem(Tas *tas, Item val){
     int a = lengthTas(*tas);
-<<<<<<< HEAD
     if(a< tas->maxTas){
-=======
-    if(a<(*tas).maxTas){
->>>>>>> c4ce8333b89361a63a807944dac0cf5d546be6c4
         IDX_TOP(*tas)++;
         TOP(*tas) = val;
     }else{
