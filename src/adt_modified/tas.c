@@ -7,16 +7,20 @@ boolean useAbility = false;
 
 void CreateTas(Tas *tas){
      IDX_TOP(*tas) = IDX_UNDEF;
-     (*tas).maxTas = 3;
+     (*tas).maxTas = 20;
 }
 
 int lengthTas(Tas tas){
     return IDX_TOP(tas)+1;
 }
 
+boolean isEmptyTas(Tas s){
+    return IDX_TOP(s) == IDX_UNDEF;
+}
+
 void addItem(Tas *tas, Item val){
     int a = lengthTas(*tas);
-    if(a<maxTas){
+    if(a< tas->maxTas){
         IDX_TOP(*tas)++;
         TOP(*tas) = val;
     }else{
@@ -49,21 +53,26 @@ void DisplayInPrgs(Tas t){
     Tas temp=t;
     Item a;
     int i = 1;
-    printf("Pesanan yang sedang diantarkan:\n");
-    while(!isEmptyTas(temp)){
-        printf("%d. ",i);
-        dropItemToVal(&temp,&a);
-        if(a.ItemType=='N'){
-            printf("Normal Item");
-        }else if(a.ItemType=='H'){
-            printf("Heavy Item");
-        }else if(a.ItemType=='P'){
-            printf("Perishable Item");
-        }else{
-            printf("VIP Item");
+
+    if(isEmptyTas(temp)) {
+        printf("Tidak ada pesanan yang sedang diantarkan.\n");
+    } else {
+        printf("Pesanan yang sedang diantarkan:\n");
+        while(!isEmptyTas(temp)){
+            printf("%d. ",i);
+            dropItemToVal(&temp,&a);
+            if(a.ItemType=='N'){
+                printf("Normal Item");
+            } else if(a.ItemType=='H'){
+                printf("Heavy Item");
+            } else if(a.ItemType=='P'){
+                printf("Perishable Item");
+            } else{
+                printf("VIP Item");
+            }
+            printf(" (Tujuan: %c)\n",a.DropOff);
+            i++;
         }
-        printf(" (Tujuan: %c)\n",a.DropOff);
-        i++;
     }
 
 }
