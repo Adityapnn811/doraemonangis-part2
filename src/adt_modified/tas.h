@@ -10,6 +10,7 @@
 typedef struct {
     Item daftar[CAPACITY_TAS];
     int idxTop;
+    int maxTas;
 
 } Tas;
 
@@ -22,6 +23,8 @@ boolean useAbility;
 void CreateTas(Tas *tas);
 void addItem(Tas *tas, Item val);
 void dropItem(Tas *tas1);
+void dropItemToVal(Tas *tas1,Item *val);
+void DisplayInPrgs(Tas t);
 
 
 #endif // TAS_H_INCLUDED

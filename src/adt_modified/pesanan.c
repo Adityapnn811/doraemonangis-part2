@@ -29,6 +29,18 @@ boolean isFullDftr(DaftarPesanan p){
     return IDX_HEAD(p) == 0 && IDX_TAIL(p) == (CAPACITY_PSN - 1);
 }
 
+boolean CmpPesanan(Pesanan P1, Pesanan P2){
+    boolean flag = false;
+    if(P1.DropOff==P2.DropOff && P1.TimeIn==P2.TimeIn && P1.PickUp==P2.PickUp && P1.ItemType==P2.ItemType){
+        flag = true;
+    }else{
+        flag = false;
+    }
+
+    return flag;
+
+}
+
 int lengthDftr(DaftarPesanan q)
 {
   if (isEmptyDftr(q))

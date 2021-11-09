@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include "tas.h"
 
-int maxTas=3;
 boolean useAbility = false;
 
 
 void CreateTas(Tas *tas){
      IDX_TOP(*tas) = IDX_UNDEF;
+     (*tas).maxTas = 3;
 }
 
 int lengthTas(Tas tas){
@@ -33,4 +33,37 @@ void dropItem(Tas *tas1){
     }else{
         IDX_TOP(*tas1)--;
     }
+}
+
+void dropItemToVal(Tas *tas1,Item *val){
+    *val = TOP(*tas1);
+    if (IDX_TOP(*tas1) == 0)
+    {
+        IDX_TOP(*tas1) = IDX_UNDEF;
+    }else{
+        IDX_TOP(*tas1)--;
+    }
+}
+
+void DisplayInPrgs(Tas t){
+    Tas temp=t;
+    Item a;
+    int i = 1;
+    printf("Pesanan yang sedang diantarkan:\n");
+    while(!isEmptyTas(temp)){
+        printf("%d. ",i);
+        dropItemToVal(&temp,&a);
+        if(a.ItemType=='N'){
+            printf("Normal Item");
+        }else if(a.ItemType=='H'){
+            printf("Heavy Item");
+        }else if(a.ItemType=='P'){
+            printf("Perishable Item");
+        }else{
+            printf("VIP Item");
+        }
+        printf(" (Tujuan: %c)\n",a.DropOff);
+        i++;
+    }
+
 }
