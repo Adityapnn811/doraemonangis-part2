@@ -21,6 +21,7 @@ int maxTas;
 boolean useAbility;
 
 void CreateTas(Tas *tas);
+boolean isEmptyTas(Tas s);
 void addItem(Tas *tas, Item val);
 void dropItem(Tas *tas1);
 void dropItemToVal(Tas *tas1,Item *val);

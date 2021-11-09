@@ -14,6 +14,10 @@ int lengthTas(Tas tas){
     return IDX_TOP(tas)+1;
 }
 
+boolean isEmptyTas(Tas s){
+    return IDX_TOP(s) == IDX_UNDEF;
+}
+
 void addItem(Tas *tas, Item val){
     int a = lengthTas(*tas);
     if(a<maxTas){
