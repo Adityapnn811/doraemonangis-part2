@@ -23,7 +23,7 @@ int main(){
         printf("\n");
         printf("Silahkan input opsi yang di atas: ");
         while(!endWord){
-            startWord(tape);
+            startWord(stdin);
                 /* pengaturan kondisi pilihan user */
             if(endWord){
                 if(help(currentWord.contents, currentWord.length)){
@@ -34,7 +34,6 @@ int main(){
                     valid = !valid;
                 }else if(new_game(currentWord.contents, currentWord.length)){
                    /* new game */
-                    newgame();
                    /* isi fungsi buat new game */
                 
                 }else if(load_game(currentWord.contents, currentWord.length)){
@@ -48,8 +47,7 @@ int main(){
                     printf("\nSelamat bertemu kembali!\n");
                     exit(0);
                 }else{
-                    endWord = !endWord;
-                    startWord(tape);
+                    startWord(stdin);
                 }
             }
         }
