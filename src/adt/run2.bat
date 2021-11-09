@@ -1,1 +1,0 @@
-gcc charmachine.c item.c list_linked.c listdin.c listpos.c matrix.c node.c player.c point.c queue.c stack.c wordmachine.c ../models/pcolor.c ../adt_modified/displaymap.c
