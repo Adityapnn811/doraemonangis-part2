@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include "listpointdin.h"
-#include "../adt/matrix.h"
-#include "../adt/point.h"
-#include "displaymap.h"
+#include "../game_header.h"
 
 void showMap(Matrix *m, ListPointDin l) {
     int i, j;
@@ -62,19 +59,13 @@ void readAdjacencyMatrix(Matrix *m) {
 void showRelation(Matrix m, ListPointDin l, POINT p) {
     int n=0;
     int counter = getIdxPoint(l, p);
-    for(int i=0;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
+    for(int i=0;i<COLS(m);i++) {
             if ((ELMT(m,counter,i) == 1)) {
                 n += 1;
                 printf("%d. %c (%d,%d)\n", n, ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
             }
 
     }
-    // for(int j=counter;j<ROWS(m);j++) {
-    //     if ((ELMT(m,counter,j) == 1)) {
-    //         n += 1;
-    //         printf("%d. %c (%d,%d)\n", n, ELMTLABEL(l,j), ELMTX(l,j), ELMTY(l,j));
-    //     }
-    // }  
 }
 
 ListPointDin mShowRelation(Matrix m, ListPointDin l, POINT p) {
@@ -84,7 +75,7 @@ ListPointDin mShowRelation(Matrix m, ListPointDin l, POINT p) {
     /* ALGORITMA */
     CreateListPointDin(&l_adj, COLS(m));
     int counter = getIdxPoint(l, p);
-    for(int i=0;i<COLS(m);i++) { // iterasi dimulai dari baris ke-index list
+    for(int i=0;i<COLS(m);i++) {
         if (ELMT(m,counter,i) == 1) {
             B.label = ELMTLABEL(l,i);
             B.position = POINT(l, i);
@@ -111,7 +102,7 @@ boolean pointInListPoint(float x, float y, ListPointDin l_adj) {
     return found;
 }
 
-
+/* TEST DRIVER */
 // int main(){
 //     Matrix m, adj;
 //     ListPointDin l; // point di dalam list

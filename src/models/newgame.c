@@ -24,13 +24,15 @@ void newgame() {
     readCustomMatrix(&m,15,20);
     printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity); // capacity blom diassign di load
 
-    
     displayMatrix(m);
+    /* END OF MENAMPILKAN ISI LOAD CONFIG.TXT */
 
     /* STATE NEW PLAYER */
     Player p;
     POINT loc;
     CreatePlayer(&p);
+
+    /* START OF TEST */
     /* TEST DRIVER PLAYER */
     printf("Uang player sebesar %d\n", UANG(p));
     printf("Waktu player sebesar %d\n", WAKTU(p));
@@ -45,11 +47,13 @@ void newgame() {
 
     border;
 
+    /* TEST ADD ITEM TO TAS */
     Tas tas;
     Item item;
     CreateItem(&item, 4, 'N', 'I', 'H', 8);
     CreateTas(&tas);
     addItem(&tas, item);
+    /* END OF TEST */
 
     showMap(&m,newgame.bangunans);
     displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,newgame.pesanans);enter;enter;
@@ -65,11 +69,7 @@ void newgame() {
     }
 
     enter;
-    
-    // displayMatrixLabel(m, newgame.adjMatrix, l, cur_player, tas);
     printf("Lokasi player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
-
-
 }
 
 int main(){
