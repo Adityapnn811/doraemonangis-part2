@@ -102,17 +102,17 @@ void dropoffcmd(Player p, Config *newgame, Tas *tas)
         }
     }
     // dropItemToVal(tas,&droppeditem);
-    dequeuePsn(&(*newgame).pesanans);
+    
     printf("Uang yang didapatkan: ___\n");
 }
 
-void pickupcmd(Player p, Config newgame, Tas *tas) 
+void pickupcmd(Player p, Config *newgame, Tas *tas) 
 /* Mengambil pesanan yang terdapat di current location */
 {
     // // printf("label %c", CUR_LOCL);
     for(int j=0;j<20;j++) { // j = banyak pesanan
-        if (curLocLabel(p, newgame) == newgame.pesanans.daftar[j].PickUp) {
-            char tipe_pesanan = newgame.pesanans.daftar[j].ItemType;
+        if (curLocLabel(p, (*newgame)) == (*newgame).pesanans.daftar[j].PickUp) {
+            char tipe_pesanan = (*newgame).pesanans.daftar[j].ItemType;
             if (tipe_pesanan == 'H') {
                 printf("Pesanan berupa Heavy Item berhasil diambil!\n");
             } else if (tipe_pesanan == 'N') {
@@ -122,24 +122,24 @@ void pickupcmd(Player p, Config newgame, Tas *tas)
             } else if (tipe_pesanan == 'V') {
                 printf("Pesanan berupa VIP Item berhasil diambil!\n");
             }
-            printf("Tujuan Pesanan: %c\n", newgame.pesanans.daftar[j].DropOff);
+            printf("Tujuan Pesanan: %c\n", (*newgame).pesanans.daftar[j].DropOff);
             Item item;
-            if (newgame.pesanans.daftar[j].ItemType != 'P') {
-                CreateItem(&item, newgame.pesanans.daftar[j].TimeIn, newgame.pesanans.daftar[j].PickUp, newgame.pesanans.daftar[j].DropOff, newgame.pesanans.daftar[j].ItemType, IDX_UNDEF);
+            if ((*newgame).pesanans.daftar[j].ItemType != 'P') {
+                CreateItem(&item, (*newgame).pesanans.daftar[j].TimeIn, (*newgame).pesanans.daftar[j].PickUp, (*newgame).pesanans.daftar[j].DropOff, (*newgame).pesanans.daftar[j].ItemType, IDX_UNDEF);
                 addItem(tas, item);
                 printf("pickup berhasil\n");
                 printf("length tas %d\n", lengthTas(*tas));
                 Pesanan p;
-                CreatePesanan(&p, newgame.pesanans.daftar[j].TimeIn, newgame.pesanans.daftar[j].PickUp, newgame.pesanans.daftar[j].DropOff, newgame.pesanans.daftar[j].ItemType, IDX_UNDEF);
-                PesananSelesai(&newgame.pesanans,p);
+                CreatePesanan(&p, (*newgame).pesanans.daftar[j].TimeIn, (*newgame).pesanans.daftar[j].PickUp, (*newgame).pesanans.daftar[j].DropOff, (*newgame).pesanans.daftar[j].ItemType, IDX_UNDEF);
+                PesananSelesai(&(*newgame).pesanans,p);
             } else {
-                CreateItem(&item, newgame.pesanans.daftar[j].TimeIn, newgame.pesanans.daftar[j].PickUp, newgame.pesanans.daftar[j].DropOff, newgame.pesanans.daftar[j].ItemType, newgame.pesanans.daftar[j].TimePerish);
+                CreateItem(&item, (*newgame).pesanans.daftar[j].TimeIn, (*newgame).pesanans.daftar[j].PickUp, (*newgame).pesanans.daftar[j].DropOff, (*newgame).pesanans.daftar[j].ItemType, (*newgame).pesanans.daftar[j].TimePerish);
                 addItem(tas, item);
                 printf("pickup perish berhasil\n");
                 printf("length tas %d\n", lengthTas(*tas));
                 Pesanan p;
-                CreatePesanan(&p, newgame.pesanans.daftar[j].TimeIn, newgame.pesanans.daftar[j].PickUp, newgame.pesanans.daftar[j].DropOff, newgame.pesanans.daftar[j].ItemType, newgame.pesanans.daftar[j].TimePerish);
-                PesananSelesai(&newgame.pesanans,p);
+                CreatePesanan(&p, (*newgame).pesanans.daftar[j].TimeIn, (*newgame).pesanans.daftar[j].PickUp, (*newgame).pesanans.daftar[j].DropOff, (*newgame).pesanans.daftar[j].ItemType, (*newgame).pesanans.daftar[j].TimePerish);
+                PesananSelesai(&(*newgame).pesanans,p);
             }
 
         }
@@ -147,4 +147,5 @@ void pickupcmd(Player p, Config newgame, Tas *tas)
         //     printf("bukan lokasi pick up\n");
         // }
     }
+    dequeuePsn(&(*newgame).pesanans);
 }
