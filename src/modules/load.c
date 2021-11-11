@@ -14,6 +14,7 @@ boolean loadGame(char *filename, Config *conf)
   FILE *fp = fopen(filename, "r");
   if (fp == NULL)
   {
+    printf("Oh dear, something went wrong with read()! %s\n", strerror(errno));
     return false;
   }
 
@@ -127,7 +128,7 @@ boolean loadGame(char *filename, Config *conf)
 
   conf->pesanans = pesanans;
 
-  fclose(fp);
+  // fclose(fp);
   return true;
 }
 

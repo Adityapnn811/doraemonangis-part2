@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "game_header.h"
+#include "./models/newgame.c"
 
 boolean endWord;
 Word currentWord;
@@ -30,7 +31,14 @@ int main(){
             }else if(new_game(currentWord.contents, currentWord.length)){
                 /* new game */
                 /* isi fungsi buat new game */
-            
+                Config newgame;
+                char *filename = "config.txt";
+                if (loadGame(filename, &newgame)) {
+                    printf("success");
+                } else {
+                    printf("fail");
+                }
+                newgames(newgame, filename);
             }else if(load_game(currentWord.contents, currentWord.length)){
                 /* load game disini */
 

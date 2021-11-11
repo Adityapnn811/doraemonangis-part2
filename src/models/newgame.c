@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include "../game_header.h"
+
 #include "cmd1.c" // command move, pickup, dropoff
 
 #define enter printf("\n");
 #define border printf("----------- END OF INFO CONFIG.TXT------------\n\n");
 
-void newgame() {
-    Config newgame;
-    char *filename = "config.txt";
+void newgames(Config newgame, char*filename) {
+    // Config newgame;
+    // char *filename = "config.txt";
 
     /* MENAMPILKAN ISI LOAD CONFIG.TXT */
     if (loadGame(filename, &newgame)) {
@@ -90,9 +91,26 @@ void newgame() {
     printf("Lokasi player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
 }
 
-int main(){
-    newgame();
-}
+// int main(){
+//     newgames();
+// //     // char *filename = "config.txt";
+// //     // FILE *fp = fopen(filename, "r");
+
+// //     // if (fp == NULL)
+// //     // {
+// //     //     printf("Error: could not open file %s", filename);
+// //     //     return 1;
+// //     // }
+
+// //     // // read one character at a time and
+// //     // // display it to the output
+// //     // char ch;
+// //     // while ((ch = fgetc(fp)) != EOF)
+// //     //     putchar(ch);
+
+// //     // // close the file
+// //     // fclose(fp);
+// }
 
 
 
