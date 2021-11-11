@@ -64,10 +64,11 @@ void newgames(Config newgame, char*filename) {
     TDList todo;
     Pesanan p1, p2;
     CreateListTD(&todo);
-    CreatePesanan(&p1, 10, 'D', 'G', 'h', 10);
-    CreatePesanan(&p2, 10, 'C', 'B', 'n', 10);
-    insertFirstTD(&todo, p1);
-    insertFirstTD(&todo, p2);
+    CreateTDfromPSN(&todo, newgame.pesanans, WAKTU(p));
+    // CreatePesanan(&p1, 10, 'D', 'G', 'h', 10);
+    // CreatePesanan(&p2, 10, 'C', 'B', 'n', 10);
+    // insertFirstTD(&todo, p1);
+    // insertFirstTD(&todo, p2);
     /* END */
 
     showMap(&m,newgame.bangunans);
@@ -81,11 +82,11 @@ void newgames(Config newgame, char*filename) {
         printf("\nENTER COMMAND di newgame: ");
         fgets(input,30,stdin);
         if (strcmp(input, "MOVE\n") == 0) {
-            movecmd(&p, newgame);
+            movecmd(&p, newgame, &todo, &speedboost, &counterMove);
         } else if (strcmp(input, "PICK_UP\n") == 0) {
             pickupcmd(p, &newgame, &tas);
         } else if (strcmp(input, "DROP_OFF\n") == 0) {
-            dropoffcmd(p, &newgame, &tas);
+            dropoffcmd(p, &newgame, &tas, &speedboost, &counterMove);
         } else if (strcmp(input, "IN_PROGRESS\n") == 0) {
             DisplayInPrgs(tas);
         } else if (strcmp(input, "TO_DO\n") == 0) {

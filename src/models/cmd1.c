@@ -66,7 +66,7 @@ ListPointDin MakeRelationList(ListPointDin x) {
     return x;
 }
 
-void movecmd(Player *p, Config newgame)
+void movecmd(Player *p, Config newgame, TDList *todo, boolean *speedboost, int *counterMove /*kurang heavyitem*/)
 /* Mengatur current loc player ke lokasi yang baru */
 {
     printf("-----COMMAND MOVE-----\n");
@@ -79,11 +79,29 @@ void movecmd(Player *p, Config newgame)
     printf("Posisi yang dipilih? (ketik 0 jika ingin kembali)\n");
 
     if (getRelation(newgame.adjMatrix, newgame.bangunans, CUR_LOC(*p), p)) {
-        setWaktu(p, (WAKTU(*p)-1));
+        // Cek apakah speedboost aktif
+        if (speedboost) {
+            printf("speedboost aktif\n");
+            if (*counterMove == 10) { // klo udah move 10 kali, berarti speedboostnya ilang
+                *speedboost = false;
+                *counterMove = 0;
+                setWaktu(p, (WAKTU(*p)+1));
+            } else if (*counterMove != 0 && *counterMove % 2 == 0) {
+                setWaktu(p, (WAKTU(*p)+1));
+                *counterMove += 1;
+            } else {
+                *counterMove += 1;
+            }
+        } else {
+            setWaktu(p, (WAKTU(*p)+1));
+        }
+        
     }
+    // tiap nambah waktu, panggil fungsi createTDfromPSN biar pesanan masuk ke to do list
+    CreateTDfromPSN(todo, newgame.pesanans, WAKTU(*p));
 }
 
-void dropoffcmd(Player p, Config *newgame, Tas *tas)
+void dropoffcmd(Player p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove)
 {
     Item droppeditem;
     int i;
@@ -92,6 +110,9 @@ void dropoffcmd(Player p, Config *newgame, Tas *tas)
             char tipe_pesanan = (*newgame).pesanans.daftar[i].ItemType;
             if (tipe_pesanan == 'H') {
                 printf("Pesanan Heavy Item berhasil diantarkan\n");
+                *speedboost = true;
+                *counterMove = 0;
+                printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
             } else if (tipe_pesanan == 'N') {
                 printf("Pesanan Normal Item berhasil diantarkan\n");
             } else if (tipe_pesanan == 'P') {
