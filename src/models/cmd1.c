@@ -104,7 +104,8 @@ void dropoffcmd(Player p, Config *newgame, Tas *tas)
         }
     }
     // dropItemToVal(tas,&droppeditem);
-    dequeuePsn(&(*newgame).pesanans);
+    dropItem(tas);
+    
     printf("Uang yang didapatkan: ___\n");
 }
 
