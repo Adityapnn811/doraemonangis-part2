@@ -102,6 +102,7 @@ void dropoffcmd(Player p, Config *newgame, Tas *tas)
         }
     }
     // dropItemToVal(tas,&droppeditem);
+    dropItem(tas);
     
     printf("Uang yang didapatkan: ___\n");
 }
