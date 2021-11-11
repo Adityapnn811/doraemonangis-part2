@@ -75,7 +75,7 @@ void newgames(Config newgame, char*filename) {
         } else if (strcmp(input, "IN_PROGRESS\n") == 0) {
             DisplayInPrgs(tas);
         } else if (strcmp(input, "TO_DO\n") == 0) {
-            DisplayListToDo(newgame.pesanans);
+            DisplayListToDo(newgame.pesanans,WAKTU(p));
         } 
         
         else {
