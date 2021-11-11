@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "matrix.h": "c"
+        "matrix.h": "c",
+        "game_header.h": "c",
+        "config.h": "c"
     }
 }

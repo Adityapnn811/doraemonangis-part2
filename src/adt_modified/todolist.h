@@ -28,6 +28,7 @@ boolean isEmptyTD(TDList l);
 AddressTD allocate(Pesanan val);
 
 AddressTD search(TDList l, Pesanan val);
+boolean searchPickUpTD(TDList l, char pickup);
 void insertFirstTD(TDList *l, Pesanan val);
 void insertLastTD(TDList *l, Pesanan val);
 
