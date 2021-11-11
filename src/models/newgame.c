@@ -33,6 +33,10 @@ void newgames(Config newgame, char*filename) {
     POINT loc;
     CreatePlayer(&p);
 
+    /* STATE ABILITY SPEEDBOOST */
+    boolean speedboost = false;
+    int counterMove = 0;
+
     /* START OF TEST */
     /* TEST DRIVER PLAYER */
     printf("Uang player sebesar %d\n", UANG(p));
@@ -56,8 +60,18 @@ void newgames(Config newgame, char*filename) {
     // addItem(&tas, item);
     /* END OF TEST */
 
+    /* TEST TO DO LIST DARI PESANAN */
+    TDList todo;
+    Pesanan p1, p2;
+    CreateListTD(&todo);
+    CreatePesanan(&p1, 10, 'D', 'G', 'h', 10);
+    CreatePesanan(&p2, 10, 'C', 'B', 'n', 10);
+    insertFirstTD(&todo, p1);
+    insertFirstTD(&todo, p2);
+    /* END */
+
     showMap(&m,newgame.bangunans);
-    displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,newgame.pesanans);enter;enter;
+    displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter;
 
     /* COMMAND MOVE, PICK UP */
     printf("Waktu: %d\n", WAKTU(p));
@@ -84,7 +98,7 @@ void newgames(Config newgame, char*filename) {
         // pickupcmd(p, newgame, tas);enter;
 
         printf("Waktu new game: %d", WAKTU(p));
-        enter;enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,newgame.pesanans);enter;enter;   
+        enter;enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter;   
     }
 
     enter;

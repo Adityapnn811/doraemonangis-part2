@@ -114,7 +114,7 @@ void displayMatrix(Matrix m)
   }
 }
 
-void displayMatrixLabel(Matrix m, Matrix m_adj, ListPointDin l_bangunan, Player p, Tas tas, DaftarPesanan daf_pes)
+void displayMatrixLabel(Matrix m, Matrix m_adj, ListPointDin l_bangunan, Player p, Tas tas, TDList todoList)
 {
   /* I.S. m terdefinisi */
   /* F.S. Nilai m(i,j) ditulis ke layar per baris per kolom, masing-masing elemen per baris 
@@ -140,7 +140,7 @@ void displayMatrixLabel(Matrix m, Matrix m_adj, ListPointDin l_bangunan, Player 
       // Cek Apakah i, j merupakan koordinat mobita
       if (CUR_LOCX(p) == i && CUR_LOCY(p) == j) {
         print_yellow((char) ELMT(m, i, j));
-      } else if (PICKUP(HEAD(daf_pes)) == (char) ELMT(m, i, j)) { // Lokasi pick up daftar pesanan
+      } else if (searchPickUpTD(todoList, (char) ELMT(m, i, j))) { // Lokasi pick up daftar pesanan
         print_red((char) ELMT(m, i, j));
       } else if (TOP(tas).DropOff == (char) ELMT(m, i, j)) { // Lokasi drop off, 
         print_blue((char) ELMT(m, i, j));

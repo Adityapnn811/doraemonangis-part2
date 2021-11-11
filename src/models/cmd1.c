@@ -95,7 +95,9 @@ void dropoffcmd(Player p, Config *newgame, Tas *tas)
             } else if (tipe_pesanan == 'N') {
                 printf("Pesanan Normal Item berhasil diantarkan\n");
             } else if (tipe_pesanan == 'P') {
+                (*tas).maxTas += 1;
                 printf("Pesanan Perish Item berhasil diantarkan\n");
+                printf("Kapasitas tas Mobita bertambah 1!\n");
             } else if (tipe_pesanan == 'V') {
                 printf("Pesanan VIP Item berhasil diantarkan\n");
             }

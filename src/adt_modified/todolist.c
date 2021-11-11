@@ -43,6 +43,29 @@ AddressTD search(TDList l, Pesanan val){
         return NULL;
     }
 }
+
+boolean searchPickUpTD(TDList l, char pickup) {
+    /* KAMUS LOKAL */
+    AddressTD p;
+    boolean found;
+    /* ALGORITMA */
+    if (isEmptyTD(l)) {
+        return false;
+    } else {
+        p = FIRSTTD(l);
+        found = false;
+        while (p != NULL &&  !found) {
+            if (PICKUP(INFOTD(p)) == pickup) {
+                found = true;
+            } else {
+                p = NEXTTD(p);
+            }
+        }
+        return found;
+    }
+    
+}
+
 void insertFirstTD(TDList *l, Pesanan val){
     AddressTD p = allocate(val);
     AddressTD loc = FIRSTTD(*l);
