@@ -22,7 +22,7 @@ typedef struct {
 #define FIRSTTD(L) ((L).first)
 #define LASTTD(L) ((L).last)
 
-void CreateTDfromPSN(TDList *l,DaftarPesanan psn);
+void CreateTDfromPSN(TDList *l,DaftarPesanan psn,int waktu);
 void CreateListTD(TDList *l);
 boolean isEmptyTD(TDList l);
 AddressTD allocate(Pesanan val);
@@ -35,6 +35,6 @@ void deleteFirstTD(TDList *l, Pesanan *val);
 void deleteLastTD(TDList *l, Pesanan *val);
 void deleteAtTD(TDList *l, AddressTD Tp);
 
-void DisplayListToDo(DaftarPesanan psn);
+void DisplayListToDo(DaftarPesanan psn,int waktu);
 
 #endif // TODOLIST_H_INCLUDED

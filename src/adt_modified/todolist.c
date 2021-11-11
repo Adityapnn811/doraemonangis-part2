@@ -114,19 +114,25 @@ void deleteAtTD(TDList *l, AddressTD Tp){
 
 }
 
-void CreateTDfromPSN(TDList *l,DaftarPesanan psn){
+void CreateTDfromPSN(TDList *l,DaftarPesanan psn,int waktu){
     DaftarPesanan pt = psn;
-    while(!isEmptyDftr(pt)){
+    boolean flag = false;
+    while(!isEmptyDftr(pt) && !flag){
         Pesanan pt1;
         dequeuePsntoVal(&pt,&pt1);
-        insertLastTD(l,pt1);
+        if(pt1.TimeIn<=waktu){
+            insertLastTD(l,pt1);
+        }else{
+            flag = true;
+        }
+        
     }
 }
 
-void DisplayListToDo(DaftarPesanan psn){
+void DisplayListToDo(DaftarPesanan psn,int waktu){
     TDList l;
     CreateListTD(&l);
-    CreateTDfromPSN(&l,psn);
+    CreateTDfromPSN(&l,psn,waktu);
     AddressTD pt = FIRSTTD(l);
     int a = 1;
     printf("Pesanan pada To Do List:\n");
