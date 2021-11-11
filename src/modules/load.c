@@ -17,37 +17,27 @@ boolean loadGame(char *filename, Config *conf)
     return false;
   }
 
+  /**
+   * Tidak dilakukan validasi karena asumsi file konfigurasi valid
+   */
+
   int x, y, n, i, j;
 
   // Ukuran map
 
   startWord(fp);
-  if (endWord || !wordToInt(currentWord, &(conf->mapRows)) ||
-      conf->mapRows < 10 || conf->mapRows > 20)
-  {
-    return false;
-  }
+  wordToInt(currentWord, &(conf->mapRows));
 
   advWord();
-  if (endWord || !wordToInt(currentWord, &(conf->mapCols)) ||
-      conf->mapCols < 10 || conf->mapCols > 30)
-  {
-    return false;
-  }
+  wordToInt(currentWord, &(conf->mapCols));
 
   // Koordinat HQ
 
   startWord(fp);
-  if (endWord || !wordToInt(currentWord, &x))
-  {
-    return false;
-  }
+  wordToInt(currentWord, &x);
 
   advWord();
-  if (endWord || !wordToInt(currentWord, &y))
-  {
-    return false;
-  }
+  wordToInt(currentWord, &y);
 
   Bangunan b;
   b.label = '8';
@@ -57,10 +47,7 @@ boolean loadGame(char *filename, Config *conf)
 
   // Jumlah lokasi
   startWord(fp);
-  if (endWord || !wordToInt(currentWord, &n))
-  {
-    return false;
-  }
+  wordToInt(currentWord, &n);
 
   // Insert HQ dulu
   CreateListPointDin(&(conf->bangunans), n);
@@ -70,23 +57,13 @@ boolean loadGame(char *filename, Config *conf)
   for (i = 0; i < n; i++)
   {
     startWord(fp);
-    if (endWord || currentWord.length != 1)
-    {
-      return false;
-    }
     b.label = currentWord.contents[0];
 
     advWord();
-    if (endWord || !wordToInt(currentWord, &x))
-    {
-      return false;
-    }
+    wordToInt(currentWord, &x);
 
     advWord();
-    if (endWord || !wordToInt(currentWord, &y))
-    {
-      return false;
-    }
+    wordToInt(currentWord, &y);
 
     b.position = MakePOINT(x, y);
     insertLastListPoint(&(conf->bangunans), b);
@@ -103,19 +80,10 @@ boolean loadGame(char *filename, Config *conf)
     startWord(fp);
     for (j = 0; j < matSize; j++)
     {
-      if (endWord || !wordToInt(currentWord, &x))
-      {
-        return false;
-      }
-
+      wordToInt(currentWord, &x);
       ELMT(matrix, i, j) = x;
       advWord();
     }
-  }
-
-  if (!isSymmetric(matrix))
-  {
-    return false;
   }
 
   conf->adjMatrix = matrix;
@@ -124,10 +92,7 @@ boolean loadGame(char *filename, Config *conf)
 
   // Jumlah pesanan
   startWord(fp);
-  if (endWord || !wordToInt(currentWord, &n))
-  {
-    return false;
-  }
+  wordToInt(currentWord, &n);
 
   // List pesanan
   DaftarPesanan pesanans;
@@ -139,39 +104,21 @@ boolean loadGame(char *filename, Config *conf)
     char pickUp, dropOff, itemType;
 
     startWord(fp);
-    if (endWord || !wordToInt(currentWord, &tIn))
-    {
-      return false;
-    }
+    wordToInt(currentWord, &tIn);
 
     advWord();
-    if (endWord || currentWord.length != 1)
-    {
-      return false;
-    }
     pickUp = currentWord.contents[0];
 
     advWord();
-    if (endWord || currentWord.length != 1)
-    {
-      return false;
-    }
     dropOff = currentWord.contents[0];
 
     advWord();
-    if (endWord || currentWord.length != 1)
-    {
-      return false;
-    }
     itemType = currentWord.contents[0];
 
     if (itemType == 'P')
     {
       advWord();
-      if (endWord || !wordToInt(currentWord, &tPerish))
-      {
-        return false;
-      }
+      wordToInt(currentWord, &tPerish);
     }
 
     CreatePesanan(&p, tIn, pickUp, dropOff, itemType, tPerish);
