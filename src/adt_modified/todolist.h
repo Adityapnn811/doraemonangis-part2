@@ -29,6 +29,9 @@ AddressTD allocate(Pesanan val);
 
 AddressTD search(TDList l, Pesanan val);
 boolean searchPickUpTD(TDList l, char pickup);
+boolean searchDropOffTD(TDList l, char dropoff);
+Pesanan searchPickUpTDLabel(TDList l, char pickup);
+Pesanan searchDropOffTDLabel(TDList l, char dropofflabel);
 void insertFirstTD(TDList *l, Pesanan val);
 void insertLastTD(TDList *l, Pesanan val);
 
@@ -37,5 +40,6 @@ void deleteLastTD(TDList *l, Pesanan *val);
 void deleteAtTD(TDList *l, AddressTD Tp);
 
 void DisplayListToDo(DaftarPesanan psn,int waktu);
+void DisplayListToDoOnly(TDList l,int waktu);
 
 #endif // TODOLIST_H_INCLUDED

@@ -79,7 +79,7 @@ void movecmd(Player *p, Config newgame, TDList *todo, boolean *speedboost, int *
 
     if (getRelation(newgame.adjMatrix, newgame.bangunans, CUR_LOC(*p), p)) {
         // Cek apakah speedboost aktif
-        if (speedboost) {
+        if (speedboost == true) {
             printf("speedboost aktif\n");
             if (*counterMove == 10) { // klo udah move 10 kali, berarti speedboostnya ilang
                 *speedboost = false;
@@ -100,75 +100,73 @@ void movecmd(Player *p, Config newgame, TDList *todo, boolean *speedboost, int *
     CreateTDfromPSN(todo, newgame.pesanans, WAKTU(*p));
 }
 
-void dropoffcmd(Player p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove)
+void dropoffcmd(Player p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove, TDList *todo)
 {
     Item droppeditem;
-    int i;
-    for(i=0;i<20;i++) {
-        if (curLocLabel(p, *newgame) == (*newgame).pesanans.daftar[i].DropOff) {
-            char tipe_pesanan = (*newgame).pesanans.daftar[i].ItemType;
-            if (tipe_pesanan == 'H') {
-                printf("Pesanan Heavy Item berhasil diantarkan\n");
-                *speedboost = true;
-                *counterMove = 0;
-                printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
-            } else if (tipe_pesanan == 'N') {
-                printf("Pesanan Normal Item berhasil diantarkan\n");
-            } else if (tipe_pesanan == 'P') {
-                (*tas).maxTas += 1;
-                printf("Pesanan Perish Item berhasil diantarkan\n");
-                printf("Kapasitas tas Mobita bertambah 1!\n");
-            } else if (tipe_pesanan == 'V') {
-                printf("Pesanan VIP Item berhasil diantarkan\n");
-            }
+    if (searchDropOffTD(*todo,curLocLabel(p, (*newgame))) == true) {
+        Pesanan dropoffpsn;
+        CreatePesanan(&dropoffpsn, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).TimeIn, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).PickUp, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).DropOff, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).ItemType, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).TimePerish);
+        char tipe_pesanan = dropoffpsn.ItemType;
+        if (tipe_pesanan == 'H') {
+            printf("Pesanan Heavy Item berhasil diantarkan\n");
+            *speedboost = true;
+            *counterMove = 0;
+            printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
+        } else if (tipe_pesanan == 'N') {
+            printf("Pesanan Normal Item berhasil diantarkan\n");
+        } else if (tipe_pesanan == 'P') {
+            (*tas).maxTas += 1;
+            printf("Pesanan Perish Item berhasil diantarkan\n");
+            printf("Kapasitas tas Mobita bertambah 1!\n");
+        } else if (tipe_pesanan == 'V') {
+            printf("Pesanan VIP Item berhasil diantarkan\n");
         }
     }
+    
     // dropItemToVal(tas,&droppeditem);
     dropItem(tas);
     
     printf("Uang yang didapatkan: ___\n");
 }
 
-void pickupcmd(Player p, Config *newgame, Tas *tas) 
+void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo) 
 /* Mengambil pesanan yang terdapat di current location */
 {
-    // // printf("label %c", CUR_LOCL);
-    for(int j=0;j<20;j++) { // j = banyak pesanan
-        if (curLocLabel(p, (*newgame)) == (*newgame).pesanans.daftar[j].PickUp) {
-            char tipe_pesanan = (*newgame).pesanans.daftar[j].ItemType;
-            if (tipe_pesanan == 'H') {
-                printf("Pesanan berupa Heavy Item berhasil diambil!\n");
-            } else if (tipe_pesanan == 'N') {
-                printf("Pesanan berupa Normal Item berhasil diambil!\n");
-            } else if (tipe_pesanan == 'P') {
-                printf("Pesanan berupa Perish Item berhasil diambil!\n");
-            } else if (tipe_pesanan == 'V') {
-                printf("Pesanan berupa VIP Item berhasil diambil!\n");
-            }
-            printf("Tujuan Pesanan: %c\n", (*newgame).pesanans.daftar[j].DropOff);
-            Item item;
-            if ((*newgame).pesanans.daftar[j].ItemType != 'P') {
-                CreateItem(&item, (*newgame).pesanans.daftar[j].TimeIn, (*newgame).pesanans.daftar[j].PickUp, (*newgame).pesanans.daftar[j].DropOff, (*newgame).pesanans.daftar[j].ItemType, IDX_UNDEF);
-                addItem(tas, item);
-                printf("pickup berhasil\n");
-                printf("length tas %d\n", lengthTas(*tas));
-                Pesanan p;
-                CreatePesanan(&p, (*newgame).pesanans.daftar[j].TimeIn, (*newgame).pesanans.daftar[j].PickUp, (*newgame).pesanans.daftar[j].DropOff, (*newgame).pesanans.daftar[j].ItemType, IDX_UNDEF);
-                PesananSelesai(&(*newgame).pesanans,p);
-            } else {
-                CreateItem(&item, (*newgame).pesanans.daftar[j].TimeIn, (*newgame).pesanans.daftar[j].PickUp, (*newgame).pesanans.daftar[j].DropOff, (*newgame).pesanans.daftar[j].ItemType, (*newgame).pesanans.daftar[j].TimePerish);
-                addItem(tas, item);
-                printf("pickup perish berhasil\n");
-                printf("length tas %d\n", lengthTas(*tas));
-                Pesanan p;
-                CreatePesanan(&p, (*newgame).pesanans.daftar[j].TimeIn, (*newgame).pesanans.daftar[j].PickUp, (*newgame).pesanans.daftar[j].DropOff, (*newgame).pesanans.daftar[j].ItemType, (*newgame).pesanans.daftar[j].TimePerish);
-                PesananSelesai(&(*newgame).pesanans,p);
-            }
-
+    printf("bp 1\n");
+    if (searchPickUpTD(*todo,curLocLabel(p, (*newgame))) == true) {
+        printf("bp 2\n");
+        Pesanan pickuppsn;
+        CreatePesanan(&pickuppsn, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).TimeIn, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).PickUp, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).DropOff, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).ItemType, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).TimePerish);
+        char tipe_pesanan = pickuppsn.ItemType;
+        printf("bp 3\n");
+        if (tipe_pesanan == 'H') {
+            printf("Pesanan berupa Heavy Item berhasil diambil!\n");
+        } else if (tipe_pesanan == 'N') {
+            printf("Pesanan berupa Normal Item berhasil diambil!\n");
+        } else if (tipe_pesanan == 'P') {
+            printf("Pesanan berupa Perish Item berhasil diambil!\n");
+        } else if (tipe_pesanan == 'V') {
+            printf("Pesanan berupa VIP Item berhasil diambil!\n");
         }
-        // else {
-        //     printf("bukan lokasi pick up\n");
-        // }
+        printf("Tujuan Pesanan: %c\n", pickuppsn.DropOff);
+        Item item;
+
+        if (pickuppsn.ItemType != 'P') {
+            CreateItem(&item, pickuppsn.TimeIn, pickuppsn.PickUp, pickuppsn.DropOff, pickuppsn.ItemType, IDX_UNDEF);
+            addItem(tas, item);
+            printf("pickup berhasil\n");
+            printf("length tas %d\n", lengthTas(*tas));
+            deleteAtTD(todo, search(*todo,pickuppsn));
+        } else {
+            CreateItem(&item, pickuppsn.TimeIn, pickuppsn.PickUp, pickuppsn.DropOff, pickuppsn.ItemType, pickuppsn.TimePerish);
+            addItem(tas, item);
+            printf("pickup perish berhasil\n");
+            printf("length tas %d\n", lengthTas(*tas));
+            deleteAtTD(todo, search(*todo,pickuppsn));
+        }
+
     }
-    dequeuePsn(&(*newgame).pesanans);
+    else {
+        printf("bukan lokasi pick up\n");
+    }
 }

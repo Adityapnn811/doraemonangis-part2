@@ -44,6 +44,54 @@ AddressTD search(TDList l, Pesanan val){
     }
 }
 
+Pesanan searchPickUpTDLabel(TDList l, char pickuplabel) {
+/* searching to do list berdasarkan label */
+    /* KAMUS LOKAL */
+    AddressTD p;
+    Pesanan label;
+    boolean perish;
+    boolean found;
+    /* ALGORITMA */
+    
+    p = FIRSTTD(l);
+    found = false;
+    perish = false;
+    while (p != NULL &&  !found) {
+        if (PICKUP(INFOTD(p)) == pickuplabel) {
+            found = true;
+            label = p->info;
+        } else {
+            p = NEXTTD(p);
+        }
+    }
+    return label;
+    
+}
+
+Pesanan searchDropOffTDLabel(TDList l, char dropofflabel) {
+/* searching to do list berdasarkan label */
+    /* KAMUS LOKAL */
+    AddressTD p;
+    Pesanan label;
+    boolean perish;
+    boolean found;
+    /* ALGORITMA */
+    
+    p = FIRSTTD(l);
+    found = false;
+    perish = false;
+    while (p != NULL &&  !found) {
+        if (PICKUP(INFOTD(p)) == dropofflabel) {
+            found = true;
+            label = p->info;
+        } else {
+            p = NEXTTD(p);
+        }
+    }
+    return label;
+    
+}
+
 boolean searchPickUpTD(TDList l, char pickup) {
     /* KAMUS LOKAL */
     AddressTD p;
@@ -56,6 +104,28 @@ boolean searchPickUpTD(TDList l, char pickup) {
         found = false;
         while (p != NULL &&  !found) {
             if (PICKUP(INFOTD(p)) == pickup) {
+                found = true;
+            } else {
+                p = NEXTTD(p);
+            }
+        }
+        return found;
+    }
+    
+}
+
+boolean searchDropOffTD(TDList l, char dropoff) {
+    /* KAMUS LOKAL */
+    AddressTD p;
+    boolean found;
+    /* ALGORITMA */
+    if (isEmptyTD(l)) {
+        return false;
+    } else {
+        p = FIRSTTD(l);
+        found = false;
+        while (p != NULL &&  !found) {
+            if (DROPOFF(INFOTD(p)) == dropoff) {
                 found = true;
             } else {
                 p = NEXTTD(p);
@@ -181,6 +251,34 @@ void DisplayListToDo(DaftarPesanan psn,int waktu){
         }
         pt = NEXTTD(pt);
     }
+}
+
+void DisplayListToDoOnly(TDList l,int waktu) {
+    AddressTD pt = FIRSTTD(l);
+    int a = 1;
+    printf("Pesanan pada To Do List:\n");
+    while(pt!=NULL){
+        if(INFOTD(pt).done==false && a<10){
+            printf("%d. ",a);
+            printf("%c -> %c",INFOTD(pt).PickUp,INFOTD(pt).DropOff,INFOTD(pt).ItemType);
+            if(INFOTD(pt).ItemType=='N'){
+                printf(" (Normal Item)");
+            }else if(INFOTD(pt).ItemType=='H'){
+                printf(" (Heavy Item)");
+            }else if(INFOTD(pt).ItemType=='P'){
+                printf(" (Perishable Item)");
+            }else{
+                printf("VIP Item");
+            }
+            if(INFOTD(pt).ItemType!='P'){
+                printf("\n");
+            }else{
+                printf(" %d\n",INFOTD(pt).TimePerish);
+            }
+            a++;
+        }
+        pt = NEXTTD(pt);
+    }  
 }
 
 

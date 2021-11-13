@@ -82,13 +82,13 @@ void newgames(Config newgame, char*filename) {
         if (strcmp(input, "MOVE\n") == 0) {
             movecmd(&p, newgame, &todo, &speedboost, &counterMove);
         } else if (strcmp(input, "PICK_UP\n") == 0) {
-            pickupcmd(p, &newgame, &tas);
+            pickupcmd(p, &newgame, &tas, &todo);
         } else if (strcmp(input, "DROP_OFF\n") == 0) {
-            dropoffcmd(p, &newgame, &tas, &speedboost, &counterMove);
+            dropoffcmd(p, &newgame, &tas, &speedboost, &counterMove, &todo);
         } else if (strcmp(input, "IN_PROGRESS\n") == 0) {
             DisplayInPrgs(tas);
         } else if (strcmp(input, "TO_DO\n") == 0) {
-            DisplayListToDo(newgame.pesanans,WAKTU(p));
+            DisplayListToDoOnly(todo,WAKTU(p));
         } 
         
         else {
