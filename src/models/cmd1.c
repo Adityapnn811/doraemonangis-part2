@@ -79,7 +79,7 @@ void movecmd(Player *p, Config newgame, TDList *todo, boolean *speedboost, int *
 
     if (getRelation(newgame.adjMatrix, newgame.bangunans, CUR_LOC(*p), p)) {
         // Cek apakah speedboost aktif
-        if (speedboost == true) {
+        if (*speedboost == true) {
             printf("speedboost aktif\n");
             if (*counterMove == 10) { // klo udah move 10 kali, berarti speedboostnya ilang
                 *speedboost = false;
