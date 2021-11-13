@@ -23,7 +23,7 @@ void newgames(Config newgame, char*filename) {
 
     Matrix m;
     readCustomMatrix(&m,newgame.mapRows+2,newgame.mapCols+2);
-    printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity); // capacity blom diassign di load
+    printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity);
 
     displayMatrix(m);
     /* END OF MENAMPILKAN ISI LOAD CONFIG.TXT */
@@ -43,8 +43,6 @@ void newgames(Config newgame, char*filename) {
     printf("Waktu player sebesar %d\n", WAKTU(p));
     printf("Lokasi player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
     printf("\n");
-    setUang(&p, 1000);
-    setWaktu(&p, 20);
     setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
     printf("Uang player sebesar %d\n", UANG(p));
     printf("Waktu player sebesar %d\n", WAKTU(p));

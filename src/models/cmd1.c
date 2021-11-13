@@ -12,7 +12,6 @@ boolean getRelation(Matrix m, ListPointDin l, POINT pt, Player *plyr) {
     //     printf("if nya bisa\n");
     // }
     int inputInt = atoi(input);
-    printf("nilai inputInt %d", inputInt);
     int i=0;
     boolean found = false;
     while((0<COLS(m) && !found)) {
