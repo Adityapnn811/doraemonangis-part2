@@ -132,13 +132,10 @@ void dropoffcmd(Player p, Config *newgame, Tas *tas, boolean *speedboost, int *c
 void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo) 
 /* Mengambil pesanan yang terdapat di current location */
 {
-    printf("bp 1\n");
     if (searchPickUpTD(*todo,curLocLabel(p, (*newgame))) == true) {
-        printf("bp 2\n");
         Pesanan pickuppsn;
         CreatePesanan(&pickuppsn, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).TimeIn, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).PickUp, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).DropOff, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).ItemType, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).TimePerish);
         char tipe_pesanan = pickuppsn.ItemType;
-        printf("bp 3\n");
         if (tipe_pesanan == 'H') {
             printf("Pesanan berupa Heavy Item berhasil diambil!\n");
         } else if (tipe_pesanan == 'N') {
