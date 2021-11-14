@@ -72,32 +72,36 @@ void newgames(Config newgame, char*filename) {
     showMap(&m,newgame.bangunans);
     displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter;
 
-    /* COMMAND MOVE, PICK UP */
+    /* COMMAND */
     printf("Waktu: %d\n", WAKTU(p));
-    /* ini nanti dipanggil dari main program di command MOVE */
-    while (true) {
-        char input[30];
+    boolean isDone = false;
+    while (!isDone) {
         printf("\nENTER COMMAND di newgame: ");
-        fgets(input,30,stdin);
-        if (strcmp(input, "MOVE\n") == 0) {
-            movecmd(&p, newgame, &todo, &speedboost, &counterMove);
-        } else if (strcmp(input, "PICK_UP\n") == 0) {
-            pickupcmd(p, &newgame, &tas, &todo);
-        } else if (strcmp(input, "DROP_OFF\n") == 0) {
-            dropoffcmd(p, &newgame, &tas, &speedboost, &counterMove, &todo);
-        } else if (strcmp(input, "IN_PROGRESS\n") == 0) {
-            DisplayInPrgs(tas);
-        } else if (strcmp(input, "TO_DO\n") == 0) {
-            DisplayListToDoOnly(todo,WAKTU(p));
-        } 
-        
-        else {
-            printf("RWONG INPUT\n");
+        startWord(stdin);
+        if (endWord) {
+            if (move(currentWord.contents, currentWord.length)) {
+                movecmd(&p, newgame, &todo, &speedboost, &counterMove);
+            } else if (pick_up(currentWord.contents, currentWord.length)) {
+                pickupcmd(p, &newgame, &tas, &todo);
+            } else if (drop_off(currentWord.contents, currentWord.length)) {
+                dropoffcmd(p, &newgame, &tas, &speedboost, &counterMove, &todo);
+            } else if (in_progress(currentWord.contents, currentWord.length)) {
+                DisplayInPrgs(tas);
+            } else if (to_do(currentWord.contents, currentWord.length)) {
+                DisplayListToDoOnly(todo,WAKTU(p));
+            } 
+            else {
+                printf("WRONG INPUT\n");
+                isDone = true;
+            }
+            printf("Waktu new game: %d", WAKTU(p));
+            enter;enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; 
+        } else {
+            while (!endWord) {
+                advWord();
+            }
         }
-        // pickupcmd(p, newgame, tas);enter;
-
-        printf("Waktu new game: %d", WAKTU(p));
-        enter;enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter;   
+  
     }
 
     enter;
