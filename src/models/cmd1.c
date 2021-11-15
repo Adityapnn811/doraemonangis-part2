@@ -65,7 +65,7 @@ ListPointDin MakeRelationList(ListPointDin x) {
     return x;
 }
 
-void movecmd(Player *p, Config newgame, TDList *todo, boolean *speedboost, int *counterMove /*kurang heavyitem*/)
+void movecmd(Player *p, Config newgame, TDList *todo, Tas *t, boolean *speedboost, int *counterMove /*kurang heavyitem*/)
 /* Mengatur current loc player ke lokasi yang baru */
 {
     printf("-----COMMAND MOVE-----\n");
@@ -85,14 +85,17 @@ void movecmd(Player *p, Config newgame, TDList *todo, boolean *speedboost, int *
                 *speedboost = false;
                 *counterMove = 0;
                 setWaktu(p, (WAKTU(*p)+1));
+                reduceAllPerishTime(t);
             } else if (*counterMove != 0 && *counterMove % 2 == 0) {
                 setWaktu(p, (WAKTU(*p)+1));
+                reduceAllPerishTime(t);
                 *counterMove += 1;
             } else {
                 *counterMove += 1;
             }
         } else {
             setWaktu(p, (WAKTU(*p)+1));
+            reduceAllPerishTime(t);
         }
         
     }

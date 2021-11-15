@@ -7,7 +7,7 @@ boolean useAbility = false;
 
 void CreateTas(Tas *tas){
      IDX_TOP(*tas) = IDX_UNDEF;
-     (*tas).maxTas = 20;
+     (*tas).maxTas = 3;
 }
 
 int lengthTas(Tas tas){
@@ -75,4 +75,37 @@ void DisplayInPrgs(Tas t){
         }
     }
 
+}
+
+void reduceAllPerishTime(Tas *t) {
+    /* KAMUS LOKAL */
+    Tas temp;
+    Item val;
+    /* ALGORITMA */
+    CreateTas(&temp);
+    temp.maxTas = t->maxTas + 1;
+    while (!isEmptyTas(*t)) {
+        if (TYPE(TOP(*t)) == 'P') {
+            setTimePerish(&TOP(*t), (TIMEPERISH(TOP(*t)) - 1));
+            if (TIMEPERISH(TOP(*t)) == 0) {
+                //delete item
+                printf("Yah, perishable item dengan tujuan %c sudah hilang :(\n", DROPOFF(TOP(*t)));
+                dropItem(t);
+            } else {
+                // pindah top of stack ke temp
+                dropItemToVal(t, &val);
+                addItem(&temp, val);
+            }
+        } else {
+            // pindah top of stack ke temp
+            dropItemToVal(t, &val);
+            addItem(&temp, val);
+        }
+    }
+    
+    // masukin semua stack dari item ke tas awal
+    while (!isEmptyTas(temp)) {
+        dropItemToVal(&temp, &val);
+        addItem(t, val);
+    }
 }
