@@ -84,7 +84,7 @@ void newgames(Config newgame, char*filename) {
         startWord(stdin);
         if (endWord) {
             if (move(currentWord.contents, currentWord.length)) {
-                movecmd(&p, newgame, &todo, &speedboost, &counterMove);
+                movecmd(&p, newgame, &todo, &tas, &speedboost, &counterMove);
             } else if (pick_up(currentWord.contents, currentWord.length)) {
                 pickupcmd(p, &newgame, &tas, &todo, &speedboost, &counterMove);
             } else if (drop_off(currentWord.contents, currentWord.length)) {
