@@ -37,6 +37,10 @@ void newgames(Config newgame, char*filename) {
     boolean speedboost = false;
     int counterMove = 0;
 
+    /* STATUS COUNTER HEAVY ITEM */
+    int countHeavy = 0;
+    // ntar tinggal setWaktu(p, (WAKTU(*p)+1+countHeavy));
+
     /* START OF TEST */
     /* TEST DRIVER PLAYER */
     printf("Uang player sebesar %d\n", UANG(p));
@@ -82,7 +86,7 @@ void newgames(Config newgame, char*filename) {
             if (move(currentWord.contents, currentWord.length)) {
                 movecmd(&p, newgame, &todo, &speedboost, &counterMove);
             } else if (pick_up(currentWord.contents, currentWord.length)) {
-                pickupcmd(p, &newgame, &tas, &todo);
+                pickupcmd(p, &newgame, &tas, &todo, &speedboost, &counterMove);
             } else if (drop_off(currentWord.contents, currentWord.length)) {
                 dropoffcmd(p, &newgame, &tas, &speedboost, &counterMove, &todo);
             } else if (in_progress(currentWord.contents, currentWord.length)) {

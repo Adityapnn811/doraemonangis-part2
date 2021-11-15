@@ -129,7 +129,7 @@ void dropoffcmd(Player p, Config *newgame, Tas *tas, boolean *speedboost, int *c
     printf("Uang yang didapatkan: ___\n");
 }
 
-void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo) 
+void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, boolean *speedboost, int *counterMove) 
 /* Mengambil pesanan yang terdapat di current location */
 {
     if (searchPickUpTD(*todo,curLocLabel(p, (*newgame))) == true) {
@@ -138,6 +138,9 @@ void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo)
         char tipe_pesanan = pickuppsn.ItemType;
         if (tipe_pesanan == 'H') {
             printf("Pesanan berupa Heavy Item berhasil diambil!\n");
+            // speedboost lgsg digagalin
+            *speedboost = false;
+            *counterMove = 0;
         } else if (tipe_pesanan == 'N') {
             printf("Pesanan berupa Normal Item berhasil diambil!\n");
         } else if (tipe_pesanan == 'P') {
