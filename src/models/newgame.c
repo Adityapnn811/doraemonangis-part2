@@ -88,7 +88,7 @@ void newgames(Config newgame, char*filename) {
             } else if (in_progress(currentWord.contents, currentWord.length)) {
                 DisplayInPrgs(tas);
             } else if (to_do(currentWord.contents, currentWord.length)) {
-                DisplayListToDoOnly(todo,WAKTU(p));
+                DisplayListToDo(newgame.pesanans,WAKTU(p));
             } 
             else {
                 printf("WRONG INPUT\n");

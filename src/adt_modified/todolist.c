@@ -230,7 +230,7 @@ void DisplayListToDo(DaftarPesanan psn,int waktu){
     int a = 1;
     printf("Pesanan pada To Do List:\n");
     while(pt!=NULL){
-        if(INFOTD(pt).done==false && a<10){
+        if(INFOTD(pt).done==false && a<15){
             printf("%d. ",a);
             printf("%c -> %c",INFOTD(pt).PickUp,INFOTD(pt).DropOff,INFOTD(pt).ItemType);
             if(INFOTD(pt).ItemType=='N'){
@@ -253,7 +253,9 @@ void DisplayListToDo(DaftarPesanan psn,int waktu){
     }
 }
 
-void DisplayListToDoOnly(TDList l,int waktu) {
+void DisplayListToDoOnly(DaftarPesanan psn, TDList l,int waktu) {
+/* ini sebenernya udh gue buat display yg dari to do, tapi kayak yg gue kirim ss di line, pesanan yg udh muncul, kalo command to do lagi bakal muncul lagi dia (jadi double) */
+    CreateTDfromPSN(&l,psn,waktu); // karena ini mungkin diakalin biar bikin to do nya engga double
     AddressTD pt = FIRSTTD(l);
     int a = 1;
     printf("Pesanan pada To Do List:\n");
