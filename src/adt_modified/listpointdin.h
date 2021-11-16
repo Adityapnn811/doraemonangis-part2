@@ -4,13 +4,18 @@
 #define LISTPOINTDIN_H
 
 #include "../modules/boolean.h"
-#include "../modules/bangunan.h"
 
 /*  Kamus Umum */
 #define IDX_UNDEF -1
 /* Indeks tak terdefinisi*/
 
 /* Definisi elemen dan tipe data */
+typedef struct bangunan
+{
+  char label;
+  POINT position;
+} Bangunan;
+
 typedef Bangunan ListElType;
 typedef int IdxType;
 typedef struct

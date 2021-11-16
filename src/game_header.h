@@ -31,7 +31,6 @@
 #include "./adt_modified/word.h"
 
 /* modules */
-#include "./modules/bangunan.h"
 #include "./modules/boolean.h"
 #include "./modules/command.h"
 #include "./modules/config.h"

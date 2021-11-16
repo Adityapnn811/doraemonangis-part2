@@ -1,10 +1,7 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#include "bangunan.h"
-#include "../adt_modified/listpointdin.h"
-#include "../adt_modified/pesanan.h"
-#include "../adt/matrix.h"
+#include "../game_header.h"
 
 typedef struct config
 {
