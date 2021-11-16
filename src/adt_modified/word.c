@@ -2,6 +2,7 @@
 
 boolean wordEquals(Word word, char *str)
 {
+
   int i = 0;
   while (i < word.length && str[i] != '\0')
   {
@@ -13,7 +14,7 @@ boolean wordEquals(Word word, char *str)
     i++;
   }
 
-  return (i == (word.length - 1)) && (str[i] == '\0');
+  return (i == word.length) && (str[i] == '\0');
 }
 
 void wordToStr(Word word, char *value)

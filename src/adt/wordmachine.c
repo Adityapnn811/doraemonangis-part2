@@ -43,6 +43,9 @@ void startWord(FILE *tape)
   start(tape);
   ignoreBlank();
 
+  /* Reset currentWord */
+  currentWord.length = 0;
+
   endWord = eot;
   if (!endWord)
   {

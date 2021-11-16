@@ -48,23 +48,67 @@ static boolean readOneWord(FILE *tape)
   return true;
 }
 
-static boolean readPoint(POINT *point, FILE *tape)
+static boolean readPoint(POINT *point)
 {
   int x, y;
 
-  startWord(tape);
-  if (endWord || !wordToInt(currentWord, &x))
+  if (!wordToInt(currentWord, &x) || endWord)
   {
     return false;
   }
 
   advWord();
-  if (endWord || !wordToInt(currentWord, &y))
+  if (!wordToInt(currentWord, &y))
   {
     return false;
   }
 
   *point = MakePOINT(x, y);
+  return true;
+}
+
+static boolean readPesanan(int *timeIn, char *pickUp, char *dropOff, char *type, int *timePerish)
+{
+  if (!wordToInt(currentWord, timeIn) || endWord)
+  {
+    return false;
+  }
+
+  advWord();
+  if (currentWord.length != 1 || endWord)
+  {
+    return false;
+  }
+  *pickUp = currentWord.contents[0];
+
+  advWord();
+  if (currentWord.length != 1 || endWord)
+  {
+    return false;
+  }
+  *dropOff = currentWord.contents[0];
+
+  advWord();
+  if (currentWord.length != 1)
+  {
+    return false;
+  }
+  *type = currentWord.contents[0];
+
+  if (*type == 'P')
+  {
+    if (endWord)
+    {
+      return false;
+    }
+
+    advWord();
+    if (!wordToInt(currentWord, timePerish))
+    {
+      return false;
+    }
+  }
+
   return true;
 }
 
@@ -107,10 +151,22 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
 
   fprintf(fp, "\n[IN_PROGRESS]\n");
 
-  Item item;
+  Item items[CAPACITY_TAS];
+
+  int bagLen = lengthTas(bag);
+  i = bagLen - 1;
   while (!isEmptyTas(bag))
   {
+    Item item;
     dropItemToVal(&bag, &item);
+    items[i] = item;
+    i--;
+  }
+
+  for (i = 0; i < bagLen; i++)
+  {
+    Item item = items[i];
+
     fprintf(fp, "%d %c %c %c", item.TimeIn, item.PickUp, item.DropOff, item.ItemType);
     if (item.ItemType == 'P')
     {
@@ -147,16 +203,7 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
   printf("Data game berhasil disimpan!");
 }
 
-enum LoadState
-{
-  LoadStart,
-  LoadPlayer,
-  LoadInventory,
-  LoadInProgress,
-  LoadTodo
-};
-
-void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
+void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *todo)
 {
   char str[WORD_CAPACITY + 1];
 
@@ -165,7 +212,7 @@ void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
   wordToStr(currentWord, str);
 
   FILE *fp;
-  fp = fopen(str, "w");
+  fp = fopen(str, "r");
   if (fp == NULL)
   {
     printf("Error dalam membuka file.");
@@ -181,11 +228,24 @@ void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
   short int loadCounter = 0;
   short int playerCounter = 0;
 
-  enum LoadState state = LoadStart;
+  enum LoadState
+  {
+    LoadStart,
+    LoadPlayer,
+    LoadInventory,
+    LoadInProgress,
+    LoadTodo
+  } state;
 
+  state = LoadStart;
   while (!feof(fp) && success)
   {
     startWord(fp);
+
+    if (endWord && currentWord.length == 0)
+    {
+      continue;
+    }
 
     if (endWord && currentWord.contents[0] == '[')
     {
@@ -230,9 +290,14 @@ void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
 
       if (wordEquals(currentWord, "Time"))
       {
+        if (endWord)
+        {
+          success = false;
+        }
+
         advWord();
 
-        if (endWord || !wordToInt(currentWord, &x))
+        if (!endWord || !wordToInt(currentWord, &x))
         {
           success = false;
         }
@@ -244,9 +309,14 @@ void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
       }
       else if (wordEquals(currentWord, "Money"))
       {
+        if (endWord)
+        {
+          success = false;
+        }
+
         advWord();
 
-        if (endWord || !wordToInt(currentWord, &x))
+        if (!endWord || !wordToInt(currentWord, &x))
         {
           success = false;
         }
@@ -258,8 +328,15 @@ void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
       }
       else if (wordEquals(currentWord, "Current_Loc"))
       {
+        if (endWord)
+        {
+          success = false;
+        }
+
         POINT p;
-        if (!readPoint(&p, fp))
+
+        advWord();
+        if (!readPoint(&p) || !endWord)
         {
           success = false;
         }
@@ -271,21 +348,28 @@ void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
       }
       else if (wordEquals(currentWord, "Prev_Loc"))
       {
+        if (endWord)
+        {
+          success = false;
+        }
+
         POINT p;
-        if (!readPoint(&p, fp))
+
+        advWord();
+        if (!readPoint(&p) || !endWord)
         {
           success = false;
         }
         else
         {
-          setPlayerPrevLoc(player, x, y);
+          setPlayerPrevLoc(player, Absis(p), Ordinat(p));
           playerCounter++;
         }
       }
     }
     else if (state == LoadInventory)
     {
-      if (!endWord || currentWord.length != 1)
+      if (!endWord || currentWord.length > 1)
       {
         success = false;
       }
@@ -303,5 +387,40 @@ void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
         }
       }
     }
+    else if (state == LoadInProgress)
+    {
+      int timeIn, timePerish;
+      char pickUp, dropOff, itemType;
+
+      if(!readPesanan(&timeIn, &pickUp, &dropOff, &itemType, &timePerish))
+      {
+        success = false;
+      }
+
+      Item item;
+      item.TimeIn = timeIn;
+      item.PickUp = pickUp;
+      item.DropOff = dropOff;
+      item.ItemType = itemType;
+      item.TimePerish = timePerish;
+
+      addItem(bag, item);
+    }
+    else if (state == LoadTodo)
+    {
+      int timeIn, timePerish;
+      char pickUp, dropOff, itemType;
+
+      if(!readPesanan(&timeIn, &pickUp, &dropOff, &itemType, &timePerish))
+      {
+        success = false;
+      }
+
+      Pesanan pesanan;
+      CreatePesanan(&pesanan, timeIn, pickUp, dropOff, itemType, timePerish);
+      insertLastTD(todo, pesanan);
+    }
   }
+
+  fclose(fp);
 }
