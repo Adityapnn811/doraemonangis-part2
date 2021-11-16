@@ -225,6 +225,10 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
   CreateTas(bag);
   CreateListTD(todo);
 
+  /* Todo menggunakan queue terlebih dahulu */
+  DaftarPesanan pesanans;
+  CreateDaftar(&pesanans);
+
   boolean success = true;
   short int loadCounter = 0;
   short int playerCounter = 0;
@@ -309,7 +313,6 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
             playerCounter++;
           }
         }
-
       }
       else if (wordEquals(currentWord, "Money"))
       {
@@ -353,7 +356,6 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
             playerCounter++;
           }
         }
-
       }
       else if (wordEquals(currentWord, "Prev_Loc"))
       {
@@ -424,7 +426,7 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
       int timeIn, timePerish;
       char pickUp, dropOff, itemType;
 
-      if(!readPesanan(&timeIn, &pickUp, &dropOff, &itemType, &timePerish))
+      if (!readPesanan(&timeIn, &pickUp, &dropOff, &itemType, &timePerish))
       {
         success = false;
       }
@@ -443,14 +445,70 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
       int timeIn, timePerish;
       char pickUp, dropOff, itemType;
 
-      if(!readPesanan(&timeIn, &pickUp, &dropOff, &itemType, &timePerish))
+      if (!readPesanan(&timeIn, &pickUp, &dropOff, &itemType, &timePerish))
       {
         success = false;
       }
 
       Pesanan pesanan;
       CreatePesanan(&pesanan, timeIn, pickUp, dropOff, itemType, timePerish);
-      insertLastTD(todo, pesanan);
+      enqueuePsn(&pesanans, pesanan);
+    }
+  }
+
+  if (success)
+  {
+    /* Bisa saja ada order fiktif di dalam IN_PROGRESS atau TODO */
+    /* Buat referensi berdasarkan konfigurasi */
+    TDList allTodo;
+    CreateTDfromPSN(&allTodo, &(conf.pesanans), WAKTU(*player));
+
+    /* Periksa in progress list */
+    Tas tmpBag = *bag;
+    while (!isEmptyTas(tmpBag))
+    {
+      Item item;
+      dropItemToVal(&tmpBag, &item);
+
+      if (item.TimeIn > WAKTU(*player))
+      {
+        success = false;
+      }
+      else
+      {
+        Pesanan pesanan;
+        CreatePesanan(&pesanan, item.TimeIn, item.PickUp, item.DropOff, item.ItemType, item.TimePerish);
+
+        AddressTD found = search(allTodo, pesanan);
+        if (found == NULL || (item.ItemType == 'P' && item.TimePerish > INFOTD(found).TimePerish))
+        {
+          success = false;
+        }
+      }
+    }
+
+    /* Periksa todolist */
+    while (!isEmptyDftr(pesanans) && success)
+    {
+      Pesanan pesanan = HEADPSN(pesanans);
+      dequeuePsn(&pesanans);
+
+      if (pesanan.TimeIn > WAKTU(*player))
+      {
+        success = false;
+      }
+      else
+      {
+        AddressTD found = search(allTodo, pesanan);
+        if (found == NULL || (pesanan.ItemType == 'P' && pesanan.TimePerish != INFOTD(found).TimePerish))
+        {
+          success = false;
+        }
+        else
+        {
+          insertLastTD(todo, pesanan);
+        }
+      }
     }
   }
 
