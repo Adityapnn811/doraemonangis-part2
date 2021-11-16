@@ -15,22 +15,6 @@ static boolean findGadget(char key, NamaGadget *g)
   return false;
 }
 
-boolean wordEquals(Word word, char *str)
-{
-  int i = 0;
-  while (i < word.length && str[i] != '\0')
-  {
-    if (word.contents[i] != str[i])
-    {
-      return false;
-    }
-
-    i++;
-  }
-
-  return (i == (word.length - 1)) && (str[i] == '\0');
-}
-
 boolean readFirstWord(FILE *tape)
 {
   startWord(tape);

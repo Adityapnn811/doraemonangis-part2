@@ -1,5 +1,21 @@
 #include "../game_header.h"
 
+boolean wordEquals(Word word, char *str)
+{
+  int i = 0;
+  while (i < word.length && str[i] != '\0')
+  {
+    if (word.contents[i] != str[i])
+    {
+      return false;
+    }
+
+    i++;
+  }
+
+  return (i == (word.length - 1)) && (str[i] == '\0');
+}
+
 void wordToStr(Word word, char *value)
 {
   int i;
