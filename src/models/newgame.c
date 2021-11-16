@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "../game_header.h"
+#include "./load.c"
 
 #include "cmd1.c" // command move, pickup, dropoff
 
@@ -115,6 +116,8 @@ void newgames(Config newgame, char*filename) {
                 
             }else if(inventory(currentWord.contents, currentWord.length)){
                 DisplayGadget(&invPlayer,&UANG(p),&tas,todo,tempPsn,&p, newgame.bangunans);
+            }else if (currentWord.contents[0] == '*') {
+                saveGame(p, invPlayer, tas, todo);
             }
             else {
                 printf("WRONG INPUT\n");
