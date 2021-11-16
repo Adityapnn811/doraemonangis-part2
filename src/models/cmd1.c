@@ -114,16 +114,20 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
 {
     Item droppeditem;
     dropItemToVal(tas,&droppeditem);
+    int countHeavy = CountHeavy(*tas);
     if (droppeditem.DropOff == curLocLabel(*p, (*newgame))) {
         char tipe_pesanan = droppeditem.ItemType;
         printf("TIPE PESANAN %c\n",tipe_pesanan);
         if (tipe_pesanan == 'H') {
             printf("Pesanan Heavy Item berhasil diantarkan\n");
-            *speedboost = true;
-            *counterMove = 0;
+            countHeavy -= 1;
+            if (countHeavy == 0) {
+                *speedboost = true;
+                *counterMove = 0;
+                printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
+            }
             UANG(*p) += 400;
             printf("Uang yang didapatkan: %d\n",400);
-            printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
         } else if (tipe_pesanan == 'N') {
             printf("Pesanan Normal Item berhasil diantarkan\n");
             UANG(*p) += 200;
