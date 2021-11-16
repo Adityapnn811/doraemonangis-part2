@@ -37,6 +37,7 @@
 #include "./modules/config.h"
 #include "./modules/help.h"
 #include "./modules/pcolor.h"
+#include "./modules/load.h"
 
 /* include header masing - masing di sini */
 ////////////////////////////////
@@ -75,6 +76,7 @@
 // #include "./modules/help.c"
 #include "./modules/pcolor.c"
 #include "./modules/config.c"
+#include "./modules/load.c"
 
 /* include header masing - masing di sini */
 
