@@ -62,6 +62,7 @@ void newgames(Config newgame, char*filename) {
 
     /* TEST ADD ITEM TO TAS */
     Tas tas;
+    CreateTas(&tas);
     Item item;
     // CreateItem(&item, 4, 'N', 'I', 'H', 8);
     // CreateTas(&tas);
