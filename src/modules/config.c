@@ -1,6 +1,6 @@
 #include "../game_header.h"
 
-boolean loadGame(char *filename, Config *conf)
+boolean loadConfig(char *filename, Config *conf)
 {
   FILE *fp = fopen(filename, "r");
   if (fp == NULL)

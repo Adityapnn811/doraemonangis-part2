@@ -33,7 +33,7 @@ int main(){
                 /* isi fungsi buat new game */
                 Config newgame;
                 char *filename = "config.txt";
-                if (loadGame(filename, &newgame)) {
+                if (loadConfig(filename, &newgame)) {
                     printf("success");
                 } else {
                     printf("fail");

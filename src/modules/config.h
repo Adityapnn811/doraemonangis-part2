@@ -14,4 +14,6 @@ typedef struct config
   DaftarPesanan pesanans;
 } Config;
 
+boolean loadConfig(char *filename, Config *conf);
+
 #endif
