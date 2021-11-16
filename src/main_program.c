@@ -38,13 +38,16 @@ int main(){
                 } else {
                     printf("fail");
                 }
-                newgames(newgame, filename);
+                startGame(newgame, true);
             }else if(load_game(currentWord.contents, currentWord.length)){
                 /* load game disini */
-
-
                 /* isi fungsi buat load game */
-            
+                Config config;
+                if (loadConfig("config.txt", &config)) {
+                    startGame(config, false);
+                } else {
+                    printf("fail");
+                }
             }else if(exit_2(currentWord.contents, currentWord.length)){
                 printf("\nSelamat bertemu kembali!\n");
                 isDone = true;

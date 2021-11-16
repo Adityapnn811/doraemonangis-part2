@@ -7,7 +7,7 @@
 #define enter printf("\n");
 #define border printf("----------- END OF INFO CONFIG.TXT------------\n\n");
 
-void newgames(Config newgame, char*filename) {
+void startGame(Config newgame, boolean isNewGame) {
 
     // /* debug test load */
     // if (loadGame(filename, &newgame)) {
@@ -88,6 +88,11 @@ void newgames(Config newgame, char*filename) {
     // Test UANG
     //UANG(p) = 2000;
 
+    /* Jika load game */
+    if (!isNewGame) {
+        loadGame(newgame, &p, &invPlayer, &tas, &todo);
+    }
+
     /* COMMAND */
     printf("Waktu: %d\n", WAKTU(p));
     boolean isDone = false;
@@ -117,18 +122,18 @@ void newgames(Config newgame, char*filename) {
                 
             }else if(inventory(currentWord.contents, currentWord.length)){
                 DisplayGadget(&invPlayer,&UANG(p),&tas,todo,tempPsn,&p, newgame.bangunans);
-            }else if (currentWord.contents[0] == '*') {
+            }else if (wordEquals(currentWord, "SAVE_GAME")) {
                 saveGame(p, invPlayer, tas, todo);
             }
             else {
                 printf("WRONG INPUT\n");
             }
-            enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG       } else {
+            enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG
+        } else {
             while (!endWord) {
                 advWord();
             }
         }
-  
     }
 
     enter;
