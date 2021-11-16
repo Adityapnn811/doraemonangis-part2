@@ -7,31 +7,33 @@
 #define border printf("----------- END OF INFO CONFIG.TXT------------\n\n");
 
 void newgames(Config newgame, char*filename) {
-    // Config newgame;
-    // char *filename = "config.txt";
 
-    /* MENAMPILKAN ISI LOAD CONFIG.TXT */
-    if (loadGame(filename, &newgame)) {
-        printf("success");
-    } else {
-        printf("fail");
-    }
+    // /* debug test load */
+    // if (loadGame(filename, &newgame)) {
+    //     printf("success");
+    // } else {
+    //     printf("fail");
+    // }
 
-    enter;displayMatrix(newgame.adjMatrix);enter;
-    displayListPoint(newgame.bangunans);enter;
-    printf("length pesanan %d", lengthDftr(newgame.pesanans));enter;
+    // enter;displayMatrix(newgame.adjMatrix);enter;
+    // displayListPoint(newgame.bangunans);enter;
+    // printf("length pesanan %d", lengthDftr(newgame.pesanans));enter;
 
+
+    // printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity);
+    // displayMatrix(m);
+    // /* end */
+
+    /* INISIALISASI MAP */
     Matrix m;
     readCustomMatrix(&m,newgame.mapRows+2,newgame.mapCols+2);
-    printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity);
-
-    displayMatrix(m);
-    /* END OF MENAMPILKAN ISI LOAD CONFIG.TXT */
+    showMap(&m,newgame.bangunans);
 
     /* STATE NEW PLAYER */
     Player p;
     POINT loc;
     CreatePlayer(&p);
+    setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
 
     /* Daftar pesanan temp untuk rujukan waktu time perish*/
     DaftarPesanan tempPsn = newgame.pesanans;
@@ -45,23 +47,24 @@ void newgames(Config newgame, char*filename) {
     // ntar tinggal setWaktu(p, (WAKTU(*p)+1+countHeavy));
 
     /* START OF TEST */
-    /* TEST DRIVER PLAYER */
-    printf("Uang player sebesar %d\n", UANG(p));
-    printf("Waktu player sebesar %d\n", WAKTU(p));
-    printf("Lokasi player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
-    printf("\n");
-    setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
-    printf("Uang player sebesar %d\n", UANG(p));
-    printf("Waktu player sebesar %d\n", WAKTU(p));
-    printf("Lokaso player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
 
-    border;
+    // /* DEBUG TEST DRIVER PLAYER */
+    // printf("Uang player sebesar %d\n", UANG(p));
+    // printf("Waktu player sebesar %d\n", WAKTU(p));
+    // printf("Lokasi player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
+    // printf("\n");
+
+    // printf("Uang player sebesar %d\n", UANG(p));
+    // printf("Waktu player sebesar %d\n", WAKTU(p));
+    // printf("Lokaso player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
+
+    // border;
 
     /* TEST ADD ITEM TO TAS */
     Tas tas;
     Item item;
     // CreateItem(&item, 4, 'N', 'I', 'H', 8);
-    CreateTas(&tas);
+    // CreateTas(&tas);
     // addItem(&tas, item);
     /* END OF TEST */
 
@@ -80,9 +83,6 @@ void newgames(Config newgame, char*filename) {
     // insertFirstTD(&todo, p2);
     /* END */
 
-    showMap(&m,newgame.bangunans);
-    displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter;
-
     // Test UANG
     //UANG(p) = 2000;
 
@@ -90,11 +90,14 @@ void newgames(Config newgame, char*filename) {
     printf("Waktu: %d\n", WAKTU(p));
     boolean isDone = false;
     while (!isDone) {
-        printf("\nENTER COMMAND di newgame: ");
+        printf("\nENTER COMMAND: ");
         startWord(stdin);
         if (endWord) {
             if (move(currentWord.contents, currentWord.length)) {
                 movecmd(&p, &newgame, &todo, &tas, &speedboost, &counterMove);
+                printf("Waktu: %d", WAKTU(p));
+            } else if (map(currentWord.contents, currentWord.length)) {
+                displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter;
             } else if (pick_up(currentWord.contents, currentWord.length)) {
                 pickupcmd(p, &newgame, &tas, &todo, &speedboost, &counterMove);
             } else if (drop_off(currentWord.contents, currentWord.length)) {
@@ -117,8 +120,7 @@ void newgames(Config newgame, char*filename) {
                 printf("WRONG INPUT\n");
                 isDone = true;
             }
-            printf("Waktu new game: %d", WAKTU(p));
-            enter;enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; 
+            enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG
         } else {
             while (!endWord) {
                 advWord();

@@ -68,7 +68,7 @@ ListPointDin MakeRelationList(ListPointDin x) {
 void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboost, int *counterMove)
 /* Mengatur current loc player ke lokasi yang baru */
 {
-    printf("-----COMMAND MOVE-----\n");
+    // printf("-----COMMAND MOVE-----\n");
     int inputPos;
     // printf("*INFO* current label %c\n", curLocLabel(p, newgame));
     printf("Posisi yang dapat dicapai:\n");
@@ -116,7 +116,8 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
     if (searchDropOffTD(*todo,curLocLabel(*p, (*newgame))) == true) {
         Pesanan dropoffpsn;
         CreatePesanan(&dropoffpsn, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).TimeIn, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).PickUp, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).DropOff, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).ItemType, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).TimePerish);
-        char tipe_pesanan = dropoffpsn.ItemType;
+        char tipe_pesanan = todo->first->info.ItemType;
+        printf("TIPE PESANAN %c\n",tipe_pesanan);
         if (tipe_pesanan == 'H') {
             printf("Pesanan Heavy Item berhasil diantarkan\n");
             *speedboost = true;
@@ -138,13 +139,13 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
             printf("Pesanan VIP Item berhasil diantarkan\n");
             UANG(*p) += 600;
             printf("Uang yang didapatkan: %d\n",600);
+        } else {
+            printf("bp1\n");
         }
+        dropItem(tas);
+    } else {
+        printf("Tidak ada pesanan yang dapat diantarkan!\n");
     }
-    
-    // dropItemToVal(tas,&droppeditem);
-    dropItem(tas);
-    
-
 }
 
 void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, boolean *speedboost, int *counterMove) 
@@ -172,19 +173,19 @@ void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, boolean *speed
         if (pickuppsn.ItemType != 'P') {
             CreateItem(&item, pickuppsn.TimeIn, pickuppsn.PickUp, pickuppsn.DropOff, pickuppsn.ItemType, IDX_UNDEF);
             addItem(tas, item);
-            printf("pickup berhasil\n");
-            printf("length tas %d\n", lengthTas(*tas));
+            // printf("pickup berhasil\n");
+            // printf("length tas %d\n", lengthTas(*tas));
             deleteAtTD(todo, search(*todo,pickuppsn));
         } else {
             CreateItem(&item, pickuppsn.TimeIn, pickuppsn.PickUp, pickuppsn.DropOff, pickuppsn.ItemType, pickuppsn.TimePerish);
             addItem(tas, item);
-            printf("pickup perish berhasil\n");
-            printf("length tas %d\n", lengthTas(*tas));
+            // printf("pickup perish berhasil\n");
+            // printf("length tas %d\n", lengthTas(*tas));
             deleteAtTD(todo, search(*todo,pickuppsn));
         }
 
     }
     else {
-        printf("bukan lokasi pick up\n");
+        printf("Pesanan tidak ditemukan!\n");
     }
 }
