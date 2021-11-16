@@ -1,13 +1,4 @@
-#include <stdio.h>
-#include <ctype.h>
-#include "load.h"
-#include "../models/boolean.h"
-#include "../models/config.h"
-#include "../models/bangunan.h"
-#include "../adt/wordmachine.h"
-#include "../adt/point.h"
-#include "../adt_modified/listpointdin.h"
-#include "../adt_modified/pesanan.h"
+#include "../game_header.h"
 
 boolean loadGame(char *filename, Config *conf)
 {
@@ -130,59 +121,4 @@ boolean loadGame(char *filename, Config *conf)
 
   // fclose(fp);
   return true;
-}
-
-boolean wordToStr(Word word, char *value)
-{
-  int i;
-  for (i = 0; i < word.length; i++)
-  {
-    value[i] = word.contents[i];
-  }
-  value[i] = '\0';
-}
-
-boolean wordToInt(Word word, int *value)
-{
-  boolean status = false;
-
-  if (word.length > 0)
-  {
-    *value = 0;
-    status = true;
-
-    int i = 0;
-    if (word.contents[0] == '-')
-    {
-      ++i;
-    }
-
-    if (word.contents[i] == '0' && (i + 1) < word.length)
-    {
-      status = false;
-    }
-    else
-    {
-      while (i < word.length && status)
-      {
-        if (isdigit(word.contents[i]))
-        {
-          *value *= 10;
-          *value += (int)(word.contents[i] - '0');
-          ++i;
-        }
-        else
-        {
-          status = false;
-        }
-      }
-
-      if (word.contents[0] == '-')
-      {
-        *value *= -1;
-      }
-    }
-  }
-
-  return status;
 }

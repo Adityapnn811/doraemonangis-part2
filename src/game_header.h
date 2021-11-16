@@ -28,6 +28,7 @@
 #include "./adt_modified/stack_linked.h"
 #include "./adt_modified/tas.h"
 #include "./adt_modified/todolist.h"
+#include "./adt_modified/word.h"
 
 /* models */
 #include "./models/bangunan.h"
@@ -36,9 +37,6 @@
 #include "./models/config.h"
 #include "./models/help.h"
 #include "./models/pcolor.h"
-
-/* modules */
-#include "./modules/load.h"
 
 /* include header masing - masing di sini */
 ////////////////////////////////
@@ -70,14 +68,13 @@
 #include "./adt_modified/stack_linked.c"
 #include "./adt_modified/tas.c"
 #include "./adt_modified/todolist.c"
+#include "./adt_modified/word.c"
 
 /* models */
 // #include "./models/command.c"
 // #include "./models/help.c"
 #include "./models/pcolor.c"
-
-/* modules */
-#include "./modules/load.c"
+#include "./models/config.c"
 
 /* include header masing - masing di sini */
 
