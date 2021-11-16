@@ -193,13 +193,20 @@ void deleteAtTD(TDList *l, AddressTD Tp){
     boolean flag = false;
     while(loc!=NULL && !flag){
         if(loc==Tp){
-            if(NEXTTD(loc)==NULL){
-                NEXTTD(PREVTD(loc)) = NULL;
-                LASTTD(*l) = PREVTD(loc);
-            }else{
-                NEXTTD(PREVTD(loc)) = NEXTTD(loc);
-                PREVTD(NEXTTD(loc)) = PREVTD(loc);
+            if (PREVTD(loc)==NULL) { // delete elemen pertama
+                if(FIRSTTD(*l)==LASTTD(*l)){
+                    LASTTD(*l) = NULL;
+                }else{
+                    PREVTD(NEXTTD(FIRSTTD(*l))) = NULL;
+                }
+                FIRSTTD(*l) = NEXTTD(loc); 
+            } else {
+                if(NEXTTD(loc)!=NULL){
+                    NEXTTD(PREVTD(loc)) = NEXTTD(loc);
+                    PREVTD(NEXTTD(loc)) = PREVTD(loc);
+                }
             }
+
             flag = true;
         }else{
             loc = NEXTTD(loc);
