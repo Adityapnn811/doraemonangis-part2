@@ -113,10 +113,9 @@ void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboo
 void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove, TDList *todo)
 {
     Item droppeditem;
-    if (searchDropOffTD(*todo,curLocLabel(*p, (*newgame))) == true) {
-        Pesanan dropoffpsn;
-        CreatePesanan(&dropoffpsn, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).TimeIn, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).PickUp, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).DropOff, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).ItemType, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).TimePerish);
-        char tipe_pesanan = todo->first->info.ItemType;
+    dropItemToVal(tas,&droppeditem);
+    if (droppeditem.DropOff == curLocLabel(*p, (*newgame))) {
+        char tipe_pesanan = droppeditem.ItemType;
         printf("TIPE PESANAN %c\n",tipe_pesanan);
         if (tipe_pesanan == 'H') {
             printf("Pesanan Heavy Item berhasil diantarkan\n");
