@@ -33,12 +33,15 @@ void newgames(Config newgame, char*filename) {
     POINT loc;
     CreatePlayer(&p);
 
+    /* Daftar pesanan temp untuk rujukan waktu time perish*/
+    DaftarPesanan tempPsn = newgame.pesanans;
+
     /* STATE ABILITY SPEEDBOOST */
     boolean speedboost = false;
     int counterMove = 0;
 
     /* STATUS COUNTER HEAVY ITEM */
-    int countHeavy = 0;
+    int countHeavy = 0; // counter nya udah di move sekalian -fajar
     // ntar tinggal setWaktu(p, (WAKTU(*p)+1+countHeavy));
 
     /* START OF TEST */
@@ -62,11 +65,15 @@ void newgames(Config newgame, char*filename) {
     // addItem(&tas, item);
     /* END OF TEST */
 
+    // Create Inventory
+    Inventory invPlayer;
+    CreateInv(&invPlayer);
+
     /* TEST TO DO LIST DARI PESANAN */
     TDList todo;
     Pesanan p1, p2;
     CreateListTD(&todo);
-    CreateTDfromPSN(&todo, newgame.pesanans, WAKTU(p));
+    //CreateTDfromPSN(&todo, &newgame.pesanans, WAKTU(p));
     // CreatePesanan(&p1, 10, 'D', 'G', 'h', 10);
     // CreatePesanan(&p2, 10, 'C', 'B', 'n', 10);
     // insertFirstTD(&todo, p1);
@@ -76,6 +83,9 @@ void newgames(Config newgame, char*filename) {
     showMap(&m,newgame.bangunans);
     displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter;
 
+    // Test UANG
+    //UANG(p) = 2000;
+
     /* COMMAND */
     printf("Waktu: %d\n", WAKTU(p));
     boolean isDone = false;
@@ -84,16 +94,25 @@ void newgames(Config newgame, char*filename) {
         startWord(stdin);
         if (endWord) {
             if (move(currentWord.contents, currentWord.length)) {
-                movecmd(&p, newgame, &todo, &tas, &speedboost, &counterMove);
+                movecmd(&p, &newgame, &todo, &tas, &speedboost, &counterMove);
             } else if (pick_up(currentWord.contents, currentWord.length)) {
                 pickupcmd(p, &newgame, &tas, &todo, &speedboost, &counterMove);
             } else if (drop_off(currentWord.contents, currentWord.length)) {
-                dropoffcmd(p, &newgame, &tas, &speedboost, &counterMove, &todo);
+                dropoffcmd(&p, &newgame, &tas, &speedboost, &counterMove, &todo);
             } else if (in_progress(currentWord.contents, currentWord.length)) {
                 DisplayInPrgs(tas);
             } else if (to_do(currentWord.contents, currentWord.length)) {
-                DisplayListToDo(newgame.pesanans,WAKTU(p));
-            } 
+                DisplayListToDo(todo,WAKTU(p));
+            } else if(buy(currentWord.contents, currentWord.length)){
+                if(CUR_LOCX(p)==newgame.bangunans.buffer[0].position.X && CUR_LOCY(p)==newgame.bangunans.buffer[0].position.Y){
+                    BuyGadget(&invPlayer,&UANG(p));
+                }else{
+                    printf("Kamu tidak berada di HQ\n");	
+                }
+                
+            }else if(inventory(currentWord.contents, currentWord.length)){
+                DisplayGadget(&invPlayer,&UANG(p),&tas,todo,tempPsn,&p, newgame.bangunans);
+            }
             else {
                 printf("WRONG INPUT\n");
                 isDone = true;

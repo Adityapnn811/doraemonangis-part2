@@ -65,7 +65,7 @@ ListPointDin MakeRelationList(ListPointDin x) {
     return x;
 }
 
-void movecmd(Player *p, Config newgame, TDList *todo, Tas *t, boolean *speedboost, int *counterMove /*kurang heavyitem*/)
+void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboost, int *counterMove)
 /* Mengatur current loc player ke lokasi yang baru */
 {
     printf("-----COMMAND MOVE-----\n");
@@ -74,10 +74,13 @@ void movecmd(Player *p, Config newgame, TDList *todo, Tas *t, boolean *speedboos
     printf("Posisi yang dapat dicapai:\n");
 
     
-    showRelation(newgame.adjMatrix, newgame.bangunans, CUR_LOC(*p));
+    showRelation((*newgame).adjMatrix, (*newgame).bangunans, CUR_LOC(*p));
     printf("Posisi yang dipilih? (ketik 0 jika ingin kembali)\n");
 
-    if (getRelation(newgame.adjMatrix, newgame.bangunans, CUR_LOC(*p), p)) {
+    // Heavy item di tas
+    int sumH = CountHeavy(*t);
+
+    if (getRelation((*newgame).adjMatrix, (*newgame).bangunans, CUR_LOC(*p), p)) {
         // Cek apakah speedboost aktif
         if (*speedboost == true) {
             printf("speedboost aktif\n");
@@ -88,48 +91,60 @@ void movecmd(Player *p, Config newgame, TDList *todo, Tas *t, boolean *speedboos
                 reduceAllPerishTime(t);
             } else if (*counterMove != 0 && *counterMove % 2 == 0) {
                 setWaktu(p, (WAKTU(*p)+1));
-                reduceAllPerishTime(t);
                 *counterMove += 1;
             } else {
                 *counterMove += 1;
             }
         } else {
-            setWaktu(p, (WAKTU(*p)+1));
-            reduceAllPerishTime(t);
+            if(sumH>0){
+                int moveH = 1 + sumH;
+                setWaktu(p, (WAKTU(*p)+moveH));
+            }else{
+                setWaktu(p, (WAKTU(*p)+1));
+            }
+            
         }
         
     }
     // tiap nambah waktu, panggil fungsi createTDfromPSN biar pesanan masuk ke to do list
-    CreateTDfromPSN(todo, newgame.pesanans, WAKTU(*p));
+    CreateTDfromPSN(todo, &((*newgame).pesanans), WAKTU(*p));
 }
 
-void dropoffcmd(Player p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove, TDList *todo)
+void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove, TDList *todo)
 {
     Item droppeditem;
-    if (searchDropOffTD(*todo,curLocLabel(p, (*newgame))) == true) {
+    if (searchDropOffTD(*todo,curLocLabel(*p, (*newgame))) == true) {
         Pesanan dropoffpsn;
-        CreatePesanan(&dropoffpsn, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).TimeIn, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).PickUp, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).DropOff, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).ItemType, (searchDropOffTDLabel(*todo,curLocLabel(p, (*newgame)))).TimePerish);
+        CreatePesanan(&dropoffpsn, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).TimeIn, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).PickUp, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).DropOff, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).ItemType, (searchDropOffTDLabel(*todo,curLocLabel(*p, (*newgame)))).TimePerish);
         char tipe_pesanan = dropoffpsn.ItemType;
         if (tipe_pesanan == 'H') {
             printf("Pesanan Heavy Item berhasil diantarkan\n");
             *speedboost = true;
             *counterMove = 0;
+            UANG(*p) += 400;
+            printf("Uang yang didapatkan: %d\n",400);
             printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
         } else if (tipe_pesanan == 'N') {
             printf("Pesanan Normal Item berhasil diantarkan\n");
+            UANG(*p) += 200;
+            printf("Uang yang didapatkan: %d\n",200);
         } else if (tipe_pesanan == 'P') {
             (*tas).maxTas += 1;
             printf("Pesanan Perish Item berhasil diantarkan\n");
+            UANG(*p) += 400;
+            printf("Uang yang didapatkan: %d\n",400);
             printf("Kapasitas tas Mobita bertambah 1!\n");
         } else if (tipe_pesanan == 'V') {
             printf("Pesanan VIP Item berhasil diantarkan\n");
+            UANG(*p) += 600;
+            printf("Uang yang didapatkan: %d\n",600);
         }
     }
     
     // dropItemToVal(tas,&droppeditem);
     dropItem(tas);
     
-    printf("Uang yang didapatkan: ___\n");
+
 }
 
 void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, boolean *speedboost, int *counterMove) 
