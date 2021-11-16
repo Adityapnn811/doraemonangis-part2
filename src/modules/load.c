@@ -1,5 +1,9 @@
 #include "../game_header.h"
 
+/**
+ * HELPER FUNCTIONS
+ */
+
 static boolean findGadget(char key, NamaGadget *g)
 {
   int i;
@@ -15,7 +19,7 @@ static boolean findGadget(char key, NamaGadget *g)
   return false;
 }
 
-boolean readFirstWord(FILE *tape)
+static boolean readFirstWord(FILE *tape)
 {
   startWord(tape);
 
@@ -27,7 +31,7 @@ boolean readFirstWord(FILE *tape)
   return true;
 }
 
-boolean readOneWord(FILE *tape)
+static boolean readOneWord(FILE *tape)
 {
   startWord(tape);
 
@@ -43,6 +47,30 @@ boolean readOneWord(FILE *tape)
 
   return true;
 }
+
+static boolean readPoint(POINT *point, FILE *tape)
+{
+  int x, y;
+
+  startWord(tape);
+  if (endWord || !wordToInt(currentWord, &x))
+  {
+    return false;
+  }
+
+  advWord();
+  if (endWord || !wordToInt(currentWord, &y))
+  {
+    return false;
+  }
+
+  *point = MakePOINT(x, y);
+  return true;
+}
+
+/**
+ * MAIN FUNCTION
+ */
 
 void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
 {
@@ -128,14 +156,13 @@ enum LoadState
   LoadTodo
 };
 
-#if 0
-void load(Player *player, Inventory *inv, Tas *bag, TDList *todo)
+void loadGame(Player *player, Inventory *inv, Tas *bag, TDList *todo)
 {
   char str[WORD_CAPACITY + 1];
 
   printf("Nama file: ");
   readOneWord(stdin);
-  wordToStr(currentWord, &str);
+  wordToStr(currentWord, str);
 
   FILE *fp;
   fp = fopen(str, "w");
@@ -231,37 +258,29 @@ void load(Player *player, Inventory *inv, Tas *bag, TDList *todo)
       }
       else if (wordEquals(currentWord, "Current_Loc"))
       {
-        advWord();
-        if (endWord || !wordToInt(currentWord, &x))
+        POINT p;
+        if (!readPoint(&p, fp))
         {
           success = false;
         }
-
-        advWord();
-        if (endWord || !wordToInt(currentWord, &y))
+        else
         {
-          return false;
+          setPlayerLoc(player, Absis(p), Ordinat(p));
+          playerCounter++;
         }
-
-        setPlayerLoc(player, x, y);
-        playerCounter++;
       }
       else if (wordEquals(currentWord, "Prev_Loc"))
       {
-        advWord();
-        if (endWord || !wordToInt(currentWord, &x))
+        POINT p;
+        if (!readPoint(&p, fp))
         {
-          return false;
+          success = false;
         }
-
-        advWord();
-        if (endWord || !wordToInt(currentWord, &y))
+        else
         {
-          return false;
+          setPlayerPrevLoc(player, x, y);
+          playerCounter++;
         }
-
-        setPlayerPrevLoc(player, x, y);
-        playerCounter++;
       }
     }
     else if (state == LoadInventory)
@@ -286,4 +305,3 @@ void load(Player *player, Inventory *inv, Tas *bag, TDList *todo)
     }
   }
 }
-#endif
