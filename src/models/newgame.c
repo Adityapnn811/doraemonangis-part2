@@ -33,7 +33,7 @@ void newgames(Config newgame, char*filename) {
     /* STATE NEW PLAYER */
     Player p;
     POINT loc;
-    CreatePlayer(&p);
+    CreatePlayer(&p);    UANG(p) = 100000000;
     setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
 
     /* Daftar pesanan temp untuk rujukan waktu time perish*/
@@ -63,6 +63,7 @@ void newgames(Config newgame, char*filename) {
 
     /* TEST ADD ITEM TO TAS */
     Tas tas;
+    CreateTas(&tas);
     Item item;
     // CreateItem(&item, 4, 'N', 'I', 'H', 8);
     // CreateTas(&tas);
@@ -121,10 +122,8 @@ void newgames(Config newgame, char*filename) {
             }
             else {
                 printf("WRONG INPUT\n");
-                isDone = true;
             }
-            enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG
-        } else {
+            enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG       } else {
             while (!endWord) {
                 advWord();
             }

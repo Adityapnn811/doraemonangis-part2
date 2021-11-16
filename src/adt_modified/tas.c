@@ -66,8 +66,8 @@ void DisplayInPrgs(Tas t){
             } else if(a.ItemType=='H' || a.ItemType=='I'){
                 printf("Heavy Item");
             } else if(a.ItemType=='P'){
-                printf("Perishable Item");
-            } else{
+                printf("Perishable Item %d",a.TimePerish);
+            } else {
                 printf("VIP Item");
             }
             printf(" (Tujuan: %c)\n",a.DropOff);
@@ -95,13 +95,14 @@ void reduceAllPerishTime(Tas *t) {
     /* KAMUS LOKAL */
     Tas temp;
     Item val;
+    int sum = CountHeavy(*t);
     /* ALGORITMA */
     CreateTas(&temp);
     temp.maxTas = t->maxTas + 1;
     while (!isEmptyTas(*t)) {
         if (TYPE(TOP(*t)) == 'P') {
-            setTimePerish(&TOP(*t), (TIMEPERISH(TOP(*t)) - 1));
-            if (TIMEPERISH(TOP(*t)) == 0) {
+            setTimePerish(&TOP(*t), (TIMEPERISH(TOP(*t)) - (1+sum)));
+            if (TIMEPERISH(TOP(*t)) <= 0) {
                 //delete item
                 printf("Yah, perishable item dengan tujuan %c sudah hilang :(\n", DROPOFF(TOP(*t)));
                 dropItem(t);
@@ -121,5 +122,18 @@ void reduceAllPerishTime(Tas *t) {
     while (!isEmptyTas(temp)) {
         dropItemToVal(&temp, &val);
         addItem(t, val);
+    }
+}
+
+void cancelEfekPengecil(Tas *t){
+    boolean flag = false;
+    int i = 0;
+    while(i<(*t).maxTas && !flag){
+        if((*t).daftar[i].ItemType=='I'){
+            (*t).daftar[i].ItemType='H';
+            flag = true;
+        }else{
+            i++;
+        }
     }
 }
