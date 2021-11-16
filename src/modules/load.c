@@ -137,6 +137,7 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
   fprintf(fp, "Money %d\n", UANG(player));
   fprintf(fp, "Current_Loc %d %d\n", CUR_LOCX(player), CUR_LOCY(player));
   fprintf(fp, "Prev_Loc %d %d\n", PREV_LOCX(player), PREV_LOCY(player));
+  fprintf(fp, "Bag_Max %d\n", bag.maxTas);
 
   fprintf(fp, "\n[INVENTORY]\n");
 
@@ -251,8 +252,8 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
     {
       /* Pergantian state */
 
-      /* Pada state player, harus ada 4 item */
-      if (state == LoadPlayer && playerCounter != 4)
+      /* Pada state player, harus ada 5 item */
+      if (state == LoadPlayer && playerCounter != 5)
       {
         success = false;
       }
@@ -294,18 +295,21 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
         {
           success = false;
         }
-
-        advWord();
-
-        if (!endWord || !wordToInt(currentWord, &x))
-        {
-          success = false;
-        }
         else
         {
-          setWaktu(player, x);
-          playerCounter++;
+          advWord();
+
+          if (!endWord || !wordToInt(currentWord, &x))
+          {
+            success = false;
+          }
+          else
+          {
+            setWaktu(player, x);
+            playerCounter++;
+          }
         }
+
       }
       else if (wordEquals(currentWord, "Money"))
       {
@@ -313,17 +317,19 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
         {
           success = false;
         }
-
-        advWord();
-
-        if (!endWord || !wordToInt(currentWord, &x))
-        {
-          success = false;
-        }
         else
         {
-          setUang(player, x);
-          playerCounter++;
+          advWord();
+
+          if (!endWord || !wordToInt(currentWord, &x))
+          {
+            success = false;
+          }
+          else
+          {
+            setUang(player, x);
+            playerCounter++;
+          }
         }
       }
       else if (wordEquals(currentWord, "Current_Loc"))
@@ -332,19 +338,22 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
         {
           success = false;
         }
-
-        POINT p;
-
-        advWord();
-        if (!readPoint(&p) || !endWord)
-        {
-          success = false;
-        }
         else
         {
-          setPlayerLoc(player, Absis(p), Ordinat(p));
-          playerCounter++;
+          POINT p;
+
+          advWord();
+          if (!readPoint(&p) || !endWord)
+          {
+            success = false;
+          }
+          else
+          {
+            setPlayerLoc(player, Absis(p), Ordinat(p));
+            playerCounter++;
+          }
         }
+
       }
       else if (wordEquals(currentWord, "Prev_Loc"))
       {
@@ -352,18 +361,41 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
         {
           success = false;
         }
+        else
+        {
+          POINT p;
 
-        POINT p;
-
-        advWord();
-        if (!readPoint(&p) || !endWord)
+          advWord();
+          if (!readPoint(&p) || !endWord)
+          {
+            success = false;
+          }
+          else
+          {
+            setPlayerPrevLoc(player, Absis(p), Ordinat(p));
+            playerCounter++;
+          }
+        }
+      }
+      else if (wordEquals(currentWord, "Bag_Max"))
+      {
+        if (endWord)
         {
           success = false;
         }
         else
         {
-          setPlayerPrevLoc(player, Absis(p), Ordinat(p));
-          playerCounter++;
+          advWord();
+
+          if (!endWord || !wordToInt(currentWord, &x))
+          {
+            success = false;
+          }
+          else
+          {
+            bag->maxTas = x;
+            playerCounter++;
+          }
         }
       }
     }
