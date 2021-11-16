@@ -92,6 +92,7 @@ void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboo
             } else if (*counterMove != 0 && *counterMove % 2 == 0) {
                 setWaktu(p, (WAKTU(*p)+1));
                 *counterMove += 1;
+                reduceAllPerishTime(t);
             } else {
                 *counterMove += 1;
             }
@@ -99,8 +100,10 @@ void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboo
             if(sumH>0){
                 int moveH = 1 + sumH;
                 setWaktu(p, (WAKTU(*p)+moveH));
+                reduceAllPerishTime(t);
             }else{
                 setWaktu(p, (WAKTU(*p)+1));
+                reduceAllPerishTime(t);
             }
             
         }
@@ -117,7 +120,7 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
     if (droppeditem.DropOff == curLocLabel(*p, (*newgame))) {
         char tipe_pesanan = droppeditem.ItemType;
         printf("TIPE PESANAN %c\n",tipe_pesanan);
-        if (tipe_pesanan == 'H') {
+        if (tipe_pesanan == 'H' || tipe_pesanan=='I') {
             printf("Pesanan Heavy Item berhasil diantarkan\n");
             UANG(*p) += 400;
             printf("Uang yang didapatkan: %d\n",400);
@@ -139,11 +142,11 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
             printf("bp1\n");
         }
         dropItem(tas);
-        // if (CountHeavy(*tas) == 0 && tipe_pesanan == 'H') {
-        //     *speedboost = true;
-        //     *counterMove = 0;
-        //     printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
-        // }
+        if (CountHeavy(*tas) == 0 && tipe_pesanan == 'H') {
+            *speedboost = true;
+            *counterMove = 0;
+            printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
+        }
     } else if (isEmptyTas(*tas)) {
         printf("Tidak ada pesanan yang dapat diantarkan!\n");
     } else if (droppeditem.DropOff != curLocLabel(*p, (*newgame))) {
@@ -154,41 +157,45 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
 void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, boolean *speedboost, int *counterMove) 
 /* Mengambil pesanan yang terdapat di current location */
 {
-    if (searchPickUpTD(*todo,curLocLabel(p, (*newgame))) == true) {
-        Pesanan pickuppsn;
-        CreatePesanan(&pickuppsn, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).TimeIn, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).PickUp, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).DropOff, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).ItemType, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).TimePerish);
-        char tipe_pesanan = pickuppsn.ItemType;
-        if (tipe_pesanan == 'H') {
-            printf("Pesanan berupa Heavy Item berhasil diambil!\n");
-            // speedboost lgsg digagalin
-            *speedboost = false;
-            *counterMove = 0;
-        } else if (tipe_pesanan == 'N') {
-            printf("Pesanan berupa Normal Item berhasil diambil!\n");
-        } else if (tipe_pesanan == 'P') {
-            printf("Pesanan berupa Perish Item berhasil diambil!\n");
-        } else if (tipe_pesanan == 'V') {
-            printf("Pesanan berupa VIP Item berhasil diambil!\n");
-        }
-        printf("Tujuan Pesanan: %c\n", pickuppsn.DropOff);
-        Item item;
+    if (lengthTas(*tas) != (*tas).maxTas) {
+        if (searchPickUpTD(*todo,curLocLabel(p, (*newgame))) == true) {
+            Pesanan pickuppsn;
+            CreatePesanan(&pickuppsn, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).TimeIn, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).PickUp, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).DropOff, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).ItemType, (searchPickUpTDLabel(*todo,curLocLabel(p, (*newgame)))).TimePerish);
+            char tipe_pesanan = pickuppsn.ItemType;
+            if (tipe_pesanan == 'H') {
+                printf("Pesanan berupa Heavy Item berhasil diambil!\n");
+                // speedboost lgsg digagalin
+                *speedboost = false;
+                *counterMove = 0;
+            } else if (tipe_pesanan == 'N') {
+                printf("Pesanan berupa Normal Item berhasil diambil!\n");
+            } else if (tipe_pesanan == 'P') {
+                printf("Pesanan berupa Perish Item berhasil diambil!\n");
+            } else if (tipe_pesanan == 'V') {
+                printf("Pesanan berupa VIP Item berhasil diambil!\n");
+            }
+            printf("Tujuan Pesanan: %c\n", pickuppsn.DropOff);
+            Item item;
 
-        if (pickuppsn.ItemType != 'P') {
-            CreateItem(&item, pickuppsn.TimeIn, pickuppsn.PickUp, pickuppsn.DropOff, pickuppsn.ItemType, IDX_UNDEF);
-            addItem(tas, item);
-            // printf("pickup berhasil\n");
-            // printf("length tas %d\n", lengthTas(*tas));
-            deleteAtTD(todo, search(*todo,pickuppsn));
-        } else {
-            CreateItem(&item, pickuppsn.TimeIn, pickuppsn.PickUp, pickuppsn.DropOff, pickuppsn.ItemType, pickuppsn.TimePerish);
-            addItem(tas, item);
-            // printf("pickup perish berhasil\n");
-            // printf("length tas %d\n", lengthTas(*tas));
-            deleteAtTD(todo, search(*todo,pickuppsn));
-        }
+            if (pickuppsn.ItemType != 'P') {
+                CreateItem(&item, pickuppsn.TimeIn, pickuppsn.PickUp, pickuppsn.DropOff, pickuppsn.ItemType, IDX_UNDEF);
+                addItem(tas, item);
+                // printf("pickup berhasil\n");
+                // printf("length tas %d\n", lengthTas(*tas));
+                deleteAtTD(todo, search(*todo,pickuppsn));
+            } else {
+                CreateItem(&item, pickuppsn.TimeIn, pickuppsn.PickUp, pickuppsn.DropOff, pickuppsn.ItemType, pickuppsn.TimePerish);
+                addItem(tas, item);
+                // printf("pickup perish berhasil\n");
+                // printf("length tas %d\n", lengthTas(*tas));
+                deleteAtTD(todo, search(*todo,pickuppsn));
+            }
 
-    }
-    else {
-        printf("Pesanan tidak ditemukan!\n");
+        }
+        else {
+            printf("Pesanan tidak ditemukan!\n");
+        }
+    } else {
+        printf("Tas udah penuh!!\n");
     }
 }

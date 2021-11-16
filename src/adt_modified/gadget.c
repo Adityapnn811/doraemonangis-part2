@@ -121,12 +121,12 @@ void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,L
     DaftarPesanan temp2=psn;
     if(gdg.key=='a'){
         if(TOP(*tas).ItemType=='P'){
-            while(HEADPSN(temp2).ItemType!=TOP(*tas).ItemType && HEADPSN(temp2).PickUp!=TOP(*tas).PickUp && HEADPSN(temp2).DropOff!=TOP(*tas).DropOff && HEADPSN(temp2).TimeIn!=TOP(*tas).TimeIn){
+            while(HEADPSN(temp2).PickUp!=TOP(*tas).PickUp && HEADPSN(temp2).DropOff!=TOP(*tas).DropOff && HEADPSN(temp2).TimeIn!=TOP(*tas).TimeIn){
                 dequeuePsn(&temp2);
             }
             TOP(*tas).TimePerish = HEADPSN(temp2).TimePerish;
         }else{
-            printf("Nothing happende.\n");
+            printf("Nothing happened.\n");
         }
     }else if(gdg.key=='b'){
         (*tas).maxTas*=2;
@@ -152,9 +152,11 @@ void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,L
             (*waktu)=0;
         }
     }else if(gdg.key=='e'){
+        /*
         if(TOP(*tas).ItemType=='H'){
             // Tanda heavy item efek hilang namun tetap berlabel heavy item
             TOP(*tas).ItemType='I'; 
         }
+        */
     }
 }

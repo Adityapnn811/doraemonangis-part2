@@ -30,6 +30,7 @@ void DisplayInPrgs(Tas t);
 int CountHeavy(Tas tas);
 
 void reduceAllPerishTime(Tas *t);
+void cancelEfekPengecil(Tas *t);
 /* I.S. tas t terdefinisi dan mungkin kosong
 F.S. semua waktu perishable item berkurang 1, jika waktu perish menjadi 0, drop item */
 

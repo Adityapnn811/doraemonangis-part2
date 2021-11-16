@@ -32,7 +32,7 @@ void newgames(Config newgame, char*filename) {
     /* STATE NEW PLAYER */
     Player p;
     POINT loc;
-    CreatePlayer(&p);
+    CreatePlayer(&p);    UANG(p) = 100000000;
     setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
 
     /* Daftar pesanan temp untuk rujukan waktu time perish*/
@@ -115,14 +115,12 @@ void newgames(Config newgame, char*filename) {
                 }
                 
             }else if(inventory(currentWord.contents, currentWord.length)){
-                DisplayGadget(&invPlayer,&UANG(p),&tas,todo,tempPsn,&p, newgame.bangunans);
+                DisplayGadget(&invPlayer,&WAKTU(p),&tas,todo,tempPsn,&p, newgame.bangunans);
             }
             else {
                 printf("WRONG INPUT\n");
-                isDone = true;
             }
-            enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG
-        } else {
+            enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG       } else {
             while (!endWord) {
                 advWord();
             }
