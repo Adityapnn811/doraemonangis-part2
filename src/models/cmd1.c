@@ -112,20 +112,13 @@ void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboo
 
 void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove, TDList *todo)
 {
-    Item droppeditem;
-    dropItemToVal(tas,&droppeditem);
-    int countHeavy = CountHeavy(*tas);
+    Item droppeditem = TOP(*tas);
+    // dropItemToVal(tas,&droppeditem);
     if (droppeditem.DropOff == curLocLabel(*p, (*newgame))) {
         char tipe_pesanan = droppeditem.ItemType;
         printf("TIPE PESANAN %c\n",tipe_pesanan);
         if (tipe_pesanan == 'H') {
             printf("Pesanan Heavy Item berhasil diantarkan\n");
-            countHeavy -= 1;
-            if (countHeavy == 0) {
-                *speedboost = true;
-                *counterMove = 0;
-                printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
-            }
             UANG(*p) += 400;
             printf("Uang yang didapatkan: %d\n",400);
         } else if (tipe_pesanan == 'N') {
@@ -146,8 +139,15 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
             printf("bp1\n");
         }
         dropItem(tas);
-    } else {
+        // if (CountHeavy(*tas) == 0 && tipe_pesanan == 'H') {
+        //     *speedboost = true;
+        //     *counterMove = 0;
+        //     printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
+        // }
+    } else if (isEmptyTas(*tas)) {
         printf("Tidak ada pesanan yang dapat diantarkan!\n");
+    } else if (droppeditem.DropOff != curLocLabel(*p, (*newgame))) {
+        printf("Tempat drop off salah! Harusnya di %c\n", droppeditem.DropOff);
     }
 }
 
