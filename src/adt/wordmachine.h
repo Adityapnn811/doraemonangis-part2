@@ -46,4 +46,8 @@ void copyWord();
           currentChar adalah karakter sesudah karakter terakhir yang diakuisisi.
           Jika panjang kata melebihi CAPACITY, maka sisa kata terpotong */
 
+void ignoreWords();
+/* Menggerakkan file pointer hingga ke ujung tape,
+   Dalam kata lain, mengabaikan setiap words dimulai dari titik ini. */
+
 #endif

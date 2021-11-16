@@ -37,11 +37,7 @@ static boolean readOneWord(FILE *tape)
 
   if (!endWord)
   {
-    while (!endWord)
-    {
-      advWord();
-    }
-
+    ignoreWords();
     return false;
   }
 

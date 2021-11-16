@@ -53,9 +53,7 @@ int main(){
                 isDone = true;
             }
         } else {
-            while (!endWord) {
-                advWord();
-            }
+            ignoreWords();
         }
     }
     return 0;

@@ -96,3 +96,13 @@ void copyWord()
   }
   currentWord.length = i;
 }
+
+void ignoreWords()
+{
+  /* Menggerakkan file pointer hingga ke ujung tape,
+     Dalam kata lain, mengabaikan setiap words dimulai dari titik ini. */
+  while (!endWord)
+  {
+    advWord();
+  }
+}

@@ -129,9 +129,7 @@ void startGame(Config newgame, boolean isNewGame) {
             }
             enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG
         } else {
-            while (!endWord) {
-                advWord();
-            }
+            ignoreWords();
         }
     }
 
