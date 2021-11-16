@@ -7,7 +7,7 @@
 #ifndef LISTPOS_H
 #define LISTPOS_H
 
-#include "../models/boolean.h"
+#include "../modules/boolean.h"
 
 /*  Kamus Umum */
 #define CAPACITYListPos 100

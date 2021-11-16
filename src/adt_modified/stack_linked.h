@@ -1,7 +1,7 @@
 #ifndef STACK_LINKED_H
 #define STACK_LINKED_H
 
-#include "../models/boolean.h"
+#include "../modules/boolean.h"
 
 /* Element Type */
 

@@ -5,7 +5,7 @@
 #define CHAR_ENGINE_H
 
 #include <stdio.h>
-#include "../models/boolean.h"
+#include "../modules/boolean.h"
 
 #define CHARMACHINE_MARK '\n'
 

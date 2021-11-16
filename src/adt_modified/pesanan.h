@@ -1,7 +1,7 @@
 #ifndef PESANAN_H_INCLUDED
 #define PESANAN_H_INCLUDED
 
-#include "../models/boolean.h"
+#include "../modules/boolean.h"
 #include "../adt/wordmachine.h"
 
 #define CAPACITY_PSN 100

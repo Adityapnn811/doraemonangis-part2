@@ -3,8 +3,8 @@
 #ifndef Matrix_H
 #define Matrix_H
 
-#include "../models/boolean.h"
-#include "../models/pcolor.h"
+#include "../modules/boolean.h"
+#include "../modules/pcolor.h"
 #include "../adt/player.h"
 #include "../adt_modified/listpointdin.h"
 #include "../adt_modified/tas.h"

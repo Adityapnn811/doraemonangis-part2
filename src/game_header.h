@@ -1,10 +1,10 @@
 #ifndef GAMEHEADER_H
 #define GAMEHEADER_H
 
-#include "./models/command.h"
-#include "./models/help.h"
+#include "./modules/command.h"
+#include "./modules/help.h"
 // #include "./adt/wordmachine.h"
-// #include "./models/newgame.c"
+// #include "./modules/newgame.c"
 
 /* adt */
 #include "./adt/charmachine.h"
@@ -30,20 +30,20 @@
 #include "./adt_modified/todolist.h"
 #include "./adt_modified/word.h"
 
-/* models */
-#include "./models/bangunan.h"
-#include "./models/boolean.h"
-#include "./models/command.h"
-#include "./models/config.h"
-#include "./models/help.h"
-#include "./models/pcolor.h"
+/* modules */
+#include "./modules/bangunan.h"
+#include "./modules/boolean.h"
+#include "./modules/command.h"
+#include "./modules/config.h"
+#include "./modules/help.h"
+#include "./modules/pcolor.h"
 
 /* include header masing - masing di sini */
 ////////////////////////////////
-#include "./models/command.c"
-#include "./models/help.c"
+#include "./modules/command.c"
+#include "./modules/help.c"
 // #include "./adt/wordmachine.c"
-// #include "./models/newgame.c"
+// #include "./modules/newgame.c"
 // #include "game_header.h"
 
 /* adt */
@@ -70,11 +70,11 @@
 #include "./adt_modified/todolist.c"
 #include "./adt_modified/word.c"
 
-/* models */
-// #include "./models/command.c"
-// #include "./models/help.c"
-#include "./models/pcolor.c"
-#include "./models/config.c"
+/* modules */
+// #include "./modules/command.c"
+// #include "./modules/help.c"
+#include "./modules/pcolor.c"
+#include "./modules/config.c"
 
 /* include header masing - masing di sini */
 

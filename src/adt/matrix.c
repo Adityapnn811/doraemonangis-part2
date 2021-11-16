@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "matrix.h"
-#include "../models/boolean.h"
-#include "../models/pcolor.h"
+#include "../modules/boolean.h"
+#include "../modules/pcolor.h"
 #include "../adt/player.h"
 #include "../adt_modified/listpointdin.h"
 #include "../adt_modified/displaymap.h"

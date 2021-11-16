@@ -2,7 +2,7 @@
 #define TAS_H_INCLUDED
 
 #include "../adt/item.h"
-#include "../models/boolean.h"
+#include "../modules/boolean.h"
 
 #define IDX_UNDEF -1
 #define CAPACITY_TAS 100

@@ -6,7 +6,7 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include "../models/boolean.h"
+#include "../modules/boolean.h"
 #include "node.h"
 
 typedef Address List;

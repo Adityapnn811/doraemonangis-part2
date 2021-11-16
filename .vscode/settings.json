@@ -2,6 +2,7 @@
     "files.associations": {
         "matrix.h": "c",
         "game_header.h": "c",
-        "config.h": "c"
+        "config.h": "c",
+        "pcolor.h": "c"
     }
 }

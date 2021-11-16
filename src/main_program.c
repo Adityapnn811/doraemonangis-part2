@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include "game_header.h"
-#include "./models/newgame.c"
+#include "./modules/newgame.c"
 
 boolean endWord;
 Word currentWord;

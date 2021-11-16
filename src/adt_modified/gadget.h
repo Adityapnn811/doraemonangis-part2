@@ -1,7 +1,7 @@
 #ifndef GADGET_H_INCLUDED
 #define GADGET_H_INCLUDED
 
-#include "../models/boolean.h"
+#include "../modules/boolean.h"
 #define CAPACITY_INV 5
 #include "tas.h"
 #include "todolist.h"

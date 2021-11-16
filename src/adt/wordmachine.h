@@ -5,7 +5,7 @@
 #define WORD_ENGINE_H
 
 #include <stdio.h>
-#include "../models/boolean.h"
+#include "../modules/boolean.h"
 #include "charmachine.h"
 
 #define WORD_CAPACITY 50

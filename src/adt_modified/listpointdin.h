@@ -3,8 +3,8 @@
 #ifndef LISTPOINTDIN_H
 #define LISTPOINTDIN_H
 
-#include "../models/boolean.h"
-#include "../models/bangunan.h"
+#include "../modules/boolean.h"
+#include "../modules/bangunan.h"
 
 /*  Kamus Umum */
 #define IDX_UNDEF -1
