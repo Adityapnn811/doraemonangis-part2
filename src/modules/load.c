@@ -128,7 +128,7 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
   fp = fopen(fname, "w");
   if (fp == NULL)
   {
-    printf("Error dalam membuka file.");
+    printf("Error dalam membuka file.\n");
     return;
   }
 
@@ -196,11 +196,11 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
 
   if (ferror(fp))
   {
-    printf("Error dalam menyimpan data.");
+    printf("Error dalam menyimpan data.\n");
     return;
   }
 
-  printf("Data game berhasil disimpan!");
+  printf("Data game berhasil disimpan!\n");
 }
 
 void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *todo)
@@ -215,7 +215,7 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
   fp = fopen(str, "r");
   if (fp == NULL)
   {
-    printf("Error dalam membuka file.");
+    printf("Error dalam membuka file.\n");
     return;
   }
 
@@ -423,4 +423,12 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
   }
 
   fclose(fp);
+
+  if (!success)
+  {
+    printf("Gagal load game. File tidak valid.\n");
+    return;
+  }
+
+  printf("Game berhasil di-load.\n");
 }
