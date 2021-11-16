@@ -14,7 +14,7 @@ void CreateInv(Inventory *inv){
     }
 }
 
-void Buy(Inventory *inv, int *uang){
+void BuyGadget(Inventory *inv, int *uang){
     //anggepan lokasi di HQ
     //uang nunggu main
     int a;
@@ -25,7 +25,9 @@ void Buy(Inventory *inv, int *uang){
     }
     printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n");
     printf("ENTER COMMAND: ");
-    scanf("%d",&a);
+    char input[30];
+    fgets(input,30,stdin);
+    a = atoi(input);
     if(a>0){
         if(!isFullInv(*inv)){
             if(((*uang)-(DaftarGadget[a-1].harga))>=0){
@@ -82,9 +84,8 @@ void AddGadget(Inventory *inv, NamaGadget gdg){
 }
 
 // Display gadget pada inventory
-void DisplayGadget(Inventory *inv,int *waktu, Tas *tas){
+void DisplayGadget(Inventory *inv,int *waktu, Tas *tas,TDList todo,DaftarPesanan psn,Player *p,ListPointDin lb){
     //inventory gadget
-    int a;
     for(int i=0; i<5;i++){
         if(KEY(*inv,i)!='z'){
             printf("%d. %s\n",i+1,GADGET(*inv,i));
@@ -94,22 +95,20 @@ void DisplayGadget(Inventory *inv,int *waktu, Tas *tas){
     }
     printf("Gadget mana yang ingin digunakan? (ketik 0 jika ingin kembali)\n");
     printf("ENTER COMMAND: ");
-    scanf("%d",&a);
+    char input[30];
+    fgets(input,30,stdin);
+    int a = atoi(input);
 
     if(a>0){
         if(KEY(*inv,a-1)!='z'){
             printf("%s berhasil digunakan\n", GADGET(*inv,a-1));
-            UseGadget((*inv).daftar[a-1],waktu,tas);
+            UseGadget((*inv).daftar[a-1],waktu,tas,psn,p,lb);
 
             deleteGadget(inv,a-1);
         }else{
             printf("Tidak ada Gadget yang dapat digunakan!\n");
         }
-    }else{
-
     }
-
-
 }
 
 void deleteGadget(Inventory *inv, int i){
@@ -118,12 +117,34 @@ void deleteGadget(Inventory *inv, int i){
     KEY(*inv,i)='z';
 }
 
-void UseGadget(NamaGadget gdg,int *waktu, Tas *tas){
+void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,ListPointDin lb){
+    DaftarPesanan temp2=psn;
     if(gdg.key=='a'){
-
+        if(TOP(*tas).ItemType=='P'){
+            while(HEADPSN(temp2).ItemType!=TOP(*tas).ItemType && HEADPSN(temp2).PickUp!=TOP(*tas).PickUp && HEADPSN(temp2).DropOff!=TOP(*tas).DropOff && HEADPSN(temp2).TimeIn!=TOP(*tas).TimeIn){
+                dequeuePsn(&temp2);
+            }
+            TOP(*tas).TimePerish = HEADPSN(temp2).TimePerish;
+        }else{
+            printf("Nothing happende.\n");
+        }
     }else if(gdg.key=='b'){
         (*tas).maxTas*=2;
+        if((*tas).maxTas>100){
+            (*tas).maxTas=100;
+        }
     }else if(gdg.key=='c'){
+        printf("Tempat yang dapat dicapai:\n");
+        for(int i=0; i<lb.Neff; i++){
+            printf("%d. %c (%d %d)\n",i+1,lb.buffer[i].label,lb.buffer[i].position.X,lb.buffer[i].position.Y);
+        }
+        printf("ENTER COMMAND: ");
+        char input[30];
+        fgets(input,30,stdin);
+        int a = atoi(input);
+        a -= 1;
+        setPlayerLoc(p,ELMTX(lb,a),ELMTY(lb,a));
+        
 
     }else if(gdg.key=='d'){
         (*waktu)-=50;
@@ -131,6 +152,9 @@ void UseGadget(NamaGadget gdg,int *waktu, Tas *tas){
             (*waktu)=0;
         }
     }else if(gdg.key=='e'){
-
+        if(TOP(*tas).ItemType=='H'){
+            // Tanda heavy item efek hilang namun tetap berlabel heavy item
+            TOP(*tas).ItemType='I'; 
+        }
     }
 }

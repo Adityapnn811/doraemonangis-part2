@@ -194,6 +194,8 @@ void deleteAtTD(TDList *l, AddressTD Tp){
     while(loc!=NULL && !flag){
         if(loc==Tp){
             if(NEXTTD(loc)==NULL){
+                NEXTTD(PREVTD(loc)) = NULL;
+                LASTTD(*l) = PREVTD(loc);
             }else{
                 NEXTTD(PREVTD(loc)) = NEXTTD(loc);
                 PREVTD(NEXTTD(loc)) = PREVTD(loc);
@@ -207,32 +209,37 @@ void deleteAtTD(TDList *l, AddressTD Tp){
 
 }
 
-void CreateTDfromPSN(TDList *l,DaftarPesanan psn,int waktu){
-    DaftarPesanan pt = psn;
+void CreateTDfromPSN(TDList *l,DaftarPesanan *psn,int waktu){
     boolean flag = false;
-    while(!isEmptyDftr(pt) && !flag){
-        Pesanan pt1;
-        dequeuePsntoVal(&pt,&pt1);
+    while(!isEmptyDftr(*psn) && !flag){
+        Pesanan pt1 = HEADPSN(*psn);
         if(pt1.TimeIn<=waktu){
-            insertLastTD(l,pt1);
+            Pesanan pt2;
+            dequeuePsntoVal(psn,&pt2);
+            insertLastTD(l,pt2);
         }else{
             flag = true;
         }
-        
     }
 }
 
-void DisplayListToDo(DaftarPesanan psn,int waktu){
+void DisplayListToDo(TDList l,int waktu){
+    /*
     TDList l;
     CreateListTD(&l);
     CreateTDfromPSN(&l,psn,waktu);
-    AddressTD pt = FIRSTTD(l);
+    */
+    
     int a = 1;
     printf("Pesanan pada To Do List:\n");
-    while(pt!=NULL){
-        if(INFOTD(pt).done==false && a<15){
+    if(isEmptyTD(l)){
+        printf("Tidak ada pesanan yang akan dikerjakan.\n");
+    }else{
+        AddressTD pt = FIRSTTD(l);
+        while(pt!=NULL){
+            
             printf("%d. ",a);
-            printf("%c -> %c",INFOTD(pt).PickUp,INFOTD(pt).DropOff,INFOTD(pt).ItemType);
+            printf("%c -> %c",INFOTD(pt).PickUp,INFOTD(pt).DropOff);
             if(INFOTD(pt).ItemType=='N'){
                 printf(" (Normal Item)");
             }else if(INFOTD(pt).ItemType=='H'){
@@ -240,7 +247,7 @@ void DisplayListToDo(DaftarPesanan psn,int waktu){
             }else if(INFOTD(pt).ItemType=='P'){
                 printf(" (Perishable Item)");
             }else{
-                printf("VIP Item");
+                printf(" (VIP Item)");
             }
             if(INFOTD(pt).ItemType!='P'){
                 printf("\n");
@@ -248,13 +255,14 @@ void DisplayListToDo(DaftarPesanan psn,int waktu){
                 printf(" %d\n",INFOTD(pt).TimePerish);
             }
             a++;
+            pt = NEXTTD(pt);
         }
-        pt = NEXTTD(pt);
     }
+    
 }
-
+/*
 void DisplayListToDoOnly(DaftarPesanan psn, TDList l,int waktu) {
-/* ini sebenernya udh gue buat display yg dari to do, tapi kayak yg gue kirim ss di line, pesanan yg udh muncul, kalo command to do lagi bakal muncul lagi dia (jadi double) */
+//ini sebenernya udh gue buat display yg dari to do, tapi kayak yg gue kirim ss di line, pesanan yg udh muncul, kalo command to do lagi bakal muncul lagi dia (jadi double)
     CreateTDfromPSN(&l,psn,waktu); // karena ini mungkin diakalin biar bikin to do nya engga double
     AddressTD pt = FIRSTTD(l);
     int a = 1;
@@ -282,5 +290,5 @@ void DisplayListToDoOnly(DaftarPesanan psn, TDList l,int waktu) {
         pt = NEXTTD(pt);
     }  
 }
-
+*/
 

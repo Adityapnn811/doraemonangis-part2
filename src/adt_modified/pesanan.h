@@ -29,10 +29,10 @@ typedef struct {
     int idx_tail;
 } DaftarPesanan;
 
-#define IDX_HEAD(q) (q).idx_head
-#define IDX_TAIL(q) (q).idx_tail
-#define HEAD(q) (q).daftar[(q).idx_head]
-#define TAIL(q) (q).daftar[(q).idx_tail]
+#define IDX_HEADPSN(q) (q).idx_head
+#define IDX_TAILPSN(q) (q).idx_tail
+#define HEADPSN(q) (q).daftar[(q).idx_head]
+#define TAILPSN(q) (q).daftar[(q).idx_tail]
 
 void CreatePesanan(Pesanan *i, int TimeIn, char PickUp, char DropOff, char ItemType, int TimePerish);
 

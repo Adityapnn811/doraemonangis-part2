@@ -63,7 +63,7 @@ void DisplayInPrgs(Tas t){
             dropItemToVal(&temp,&a);
             if(a.ItemType=='N'){
                 printf("Normal Item");
-            } else if(a.ItemType=='H'){
+            } else if(a.ItemType=='H' || a.ItemType=='I'){
                 printf("Heavy Item");
             } else if(a.ItemType=='P'){
                 printf("Perishable Item");
@@ -74,6 +74,20 @@ void DisplayInPrgs(Tas t){
             i++;
         }
     }
+
+}
+
+int CountHeavy(Tas tas){
+    int sum = 0;
+    Tas temp = tas;
+    while(!isEmptyTas(temp)){
+        Item a;
+        dropItemToVal(&temp,&a);
+        if(a.ItemType=='H'){
+            sum+=1;
+        }
+    }
+    return sum;
 
 }
 

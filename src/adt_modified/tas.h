@@ -22,14 +22,18 @@ boolean useAbility;
 
 void CreateTas(Tas *tas);
 boolean isEmptyTas(Tas s);
+int lengthTas(Tas tas);
 void addItem(Tas *tas, Item val);
 void dropItem(Tas *tas1);
 void dropItemToVal(Tas *tas1,Item *val);
 void DisplayInPrgs(Tas t);
+int CountHeavy(Tas tas);
 
 void reduceAllPerishTime(Tas *t);
 /* I.S. tas t terdefinisi dan mungkin kosong
 F.S. semua waktu perishable item berkurang 1, jika waktu perish menjadi 0, drop item */
+
+
 // void setLengthTas(Tas *tas);
 
 

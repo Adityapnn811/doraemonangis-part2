@@ -16,17 +16,17 @@ void CreatePesanan(Pesanan *i, int TimeIn, char PickUp, char DropOff, char ItemT
 }
 
 void CreateDaftar(DaftarPesanan *dp){
-  IDX_HEAD(*dp) = IDX_UNDEF;
-  IDX_TAIL(*dp) = IDX_UNDEF;
+  IDX_HEADPSN(*dp) = IDX_UNDEF;
+  IDX_TAILPSN(*dp) = IDX_UNDEF;
 
 }
 
 boolean isEmptyDftr(DaftarPesanan p){
-    return IDX_HEAD(p) == IDX_UNDEF && IDX_TAIL(p) == IDX_UNDEF;
+    return IDX_HEADPSN(p) == IDX_UNDEF && IDX_TAILPSN(p) == IDX_UNDEF;
 }
 
 boolean isFullDftr(DaftarPesanan p){
-    return IDX_HEAD(p) == 0 && IDX_TAIL(p) == (CAPACITY_PSN - 1);
+    return IDX_HEADPSN(p) == 0 && IDX_TAILPSN(p) == (CAPACITY_PSN - 1);
 }
 
 boolean CmpPesanan(Pesanan P1, Pesanan P2){
@@ -48,38 +48,38 @@ int lengthDftr(DaftarPesanan q)
     return 0;
   }
 
-  return IDX_TAIL(q) - IDX_HEAD(q) + 1;
+  return IDX_TAILPSN(q) - IDX_HEADPSN(q) + 1;
 }
 
 
 void enqueuePsn(DaftarPesanan *dft, Pesanan pt){
-    int head;
+    int HEADPSN;
     if (isEmptyDftr(*dft))
     {
-        IDX_HEAD(*dft) = 0;
-        IDX_TAIL(*dft) = 0;
-        HEAD(*dft) = pt;
+        IDX_HEADPSN(*dft) = 0;
+        IDX_TAILPSN(*dft) = 0;
+        HEADPSN(*dft) = pt;
     }
     else
     {
-        if (IDX_TAIL(*dft) == (CAPACITY_PSN - 1))
+        if (IDX_TAILPSN(*dft) == (CAPACITY_PSN - 1))
         {
-          head = IDX_HEAD(*dft);
-          while (IDX_HEAD(*dft) <= IDX_TAIL(*dft))
+          HEADPSN = IDX_HEADPSN(*dft);
+          while (IDX_HEADPSN(*dft) <= IDX_TAILPSN(*dft))
           {
-            Pesanan tmp = HEAD(*dft);
-            IDX_HEAD(*dft) -= head;
-            HEAD(*dft) = tmp;
-            IDX_HEAD(*dft) += head;
-            ++IDX_HEAD(*dft);
+            Pesanan tmp = HEADPSN(*dft);
+            IDX_HEADPSN(*dft) -= HEADPSN;
+            HEADPSN(*dft) = tmp;
+            IDX_HEADPSN(*dft) += HEADPSN;
+            ++IDX_HEADPSN(*dft);
           }
-          IDX_HEAD(*dft) = 0;
-          IDX_TAIL(*dft) -= head;
+          IDX_HEADPSN(*dft) = 0;
+          IDX_TAILPSN(*dft) -= HEADPSN;
         }
 
-        IDX_TAIL(*dft)++;
-        TAIL(*dft) = pt;
-        int i = IDX_TAIL(*dft);
+        IDX_TAILPSN(*dft)++;
+        TAILPSN(*dft) = pt;
+        int i = IDX_TAILPSN(*dft);
         Pesanan temp2;
         while((*dft).daftar[i].TimeIn <= (*dft).daftar[i-1].TimeIn && i>=0){
                 temp2 = (*dft).daftar[i];
@@ -92,21 +92,21 @@ void enqueuePsn(DaftarPesanan *dft, Pesanan pt){
 
 
 void dequeuePsn(DaftarPesanan *dft){
-    if(IDX_HEAD(*dft)==IDX_TAIL(*dft)){
-        IDX_HEAD(*dft) = IDX_UNDEF;
-        IDX_TAIL(*dft) = IDX_UNDEF;
+    if(IDX_HEADPSN(*dft)==IDX_TAILPSN(*dft)){
+        IDX_HEADPSN(*dft) = IDX_UNDEF;
+        IDX_TAILPSN(*dft) = IDX_UNDEF;
     }else{
-        IDX_HEAD(*dft)++;
+        IDX_HEADPSN(*dft)++;
     }
 }
 
 void dequeuePsntoVal(DaftarPesanan *dft,Pesanan *pt){
-    *pt = HEAD(*dft);
-    if(IDX_HEAD(*dft)==IDX_TAIL(*dft)){
-        IDX_HEAD(*dft) = IDX_UNDEF;
-        IDX_TAIL(*dft) = IDX_UNDEF;
+    *pt = HEADPSN(*dft);
+    if(IDX_HEADPSN(*dft)==IDX_TAILPSN(*dft)){
+        IDX_HEADPSN(*dft) = IDX_UNDEF;
+        IDX_TAILPSN(*dft) = IDX_UNDEF;
     }else{
-        IDX_HEAD(*dft)++;
+        IDX_HEADPSN(*dft)++;
     }
 }
 

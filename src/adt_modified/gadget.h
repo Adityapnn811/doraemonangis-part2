@@ -4,6 +4,9 @@
 #include "../models/boolean.h"
 #define CAPACITY_INV 5
 #include "tas.h"
+#include "todolist.h"
+#include "../adt/player.h"
+#include "listpointdin.h"
 
 typedef char *name;
 
@@ -33,9 +36,9 @@ NamaGadget DaftarGadget[5];
 
 boolean isFullInv(Inventory inv);
 void CreateInv(Inventory *inv);
-void Buy(Inventory *inv, int *uang);
-void DisplayGadget(Inventory *inv,int *waktu, Tas *tas);
-void UseGadget(NamaGadget gdg,int *waktu, Tas *tas);
+void BuyGadget(Inventory *inv, int *uang);
+void DisplayGadget(Inventory *inv,int *waktu, Tas *tas,TDList todo,DaftarPesanan psn,Player *p,ListPointDin lb);
+void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,ListPointDin lb);
 void AddGadget(Inventory *inv,NamaGadget gdg);
 NamaGadget isGadget(Inventory inv, char key);
 void deleteGadget(Inventory *inv, int i);
