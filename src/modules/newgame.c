@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "../game_header.h"
-#include "./load.c"
 
 #include "cmd1.c" // command move, pickup, dropoff
 
