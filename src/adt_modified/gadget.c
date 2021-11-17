@@ -23,11 +23,10 @@ void BuyGadget(Inventory *inv, int *uang){
     for(int i=0;i<5;i++){
         printf("%d. %s (%d Yen)\n",i+1,DaftarGadget[i].nama,DaftarGadget[i].harga);
     }
-    printf("Gadget mana yang ingin kau beli? (ketik 0 jika ingin kembali)\n");
+    printf("Gadget mana yang ingin kau beli? (jika input salah akan kembali ke halaman sebelumnya)\n");
     printf("ENTER COMMAND: ");
-    char input[30];
-    fgets(input,30,stdin);
-    a = atoi(input);
+    startWord(stdin);
+    wordToInt(currentWord, &a);
     if(a>0){
         if(!isFullInv(*inv)){
             if(((*uang)-(DaftarGadget[a-1].harga))>=0){
@@ -93,11 +92,11 @@ void DisplayGadget(Inventory *inv,int *waktu, Tas *tas,TDList todo,DaftarPesanan
             printf("%d. -\n",i+1);
         }
     }
-    printf("Gadget mana yang ingin digunakan? (ketik 0 jika ingin kembali)\n");
+    printf("Gadget mana yang ingin digunakan? (jika input salah akan kembali ke halaman sebelumnya)\n");
     printf("ENTER COMMAND: ");
-    char input[30];
-    fgets(input,30,stdin);
-    int a = atoi(input);
+    int a;
+    startWord(stdin);
+    wordToInt(currentWord, &a);
 
     if(a>0){
         if(KEY(*inv,a-1)!='z'){
@@ -139,9 +138,9 @@ void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,L
             printf("%d. %c (%d %d)\n",i+1,lb.buffer[i].label,lb.buffer[i].position.X,lb.buffer[i].position.Y);
         }
         printf("ENTER COMMAND: ");
-        char input[30];
-        fgets(input,30,stdin);
-        int a = atoi(input);
+        int a;
+        startWord(stdin);
+        wordToInt(currentWord, &a);
         a -= 1;
         setPlayerLoc(p,ELMTX(lb,a),ELMTY(lb,a));
         

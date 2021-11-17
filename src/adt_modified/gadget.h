@@ -7,6 +7,7 @@
 #include "todolist.h"
 #include "../adt/player.h"
 #include "listpointdin.h"
+#include "word.h"
 
 typedef char *name;
 

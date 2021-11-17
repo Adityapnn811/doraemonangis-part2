@@ -109,16 +109,23 @@ static boolean readPesanan(int *timeIn, char *pickUp, char *dropOff, char *type,
 }
 
 /**
+ * EXTERNAL HELPER FUNCTION
+ */
+void inputFilename(char *filename)
+{
+  printf("Input path file: ");
+  readOneWord(stdin);
+  wordToStr(currentWord, filename);
+}
+
+/**
  * MAIN FUNCTION
  */
 
 void saveGame(Player player, Inventory inv, Tas bag, TDList todo, Speedboost boost)
 {
   char fname[WORD_CAPACITY + 1];
-
-  printf("Nama file: ");
-  readOneWord(stdin);
-  wordToStr(currentWord, fname);
+  inputFilename(fname);
 
   FILE *fp;
   fp = fopen(fname, "w");
@@ -134,16 +141,17 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo, Speedboost boo
   fprintf(fp, "Current_Loc %d %d\n", CUR_LOCX(player), CUR_LOCY(player));
   fprintf(fp, "Prev_Loc %d %d\n", PREV_LOCX(player), PREV_LOCY(player));
   fprintf(fp, "Bag_Max %d\n", bag.maxTas);
+  fprintf(fp, "Done_Count %d\n", PESANAN_DONE(player));
 
   /* Speed boost */
   fprintf(fp, "Speed_Boost ");
   if (SB_ISACTIVE(boost))
   {
-    fprintf(fp, "T %d", SB_COUNTER(boost));
+    fprintf(fp, "T %d\n", SB_COUNTER(boost));
   }
   else
   {
-    fprintf(fp, "F");
+    fprintf(fp, "F\n");
   }
 
   fprintf(fp, "\n[INVENTORY]\n");
@@ -211,20 +219,17 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo, Speedboost boo
   printf("Data game berhasil disimpan!\n");
 }
 
-void loadGame(DaftarPesanan *pesanans, Player *player, Inventory *inv, Tas *bag, TDList *todo, Speedboost *boost)
+boolean loadGame(DaftarPesanan *pesanans, Player *player, Inventory *inv, Tas *bag, TDList *todo, Speedboost *boost)
 {
   char str[WORD_CAPACITY + 1];
-
-  printf("Nama file: ");
-  readOneWord(stdin);
-  wordToStr(currentWord, str);
+  inputFilename(str);
 
   FILE *fp;
   fp = fopen(str, "r");
   if (fp == NULL)
   {
     printf("Error dalam membuka file.\n");
-    return;
+    return false;
   }
 
   CreatePlayer(player);
@@ -263,8 +268,8 @@ void loadGame(DaftarPesanan *pesanans, Player *player, Inventory *inv, Tas *bag,
     {
       /* Pergantian state */
 
-      /* Pada state player, harus ada 6 item */
-      if (state == LoadPlayer && playerCounter != 6)
+      /* Pada state player, harus ada ... */
+      if (state == LoadPlayer && playerCounter != 7)
       {
         success = false;
       }
@@ -403,6 +408,26 @@ void loadGame(DaftarPesanan *pesanans, Player *player, Inventory *inv, Tas *bag,
           else
           {
             bag->maxTas = x;
+            playerCounter++;
+          }
+        }
+      }
+      else if (wordEquals(currentWord, "Done_Count"))
+      {
+        if (endWord)
+        {
+          success = false;
+        }
+        else
+        {
+          advWord();
+          if (!endWord || !wordToInt(currentWord, &x))
+          {
+            success = false;
+          }
+          else
+          {
+            PESANAN_DONE(*player) = x;
             playerCounter++;
           }
         }
@@ -574,8 +599,9 @@ void loadGame(DaftarPesanan *pesanans, Player *player, Inventory *inv, Tas *bag,
   if (!success)
   {
     printf("Gagal load game. File tidak valid.\n");
-    return;
+    return false;
   }
 
   printf("Game berhasil di-load.\n");
+  return true;
 }

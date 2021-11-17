@@ -234,12 +234,6 @@ void CreateTDfromPSN(TDList *l,DaftarPesanan *psn,int waktu){
 }
 
 void DisplayListToDo(TDList l,int waktu){
-    /*
-    TDList l;
-    CreateListTD(&l);
-    CreateTDfromPSN(&l,psn,waktu);
-    */
-    
     int a = 1;
     printf("Pesanan pada To Do List:\n");
     if(isEmptyTD(l)){
@@ -265,35 +259,3 @@ void DisplayListToDo(TDList l,int waktu){
     }
     
 }
-/*
-void DisplayListToDoOnly(DaftarPesanan psn, TDList l,int waktu) {
-//ini sebenernya udh gue buat display yg dari to do, tapi kayak yg gue kirim ss di line, pesanan yg udh muncul, kalo command to do lagi bakal muncul lagi dia (jadi double)
-    CreateTDfromPSN(&l,psn,waktu); // karena ini mungkin diakalin biar bikin to do nya engga double
-    AddressTD pt = FIRSTTD(l);
-    int a = 1;
-    printf("Pesanan pada To Do List:\n");
-    while(pt!=NULL){
-        if(INFOTD(pt).done==false && a<10){
-            printf("%d. ",a);
-            printf("%c -> %c",INFOTD(pt).PickUp,INFOTD(pt).DropOff,INFOTD(pt).ItemType);
-            if(INFOTD(pt).ItemType=='N'){
-                printf(" (Normal Item)");
-            }else if(INFOTD(pt).ItemType=='H'){
-                printf(" (Heavy Item)");
-            }else if(INFOTD(pt).ItemType=='P'){
-                printf(" (Perishable Item)");
-            }else{
-                printf("VIP Item");
-            }
-            if(INFOTD(pt).ItemType!='P'){
-                printf("\n");
-            }else{
-                printf(" %d\n",INFOTD(pt).TimePerish);
-            }
-            a++;
-        }
-        pt = NEXTTD(pt);
-    }  
-}
-*/
-

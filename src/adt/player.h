@@ -10,6 +10,7 @@ typedef struct
 {
     int waktu; // Waktu player sekarang
     int uang; // Uang yang dimiliki player sekarang
+    int PesananDone;
     POINT currentLoc;
     POINT prevLoc;
 } Player;
@@ -17,6 +18,7 @@ typedef struct
 /***** SELEKTOR *****/
 #define WAKTU(p) (p).waktu
 #define UANG(p) (p).uang
+#define PESANAN_DONE(p) (p).PesananDone
 #define CUR_LOCX(p) (p).currentLoc.X
 #define CUR_LOCY(p) (p).currentLoc.Y
 #define CUR_LOC(p) (p).currentLoc

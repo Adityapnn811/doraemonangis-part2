@@ -25,30 +25,24 @@ int main(){
         startWord(stdin);
         /* pengaturan kondisi pilihan user */
         if(endWord) {
-            if(help(currentWord.contents, currentWord.length)){
+            if(wordEquals(currentWord, "iv")){
                 printf("\n");
                 show_help();
-            }else if(new_game(currentWord.contents, currentWord.length)){
+            }else if(wordEquals(currentWord, "i") || wordEquals(currentWord, "ii")){
                 /* new game */
-                /* isi fungsi buat new game */
+                boolean isNewGame = wordEquals(currentWord, "i");
                 Config newgame;
-                char *filename = "config.txt";
+
+                printf("\n--- LOAD CONFIG FILE ---\n");
+                char filename[WORD_CAPACITY + 1] = "config.txt"; // !!INI NANTI APUS
+                inputFilename(filename);
+
                 if (loadConfig(filename, &newgame)) {
-                    printf("success");
+                    startGame(newgame, isNewGame);
                 } else {
-                    printf("fail");
+                    printf("Gagal me-load file config.\n");
                 }
-                startGame(newgame, true);
-            }else if(load_game(currentWord.contents, currentWord.length)){
-                /* load game disini */
-                /* isi fungsi buat load game */
-                Config config;
-                if (loadConfig("config.txt", &config)) {
-                    startGame(config, false);
-                } else {
-                    printf("fail");
-                }
-            }else if(exit_2(currentWord.contents, currentWord.length)){
+            }else if(wordEquals(currentWord, "iii")){
                 printf("\nSelamat bertemu kembali!\n");
                 isDone = true;
             }

@@ -4,14 +4,14 @@ boolean getRelation(Matrix m, ListPointDin l, POINT pt, Player *plyr) {
     int counter = getIdxPoint(l, pt);
     
     int nPos=0;
-    char input[30];
+    int inputInt;
+    startWord(stdin);
+    wordToInt(currentWord, &inputInt);
+
+    // char input[30];
     printf("\nENTER COMMAND: ");
-    fgets(input,30,stdin);
-    // printf("inputnya %s\n", input);
-    // if (strcmp(input, "30")) {
-    //     printf("if nya bisa\n");
-    // }
-    int inputInt = atoi(input);
+    // fgets(input,30,stdin);
+    // int inputInt = atoi(input);
     int i=0;
     boolean found = false;
     while((0<COLS(m) && !found)) {
@@ -65,7 +65,7 @@ ListPointDin MakeRelationList(ListPointDin x) {
     return x;
 }
 
-void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboost, int *counterMove)
+void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, Speedboost *sb)
 /* Mengatur current loc player ke lokasi yang baru */
 {
     // printf("-----COMMAND MOVE-----\n");
@@ -82,19 +82,18 @@ void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboo
 
     if (getRelation((*newgame).adjMatrix, (*newgame).bangunans, CUR_LOC(*p), p)) {
         // Cek apakah speedboost aktif
-        if (*speedboost == true) {
+        if (SB_ISACTIVE(*sb) == true) {
             printf("speedboost aktif\n");
-            if (*counterMove == 10) { // klo udah move 10 kali, berarti speedboostnya ilang
-                *speedboost = false;
-                *counterMove = 0;
+            if (SB_COUNTER(*sb) == 10) { // klo udah move 10 kali, berarti speedboostnya ilang
+                resetSpeedboost(sb);
                 setWaktu(p, (WAKTU(*p)+1));
                 reduceAllPerishTime(t);
-            } else if (*counterMove != 0 && *counterMove % 2 == 0) {
+            } else if (SB_COUNTER(*sb) != 0 && SB_COUNTER(*sb) % 2 == 0) {
                 setWaktu(p, (WAKTU(*p)+1));
-                *counterMove += 1;
+                SB_COUNTER(*sb) += 1;
                 reduceAllPerishTime(t);
             } else {
-                *counterMove += 1;
+                SB_COUNTER(*sb) += 1;
             }
         } else {
             if(sumH>0){
@@ -113,12 +112,13 @@ void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboo
     CreateTDfromPSN(todo, &((*newgame).pesanans), WAKTU(*p));
 }
 
-void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove, TDList *todo)
+void dropoffcmd(Player *p, Config *newgame, Tas *tas, Speedboost *sb, TDList *todo)
 {
     cancelEfekPengecil(tas);
     Item droppeditem = TOP(*tas);
     // dropItemToVal(tas,&droppeditem);
     if (droppeditem.DropOff == curLocLabel(*p, (*newgame))) {
+        PESANAN_DONE(*p)+=1;
         char tipe_pesanan = droppeditem.ItemType;
         printf("TIPE PESANAN %c\n",tipe_pesanan);
         if (tipe_pesanan == 'H' || tipe_pesanan=='I') {
@@ -144,8 +144,8 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
         }
         dropItem(tas);
         if (CountHeavy(*tas) == 0 && tipe_pesanan == 'H') {
-            *speedboost = true;
-            *counterMove = 0;
+            SB_ISACTIVE(*sb) = true;
+            SB_COUNTER(*sb) = 1;
             printf("Yeay, kamu mendapatkan speedboost untuk sepuluh move!\n");
         }
     } else if (isEmptyTas(*tas)) {
@@ -155,7 +155,7 @@ void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *
     }
 }
 
-void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, boolean *speedboost, int *counterMove) 
+void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, Speedboost *sb) 
 /* Mengambil pesanan yang terdapat di current location */
 {
     if (lengthTas(*tas) != (*tas).maxTas) {
@@ -166,8 +166,7 @@ void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, boolean *speed
             if (tipe_pesanan == 'H') {
                 printf("Pesanan berupa Heavy Item berhasil diambil!\n");
                 // speedboost lgsg digagalin
-                *speedboost = false;
-                *counterMove = 0;
+                resetSpeedboost(sb);
             } else if (tipe_pesanan == 'N') {
                 printf("Pesanan berupa Normal Item berhasil diambil!\n");
             } else if (tipe_pesanan == 'P') {
@@ -199,4 +198,8 @@ void pickupcmd(Player p, Config *newgame, Tas *tas, TDList *todo, boolean *speed
     } else {
         printf("Tas udah penuh!!\n");
     }
+}
+
+boolean isDone (TDList todo, Tas tas, DaftarPesanan psn, Player p, ListPointDin bangunan) {
+    return (isEmptyTD(todo) && (isEmptyDftr(psn) && (isEmptyTas(tas)) && CUR_LOCX(p)==bangunan.buffer[0].position.X && CUR_LOCY(p)==bangunan.buffer[0].position.Y));
 }

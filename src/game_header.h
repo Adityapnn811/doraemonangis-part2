@@ -1,23 +1,14 @@
 #ifndef GAMEHEADER_H
 #define GAMEHEADER_H
 
-#include "./modules/command.h"
 #include "./modules/help.h"
-// #include "./adt/wordmachine.h"
-// #include "./modules/newgame.c"
 
 /* adt */
 #include "./adt/charmachine.h"
 #include "./adt/item.h"
-#include "./adt/list_linked.h"
-#include "./adt/listdin.h"
-#include "./adt/listpos.h"
 #include "./adt/matrix.h"
-#include "./adt/node.h"
 #include "./adt/player.h"
 #include "./adt/point.h"
-#include "./adt/queue.h"
-#include "./adt/stack.h"
 #include "./adt/wordmachine.h"
 
 /* adt modified */
@@ -33,7 +24,6 @@
 
 /* modules */
 #include "./modules/boolean.h"
-#include "./modules/command.h"
 #include "./modules/config.h"
 #include "./modules/help.h"
 #include "./modules/pcolor.h"
@@ -41,24 +31,14 @@
 
 /* include header masing - masing di sini */
 ////////////////////////////////
-#include "./modules/command.c"
 #include "./modules/help.c"
-// #include "./adt/wordmachine.c"
-// #include "./modules/newgame.c"
-// #include "game_header.h"
 
 /* adt */
 #include "./adt/charmachine.c"
 #include "./adt/item.c"
-#include "./adt/list_linked.c"
-#include "./adt/listdin.c"
-#include "./adt/listpos.c"
 #include "./adt/matrix.c"
-#include "./adt/node.c"
 #include "./adt/player.c"
 #include "./adt/point.c"
-#include "./adt/queue.c"
-#include "./adt/stack.c"
 #include "./adt/wordmachine.c"
 
 /* adt modified */
@@ -73,8 +53,6 @@
 #include "./adt_modified/speedboost.c"
 
 /* modules */
-// #include "./modules/command.c"
-// #include "./modules/help.c"
 #include "./modules/pcolor.c"
 #include "./modules/config.c"
 #include "./modules/load.c"

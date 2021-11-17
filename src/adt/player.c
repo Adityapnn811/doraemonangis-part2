@@ -7,6 +7,7 @@
 void CreatePlayer(Player *p) {
     /* KAMUS LOKAL */
     /* ALGORITMA */
+    PESANAN_DONE(*p) = 0;
     WAKTU(*p) = 0;
     UANG(*p) = 0;
     CUR_LOCX(*p) = 0;

@@ -1,9 +1,14 @@
 # Mobilita End Game
+## Latar Belakang
+> 'Mobita menjadi seorang kurir demi mencari nafkah untuk keluarganya.' Dengan adanya pandemi COVID-19, usaha orang tua Mobita mengalami penurunan
+pendapatan. Setelah diringankannya PPKM, Mobita ingin membantu orang tuanya
+mendapat penghasilan menjadi seorang kurir. Tugas kalian adalah membantu Mobita
+membuatkan aplikasi yang akan membantunya melacak pesanan, navigasi peta, mengambil
+dan menurunkan barang.
 
-> Mobita menjadi seorang kurir demi mencari nafkah untuk keluarganya.
 
 ## Deskripsi Program
-Tugas Besar Mata Kuliah IF2110 Algoritma dan Struktur Data
+Tugas Besar Mata Kuliah IF2110 Algoritma dan Struktur Data.
 Permainan berbasis CLI (command-line interface) tentang pengantaran
 barang. Permainan ini dibuat dalam bahasa C dengan menggunakan berbagai kumpulan struktur data.
 
