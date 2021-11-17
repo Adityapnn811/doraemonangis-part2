@@ -2,10 +2,11 @@
 #define STACK_LINKED_H
 
 #include "../models/boolean.h"
+#include "tas.h"
 
 /* Element Type */
 
-typedef int StackLinkedElType;
+typedef Item StackLinkedElType;
 
 /* Node */
 
@@ -29,8 +30,8 @@ typedef struct stackLinked
 } StackLinked;
 
 /* Stack accessor */
-
-#define STACKL_TOP(s) (s).top
+#define STACKL_ADDR(n) (n).top
+#define STACKL_TOP(s) (s).top->info
 
 /* Constructor */
 
@@ -44,5 +45,7 @@ boolean isEmpty(StackLinked s);
 
 boolean push(StackLinked *s, StackLinkedElType value);
 boolean pop(StackLinked *s, StackLinkedElType *value);
+void CreateInPrgsFromTas(StackLinked *inPr, Tas t);
+void DisplayInPrgs2(Tas t);
 
 #endif
