@@ -13,6 +13,8 @@ boolean exit_2(char current[], int length);
 
 boolean help(char current[], int length);
 
+boolean help_in(char current[], int length);
+
 boolean move(char current[], int length);
 
 boolean pick_up(char current[], int length);

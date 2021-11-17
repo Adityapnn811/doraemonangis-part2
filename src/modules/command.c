@@ -16,6 +16,10 @@ boolean help(char current[], int length){
     return(current[0] == 'i' && current[1] == 'v' && length == 2);
 }
 
+boolean help_in(char current[], int length){
+    return(current[0] == 'H' && current[1] == 'E' && current[2] == 'L' && current[3] == 'P' && length == 4);
+}
+
 boolean move(char current[], int length){
     return(current[0] == 'M' && current[1] == 'O' && current [2] == 'V' && current[3] == 'E' && length == 4);
 }
