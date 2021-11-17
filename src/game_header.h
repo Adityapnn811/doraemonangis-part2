@@ -1,62 +1,51 @@
 #ifndef GAMEHEADER_H
 #define GAMEHEADER_H
 
-#include "./modules/help.h"
+#include "./adt/boolean.h"
 
-/* adt */
-#include "./adt/charmachine.h"
-#include "./adt/item.h"
-#include "./adt/matrix.h"
-#include "./adt/player.h"
-#include "./adt/point.h"
-#include "./adt/wordmachine.h"
+#include "./adt/point/point.h"
+#include "./adt_modified/listpointdin/listpointdin.h"
+#include "./adt/charmachine/charmachine.h"
+#include "./adt/wordmachine/wordmachine.h"
+#include "./adt_modified/word/word.h"
+#include "./adt_modified/item/item.h"
+#include "./adt_modified/pesanan/pesanan.h"
+#include "./adt_modified/player/player.h"
+#include "./adt_modified/speedboost/speedboost.h"
+#include "./adt_modified/tas/tas.h"
+#include "./adt_modified/stack_linked/stack_linked.h"
+#include "./adt_modified/todolist/todolist.h"
+#include "./adt_modified/gadget/gadget.h"
+#include "./adt/matrix/matrix.h"
+#include "./adt_modified/displaymap/displaymap.h"
 
-/* adt modified */
-#include "./adt_modified/displaymap.h"
-#include "./adt_modified/gadget.h"
-#include "./adt_modified/listpointdin.h"
-#include "./adt_modified/pesanan.h"
-#include "./adt_modified/stack_linked.h"
-#include "./adt_modified/tas.h"
-#include "./adt_modified/todolist.h"
-#include "./adt_modified/word.h"
-#include "./adt_modified/speedboost.h"
+#include "./modules/config/config.h"
+#include "./modules/help/help.h"
+#include "./modules/load/load.h"
+#include "./modules/pcolor/pcolor.h"
 
-/* modules */
-#include "./modules/boolean.h"
-#include "./modules/config.h"
-#include "./modules/help.h"
-#include "./modules/pcolor.h"
-#include "./modules/load.h"
+#include "./adt/matrix/matrix.c"
+#include "./adt/point/point.c"
+#include "./adt/charmachine/charmachine.c"
+#include "./adt/wordmachine/wordmachine.c"
 
-/* include header masing - masing di sini */
-////////////////////////////////
-#include "./modules/help.c"
+#include "./adt_modified/displaymap/displaymap.c"
+#include "./adt_modified/gadget/gadget.c"
+#include "./adt_modified/item/item.c"
+#include "./adt_modified/listpointdin/listpointdin.c"
+#include "./adt_modified/pesanan/pesanan.c"
+#include "./adt_modified/player/player.c"
+#include "./adt_modified/speedboost/speedboost.c"
+#include "./adt_modified/stack_linked/stack_linked.c"
+#include "./adt_modified/tas/tas.c"
+#include "./adt_modified/todolist/todolist.c"
+#include "./adt_modified/word/word.c"
 
-/* adt */
-#include "./adt/charmachine.c"
-#include "./adt/item.c"
-#include "./adt/matrix.c"
-#include "./adt/player.c"
-#include "./adt/point.c"
-#include "./adt/wordmachine.c"
-
-/* adt modified */
-#include "./adt_modified/displaymap.c"
-#include "./adt_modified/gadget.c"
-#include "./adt_modified/listpointdin.c"
-#include "./adt_modified/pesanan.c"
-#include "./adt_modified/stack_linked.c"
-#include "./adt_modified/tas.c"
-#include "./adt_modified/todolist.c"
-#include "./adt_modified/word.c"
-#include "./adt_modified/speedboost.c"
-
-/* modules */
-#include "./modules/pcolor.c"
-#include "./modules/config.c"
-#include "./modules/load.c"
-
-/* include header masing - masing di sini */
+#include "./modules/config/config.c"
+#include "./modules/help/help.c"
+#include "./modules/load/load.c"
+#include "./modules/pcolor/pcolor.c"
+#include "./modules/command/command.c"
+#include "./modules/newgame/newgame.c"
 
 #endif
