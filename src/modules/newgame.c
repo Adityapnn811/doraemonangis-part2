@@ -8,23 +8,35 @@
 
 void startGame(Config newgame, boolean isNewGame) {
 
-    /* INISIALISASI MAP, TAS, INVENTORY, DAN PLAYER */
-    Matrix m;
-    Player p;
-    POINT loc;
-    DaftarPesanan tempPsn = newgame.pesanans; // Daftar pesanan temp untuk rujukan waktu time perish
-    Tas tas;
-    Item item;
-    Inventory invPlayer;
-    TDList todo;
+    // /* debug test load */
+    // if (loadGame(filename, &newgame)) {
+    //     printf("success");
+    // } else {
+    //     printf("fail");
+    // }
 
+    // enter;displayMatrix(newgame.adjMatrix);enter;
+    // displayListPoint(newgame.bangunans);enter;
+    // printf("length pesanan %d", lengthDftr(newgame.pesanans));enter;
+
+
+    // printf("capcity bangunan %d (blom diassign di load)\n",newgame.bangunans.capacity);
+    // displayMatrix(m);
+    // /* end */
+
+    /* INISIALISASI MAP */
+    Matrix m;
     readCustomMatrix(&m,newgame.mapRows+2,newgame.mapCols+2);
     showMap(&m,newgame.bangunans);
+
+    /* STATE NEW PLAYER */
+    Player p;
+    POINT loc;
     CreatePlayer(&p);    UANG(p) = 100000000;
     setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
-    CreateTas(&tas);
-    CreateInv(&invPlayer);
-    CreateListTD(&todo);
+
+    /* Daftar pesanan temp untuk rujukan waktu time perish*/
+    DaftarPesanan tempPsn = newgame.pesanans;
 
     /* STATE ABILITY SPEEDBOOST */
     boolean speedboost = false;
@@ -37,6 +49,47 @@ void startGame(Config newgame, boolean isNewGame) {
     /* STATUS COUNTER HEAVY ITEM */
     int countHeavy = 0; // counter nya udah di move sekalian -fajar
     // ntar tinggal setWaktu(p, (WAKTU(*p)+1+countHeavy));
+
+    /* START OF TEST */
+
+    // /* DEBUG TEST DRIVER PLAYER */
+    // printf("Uang player sebesar %d\n", UANG(p));
+    // printf("Waktu player sebesar %d\n", WAKTU(p));
+    // printf("Lokasi player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
+    // printf("\n");
+
+    // printf("Uang player sebesar %d\n", UANG(p));
+    // printf("Waktu player sebesar %d\n", WAKTU(p));
+    // printf("Lokaso player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
+
+    // border;
+
+    /* TEST ADD ITEM TO TAS */
+    Tas tas;
+    CreateTas(&tas);
+    Item item;
+    // CreateItem(&item, 4, 'N', 'I', 'H', 8);
+    // CreateTas(&tas);
+    // addItem(&tas, item);
+    /* END OF TEST */
+
+    // Create Inventory
+    Inventory invPlayer;
+    CreateInv(&invPlayer);
+
+    /* TEST TO DO LIST DARI PESANAN */
+    TDList todo;
+    Pesanan p1, p2;
+    CreateListTD(&todo);
+    //CreateTDfromPSN(&todo, &newgame.pesanans, WAKTU(p));
+    // CreatePesanan(&p1, 10, 'D', 'G', 'h', 10);
+    // CreatePesanan(&p2, 10, 'C', 'B', 'n', 10);
+    // insertFirstTD(&todo, p1);
+    // insertFirstTD(&todo, p2);
+    /* END */
+
+    // Test UANG
+    //UANG(p) = 2000;
 
     /* Jika load game */
     if (!isNewGame) {
@@ -60,7 +113,7 @@ void startGame(Config newgame, boolean isNewGame) {
             } else if (drop_off(currentWord.contents, currentWord.length)) {
                 dropoffcmd(&p, &newgame, &tas, &speedboost, &counterMove, &todo);
             } else if (in_progress(currentWord.contents, currentWord.length)) {
-                DisplayInPrgs(tas);
+                DisplayInPrgs2(tas);
             } else if (to_do(currentWord.contents, currentWord.length)) {
                 DisplayListToDo(todo,WAKTU(p));
             } else if(buy(currentWord.contents, currentWord.length)){
@@ -70,15 +123,10 @@ void startGame(Config newgame, boolean isNewGame) {
                     printf("Kamu tidak berada di HQ\n");	
                 }
                 
-            }else if(inventory(currentWord.contents, currentWord.length)){
-                DisplayGadget(&invPlayer,&UANG(p),&tas,todo,tempPsn,&p, newgame.bangunans);
-            }else if (wordEquals(currentWord, "SAVE_GAME")) {
-                saveGame(p, invPlayer, tas, todo, sb);
             } else if(inventory(currentWord.contents, currentWord.length)) {
                 DisplayGadget(&invPlayer,&WAKTU(p),&tas,todo,tempPsn,&p, newgame.bangunans);
-            } else if (help_in(currentWord.contents, currentWord.length)) {
-                printf("\n");
-                show_help();
+            } else if (wordEquals(currentWord, "SAVE_GAME")) {
+                saveGame(p, invPlayer, tas, todo, sb);
             }
             else {
                 printf("WRONG INPUT\n");
@@ -92,3 +140,27 @@ void startGame(Config newgame, boolean isNewGame) {
     enter;
     printf("Lokasi player di (%d, %d)\n", CUR_LOCX(p), CUR_LOCY(p));
 }
+
+// int main(){
+//     newgames();
+// //     // char *filename = "config.txt";
+// //     // FILE *fp = fopen(filename, "r");
+
+// //     // if (fp == NULL)
+// //     // {
+// //     //     printf("Error: could not open file %s", filename);
+// //     //     return 1;
+// //     // }
+
+// //     // // read one character at a time and
+// //     // // display it to the output
+// //     // char ch;
+// //     // while ((ch = fgetc(fp)) != EOF)
+// //     //     putchar(ch);
+
+// //     // // close the file
+// //     // fclose(fp);
+// }
+
+
+

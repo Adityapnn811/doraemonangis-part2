@@ -26,7 +26,6 @@ int lengthTas(Tas tas);
 void addItem(Tas *tas, Item val);
 void dropItem(Tas *tas1);
 void dropItemToVal(Tas *tas1,Item *val);
-void DisplayInPrgs(Tas t);
 int CountHeavy(Tas tas);
 
 void reduceAllPerishTime(Tas *t);

@@ -49,34 +49,6 @@ void dropItemToVal(Tas *tas1,Item *val){
     }
 }
 
-void DisplayInPrgs(Tas t){
-    Tas temp=t;
-    Item a;
-    int i = 1;
-
-    if(isEmptyTas(temp)) {
-        printf("Tidak ada pesanan yang sedang diantarkan.\n");
-    } else {
-        printf("Pesanan yang sedang diantarkan:\n");
-        while(!isEmptyTas(temp)){
-            printf("%d. ",i);
-            dropItemToVal(&temp,&a);
-            if(a.ItemType=='N'){
-                printf("Normal Item");
-            } else if(a.ItemType=='H' || a.ItemType=='I'){
-                printf("Heavy Item");
-            } else if(a.ItemType=='P'){
-                printf("Perishable Item %d",a.TimePerish);
-            } else {
-                printf("VIP Item");
-            }
-            printf(" (Tujuan: %c)\n",a.DropOff);
-            i++;
-        }
-    }
-
-}
-
 int CountHeavy(Tas tas){
     int sum = 0;
     Tas temp = tas;

@@ -6,14 +6,14 @@
 
 void createStackLinked(StackLinked *s)
 {
-  STACKL_TOP(*s) = NULL;
+  STACKL_ADDR(*s) = NULL;
 }
 
 /* Basic test */
 
 boolean isEmpty(StackLinked s)
 {
-  return STACKL_TOP(s) == NULL;
+  return STACKL_ADDR(s) == NULL;
 }
 
 /* Basic stack operation */
@@ -24,14 +24,16 @@ boolean push(StackLinked *s, StackLinkedElType value)
   StackAddress p;
 
   /* Algoritma */
-  p = malloc(sizeof(StackNode));
-  if (!p)
+  p = (StackAddress) malloc(sizeof(StackNode));
+  if (p!=NULL)
   {
-    return false;
+    STACKL_INFO(p) = value;
+    STACKL_NEXT(p) = NULL;
+
   }
 
-  STACKL_NEXT(p) = STACKL_TOP(*s);
-  STACKL_TOP(*s) = p;
+  STACKL_NEXT(p) = STACKL_ADDR(*s);
+  STACKL_ADDR(*s) = p;
 
   return true;
 }
@@ -42,15 +44,61 @@ boolean pop(StackLinked *s, StackLinkedElType *value)
   StackAddress top;
 
   /* Algoritma */
-  if (isEmpty(*s))
-  {
-    return false;
-  }
-
-  top = STACKL_TOP(*s);
-  *value = STACKL_INFO(top);
-  STACKL_TOP(*s) = STACKL_NEXT(top);
+  *value = STACKL_TOP(*s);
+  top = STACKL_ADDR(*s);
+  STACKL_ADDR(*s) = STACKL_NEXT(STACKL_ADDR(*s));
+  STACKL_NEXT(top) = NULL;
 
   free(top);
   return true;
 }
+
+void CreateInPrgsFromTas(StackLinked *inPr, Tas t){
+    Item b;
+    Tas temp = t;
+    Tas temp2;
+    CreateTas(&temp2);
+    temp2.maxTas = temp.maxTas;
+    while(!isEmptyTas(temp)){
+        dropItemToVal(&temp,&b);
+        addItem(&temp2,b);
+    }
+    while(!isEmptyTas(temp2)){
+        dropItemToVal(&temp2,&b);
+        push(inPr,b);
+    }
+
+}
+
+void DisplayInPrgs2(Tas t){
+    StackLinked temp;
+    createStackLinked(&temp);
+    Item a;
+    Tas tas2 = t;
+    CreateInPrgsFromTas(&temp,tas2);
+    int i = 1;
+    if (isEmptyTas(tas2))
+    {
+      printf("Tidak ada pesanan yang sedang diantarkan.\n");
+    }else{
+      printf("Pesanan yang sedang diantarkan:\n");
+      while(!isEmpty(temp)){
+        pop(&temp,&a);
+        printf("%d. ",i);
+        if(a.ItemType=='N'){
+            printf("Normal Item");
+        } else if(a.ItemType=='H' || a.ItemType=='I'){
+            printf("Heavy Item");
+        } else if(a.ItemType=='P'){
+            printf("Perishable Item %d",a.TimePerish);
+        } else {
+            printf("VIP Item");
+        }
+        printf(" (Tujuan: %c)\n",a.DropOff);
+        
+        i++;
+      }
+    }
+    
+    
+} 

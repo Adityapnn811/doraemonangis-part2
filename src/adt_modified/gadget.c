@@ -152,11 +152,11 @@ void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,L
             (*waktu)=0;
         }
     }else if(gdg.key=='e'){
-        /*
         if(TOP(*tas).ItemType=='H'){
             // Tanda heavy item efek hilang namun tetap berlabel heavy item
             TOP(*tas).ItemType='I'; 
+        }else{
+            printf("Nothing happened\n");
         }
-        */
     }
 }
