@@ -2,6 +2,11 @@
 
 > Mobita menjadi seorang kurir demi mencari nafkah untuk keluarganya.
 
+## Deskripsi Program
+Tugas Besar Mata Kuliah IF2110 Algoritma dan Struktur Data
+Permainan berbasis CLI (command-line interface) tentang pengantaran
+barang. Permainan ini dibuat dalam bahasa C dengan menggunakan berbagai kumpulan struktur data.
+
 ## Direktori
     src
     ├── adt                        # Berisi daftar ADT sederhana
@@ -21,8 +26,8 @@ Jalankan `run.bat` yang terletak pada folder src.
 1.	13520002 – Muhammad Fikri Ranjabi 
 2.	13520007 – Nadia Mareta Putri Leiden  
 3.	13520024 – Hilya Fadhilah Imania  
-4.	Muhammad Fajar Ramadhan – 13520026
-5.	Aditya Prawira Nugroho – 13520049
+4.	13520026 – Muhammad Fajar Ramadhan
+5.	13520049 – Aditya Prawira Nugroho
 
 ## Pembagian Tugas
 | Nama - NIM                           | Job Description                                                                                                     |
