@@ -115,6 +115,7 @@ void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, boolean *speedboo
 
 void dropoffcmd(Player *p, Config *newgame, Tas *tas, boolean *speedboost, int *counterMove, TDList *todo)
 {
+    cancelEfekPengecil(tas);
     Item droppeditem = TOP(*tas);
     // dropItemToVal(tas,&droppeditem);
     if (droppeditem.DropOff == curLocLabel(*p, (*newgame))) {
