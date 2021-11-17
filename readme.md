@@ -14,9 +14,31 @@ barang. Permainan ini dibuat dalam bahasa C dengan menggunakan berbagai kumpulan
 
 ## Direktori
     src
-    ├── adt                        # Berisi daftar ADT sederhana
-    ├── adt_modified               # Berisi daftar ADT yang sudah dimodifikasi
-    ├── modules                    # Automated tests (alternatively `spec` or `tests`)
+    ├── adt                        # Berisi ADT sederhana
+    │    ├── charmachine
+    │   ├── matrix
+    │   ├── point
+    │   ├── wordmachine
+    │   └── boolean.h
+    ├── adt_modified               # Berisi ADT yang sudah dimodifikasi
+    │   ├── displaymap
+    │   ├── gadget
+    │   ├── item
+    │   ├── listpointdin
+    │   ├── pesanan
+    │   ├── player
+    │   ├── speedboost
+    │   ├── stack_linked
+    │   ├── tas
+    │   ├── todolist
+    │   └── word
+    ├── modules                    # Fungsi-fungsi yang digunakan di main
+    │   ├── command
+    │   ├── config
+    │   ├── help
+    │   ├── load
+    │   ├── newgame
+    │   └── pcolor
     ├── config.txt                 # File config yang akan diload saat new game
     ├── <save>.txt                 # File save jika menjalankan save game
     ├── game_header.h              # Header untuk semua ADT
@@ -57,3 +79,22 @@ Jalankan `run.bat` yang terletak pada folder src.
 |                                      | 3. Membuat fungsi Map, Matrix, Bangunan dan Move (Bersama Ranjabi)                                                  |
 |                                      | 4. Refactor fungsi                                                                                                  |
 |                                      | 5. Mengimplementasikan ability                                                                                      |
+
+## Daftar Fitur
+| Daftar Fitur                            | Status Pengerjaan |
+|-----------------------------------------|-------------------|
+| New Game, Save Game, dan Load Game      | Selesai           |
+| Mekanisme waktu                         | Selesai           |
+| Pesanan                                 | Selesai           |
+| To Do List                              | Selesai           |
+| In Progress                             | Selesai           |
+| Tas                                     | Selesai           |
+| Efek Item (Heavy, Perishable)           | Selesai           |
+| Ability Speedboost                      | Selesai           |
+| Ability Increase Capacity               | Selesai           |
+| Gadget (termasuk bonus Senter Pengecil) | Selesai           |
+| Inventory                               | Selesai           |
+| Peta                                    | Selesai           |
+| Command MOVE, PICK_UP, DROP_OFF         | Selesai           |
+| Buy Item                                | Selesai           |
+| Help                                    | Selesai           |

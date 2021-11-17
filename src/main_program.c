@@ -33,7 +33,7 @@ int main(){
                 Config newgame;
 
                 printf("\n--- LOAD CONFIG FILE ---\n");
-                char filename[WORD_CAPACITY + 1] = "config.txt"; // !!INI NANTI APUS
+                char filename[WORD_CAPACITY + 1];
                 inputFilename(filename);
 
                 if (loadConfig(filename, &newgame)) {

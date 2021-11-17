@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../../game_header.h"
+#include "todolist.h"
 
 
 void CreateListTD(TDList *l){

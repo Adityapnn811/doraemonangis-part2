@@ -100,10 +100,13 @@ void DisplayGadget(Inventory *inv,int *waktu, Tas *tas,TDList todo,DaftarPesanan
 
     if(a>0){
         if(KEY(*inv,a-1)!='z'){
+            boolean flag = false;
             printf("%s berhasil digunakan\n", GADGET(*inv,a-1));
-            UseGadget((*inv).daftar[a-1],waktu,tas,psn,p,lb);
-
-            deleteGadget(inv,a-1);
+            UseGadget(&flag,(*inv).daftar[a-1],waktu,tas,psn,p,lb);
+            if(flag){
+                deleteGadget(inv,a-1);
+            }
+            
         }else{
             printf("Tidak ada Gadget yang dapat digunakan!\n");
         }
@@ -116,7 +119,7 @@ void deleteGadget(Inventory *inv, int i){
     KEY(*inv,i)='z';
 }
 
-void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,ListPointDin lb){
+void UseGadget(boolean *flag,NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,ListPointDin lb){
     DaftarPesanan temp2=psn;
     if(gdg.key=='a'){
         if(TOP(*tas).ItemType=='P'){
@@ -127,29 +130,40 @@ void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,L
         }else{
             printf("Nothing happened.\n");
         }
+        *flag = 1;
     }else if(gdg.key=='b'){
         (*tas).maxTas*=2;
         if((*tas).maxTas>100){
             (*tas).maxTas=100;
         }
+        *flag = 1;
     }else if(gdg.key=='c'){
         printf("Tempat yang dapat dicapai:\n");
+        int x = 0;
         for(int i=0; i<lb.Neff; i++){
             printf("%d. %c (%d %d)\n",i+1,lb.buffer[i].label,lb.buffer[i].position.X,lb.buffer[i].position.Y);
+            x += 1;
         }
-        printf("ENTER COMMAND: ");
         int a;
+        printf("ENTER COMMAND: "); 
         startWord(stdin);
         wordToInt(currentWord, &a);
-        a -= 1;
-        setPlayerLoc(p,ELMTX(lb,a),ELMTY(lb,a));
-        
+        if((a>0 && a<x)){
+            a -= 1;
+            setPlayerLoc(p,ELMTX(lb,a),ELMTY(lb,a));
+            *flag = 1;
+        }else{
+            printf("Input salah, gadget tidak jadi digunakan\n");
+            *flag = 0;
+        }
+
 
     }else if(gdg.key=='d'){
         (*waktu)-=50;
         if(*waktu<0){
             (*waktu)=0;
         }
+        *flag = 1;
     }else if(gdg.key=='e'){
         if(TOP(*tas).ItemType=='H'){
             // Tanda heavy item efek hilang namun tetap berlabel heavy item
@@ -157,5 +171,6 @@ void UseGadget(NamaGadget gdg,int *waktu, Tas *tas,DaftarPesanan psn,Player *p,L
         }else{
             printf("Nothing happened\n");
         }
+        *flag = 1;
     }
 }

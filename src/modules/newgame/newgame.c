@@ -6,46 +6,32 @@
 
 void startGame(Config newgame, boolean isNewGame) {
 
-    /* INISIALISASI MAP */
+    /* INISIALISASI AWAL PERMAINAN */
     Matrix m;
+    Player p;
+    POINT loc;
+    DaftarPesanan tempPsn = newgame.pesanans;
+    Speedboost sb;
+    Tas tas;
+    Item item;
+    Inventory invPlayer;
+    TDList todo;
+    Pesanan p1, p2;
+
+    CreatePlayer(&p);    UANG(p) = 0;
+    setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
+    resetSpeedboost(&sb);
+    CreateTas(&tas);
+    CreateInv(&invPlayer);
+    CreateListTD(&todo);
+
+    /* INISIALISASI MAP */
     readCustomMatrix(&m,newgame.mapRows+2,newgame.mapCols+2);
     showMap(&m,newgame.bangunans);
 
-    /* STATE NEW PLAYER */
-    Player p;
-    POINT loc;
-    CreatePlayer(&p);    UANG(p) = 0;
-    setPlayerLoc(&p, newgame.bangunans.buffer[0].position.X, newgame.bangunans.buffer[0].position.Y);
-    // setPlayerLoc(&p, 1, 2);
-
-    /* Daftar pesanan temp untuk rujukan waktu time perish*/
-    DaftarPesanan tempPsn = newgame.pesanans;
-
-    /* STATE ABILITY SPEEDBOOST */
-    Speedboost sb;
-    resetSpeedboost(&sb);
-
-    /* START OF TEST */
-
-
-    // border;
-
-    /* TEST ADD ITEM TO TAS */
-    Tas tas;
-    CreateTas(&tas);
-    Item item;
-
-    // Create Inventory
-    Inventory invPlayer;
-    CreateInv(&invPlayer);
-
-    /* TEST TO DO LIST DARI PESANAN */
-    TDList todo;
-    Pesanan p1, p2;
-    CreateListTD(&todo);
-
-    /* END */
-
+    /* UNTUK DEBUG MENAMPILKAN MAP */
+    // enter;displayMatrix(newgame.adjMatrix);enter;
+    // displayListPoint(newgame.bangunans);enter;
 
     /* Jika load game */
     if (!isNewGame) {
@@ -54,13 +40,9 @@ void startGame(Config newgame, boolean isNewGame) {
     }
 
     /* COMMAND */
-    enter;displayMatrix(newgame.adjMatrix);enter;
-    displayListPoint(newgame.bangunans);enter;
     printf("length pesanan %d", lengthDftr(newgame.pesanans));enter;
     printf("Waktu: %d\n", WAKTU(p));
-    // boolean isDone = false;
     while (!isDone(todo,tas,newgame.pesanans,p,newgame.bangunans)){
-    // while (!isDone) {
         printf("\nENTER COMMAND: ");
         startWord(stdin);
         if (endWord) {
@@ -84,7 +66,9 @@ void startGame(Config newgame, boolean isNewGame) {
                     printf("Kamu tidak berada di HQ\n");	
                 }
             } else if(wordEquals(currentWord, "INVENTORY")) {
+                printf("Uang yang dimiliki: %d\n",UANG(p));
                 DisplayGadget(&invPlayer,&WAKTU(p),&tas,todo,tempPsn,&p, newgame.bangunans);
+
             } else if (wordEquals(currentWord, "SAVE_GAME")) {
                 saveGame(p, invPlayer, tas, todo, sb);
             } else if (wordEquals(currentWord, "HELP")) {
@@ -96,7 +80,7 @@ void startGame(Config newgame, boolean isNewGame) {
             else {
                 printf("WRONG INPUT\n");
             }
-            enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG
+            // enter;displayMatrixLabel(m,newgame.adjMatrix,newgame.bangunans,p,tas,todo);enter;enter; // AUTO PRINT MAP BUAT DEBUG
         } else {
             ignoreWords();
         }

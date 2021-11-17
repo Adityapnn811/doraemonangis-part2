@@ -15,5 +15,5 @@ void show_help(){
     printf("8. INVENTORY: menunjukkan gadget yang dimiliki oleh pemain. Ketik 'INVENTORY' kapital\n");
     printf("9. NEW GAME: memulai permainan dengan mengambil data dari file config.txt yang sudah tersedia. Ketik 'NEW_GAME' kapital\n");
     printf("10. SAVE GAME: menyimpan kondisi player saat ini, hanya dapat dilakukan ketika permainan sedang berjalan. Ketik 'SAVE_GAME' kapital\n");
-    printf("11. EXIT GAME: keluar dari permainan. Ketik 'EXIT_");
+    printf("11. EXIT GAME: keluar dari permainan yang sedang berjalan. Ketik 'EXIT'\n");
 }
