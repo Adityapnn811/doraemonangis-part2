@@ -211,7 +211,7 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo, Speedboost boo
   printf("Data game berhasil disimpan!\n");
 }
 
-void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *todo, Speedboost *boost)
+void loadGame(DaftarPesanan *pesanans, Player *player, Inventory *inv, Tas *bag, TDList *todo, Speedboost *boost)
 {
   char str[WORD_CAPACITY + 1];
 
@@ -233,8 +233,8 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
   CreateListTD(todo);
 
   /* Todo menggunakan queue terlebih dahulu */
-  DaftarPesanan pesanans;
-  CreateDaftar(&pesanans);
+  DaftarPesanan todoQueue;
+  CreateDaftar(&todoQueue);
 
   boolean success = true;
   short int loadCounter = 0;
@@ -509,7 +509,7 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
 
       Pesanan pesanan;
       CreatePesanan(&pesanan, timeIn, pickUp, dropOff, itemType, timePerish);
-      enqueuePsn(&pesanans, pesanan);
+      enqueuePsn(&todoQueue, pesanan);
     }
   }
 
@@ -518,7 +518,7 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
     /* Bisa saja ada order fiktif di dalam IN_PROGRESS atau TODO */
     /* Buat referensi berdasarkan konfigurasi */
     TDList allTodo;
-    CreateTDfromPSN(&allTodo, &(conf.pesanans), WAKTU(*player));
+    CreateTDfromPSN(&allTodo, pesanans, WAKTU(*player));
 
     /* Periksa in progress list */
     Tas tmpBag = *bag;
@@ -545,10 +545,10 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
     }
 
     /* Periksa todolist */
-    while (!isEmptyDftr(pesanans) && success)
+    while (!isEmptyDftr(todoQueue) && success)
     {
-      Pesanan pesanan = HEADPSN(pesanans);
-      dequeuePsn(&pesanans);
+      Pesanan pesanan = HEADPSN(todoQueue);
+      dequeuePsn(&todoQueue);
 
       if (pesanan.TimeIn > WAKTU(*player))
       {

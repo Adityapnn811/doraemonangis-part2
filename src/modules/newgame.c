@@ -93,7 +93,7 @@ void startGame(Config newgame, boolean isNewGame) {
 
     /* Jika load game */
     if (!isNewGame) {
-        loadGame(newgame, &p, &invPlayer, &tas, &todo, &sb);
+        loadGame(&(newgame.pesanans), &p, &invPlayer, &tas, &todo, &sb);
     }
 
     /* COMMAND */
