@@ -29,6 +29,7 @@
 #include "./adt_modified/tas.h"
 #include "./adt_modified/todolist.h"
 #include "./adt_modified/word.h"
+#include "./adt_modified/speedboost.h"
 
 /* modules */
 #include "./modules/boolean.h"
@@ -69,6 +70,7 @@
 #include "./adt_modified/tas.c"
 #include "./adt_modified/todolist.c"
 #include "./adt_modified/word.c"
+#include "./adt_modified/speedboost.c"
 
 /* modules */
 // #include "./modules/command.c"

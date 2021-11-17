@@ -112,7 +112,7 @@ static boolean readPesanan(int *timeIn, char *pickUp, char *dropOff, char *type,
  * MAIN FUNCTION
  */
 
-void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
+void saveGame(Player player, Inventory inv, Tas bag, TDList todo, Speedboost boost)
 {
   char fname[WORD_CAPACITY + 1];
 
@@ -134,6 +134,17 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
   fprintf(fp, "Current_Loc %d %d\n", CUR_LOCX(player), CUR_LOCY(player));
   fprintf(fp, "Prev_Loc %d %d\n", PREV_LOCX(player), PREV_LOCY(player));
   fprintf(fp, "Bag_Max %d\n", bag.maxTas);
+
+  /* Speed boost */
+  fprintf(fp, "Speed_Boost ");
+  if (SB_ISACTIVE(boost))
+  {
+    fprintf(fp, "T %d", SB_COUNTER(boost));
+  }
+  else
+  {
+    fprintf(fp, "F");
+  }
 
   fprintf(fp, "\n[INVENTORY]\n");
 
@@ -200,7 +211,7 @@ void saveGame(Player player, Inventory inv, Tas bag, TDList todo)
   printf("Data game berhasil disimpan!\n");
 }
 
-void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *todo)
+void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *todo, Speedboost *boost)
 {
   char str[WORD_CAPACITY + 1];
 
@@ -252,8 +263,8 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
     {
       /* Pergantian state */
 
-      /* Pada state player, harus ada 5 item */
-      if (state == LoadPlayer && playerCounter != 5)
+      /* Pada state player, harus ada 6 item */
+      if (state == LoadPlayer && playerCounter != 6)
       {
         success = false;
       }
@@ -393,6 +404,56 @@ void loadGame(Config conf, Player *player, Inventory *inv, Tas *bag, TDList *tod
           {
             bag->maxTas = x;
             playerCounter++;
+          }
+        }
+      }
+      else if (wordEquals(currentWord, "Speed_Boost"))
+      {
+        if (endWord)
+        {
+          success = false;
+        }
+        else
+        {
+          advWord();
+
+          if (wordEquals(currentWord, "F"))
+          {
+            if (!endWord)
+            {
+              success = false;
+            }
+            else
+            {
+              resetSpeedboost(boost);
+              playerCounter++;
+            }
+          }
+          else if (wordEquals(currentWord, "T"))
+          {
+            if (endWord)
+            {
+              success = false;
+            }
+            else
+            {
+              advWord();
+
+              if (!endWord || !wordToInt(currentWord, &x))
+              {
+                success = false;
+              }
+              else
+              {
+                SB_ISACTIVE(*boost) = true;
+                SB_COUNTER(*boost) = x;
+                playerCounter++;
+              }
+            }
+          }
+          else
+          {
+            success = false;
           }
         }
       }

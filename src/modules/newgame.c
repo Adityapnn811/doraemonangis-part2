@@ -42,6 +42,10 @@ void startGame(Config newgame, boolean isNewGame) {
     boolean speedboost = false;
     int counterMove = 0;
 
+    /* TODO, speedboost disatuin ke sini */
+    Speedboost sb;
+    resetSpeedboost(&sb);
+
     /* STATUS COUNTER HEAVY ITEM */
     int countHeavy = 0; // counter nya udah di move sekalian -fajar
     // ntar tinggal setWaktu(p, (WAKTU(*p)+1+countHeavy));
@@ -89,7 +93,7 @@ void startGame(Config newgame, boolean isNewGame) {
 
     /* Jika load game */
     if (!isNewGame) {
-        loadGame(newgame, &p, &invPlayer, &tas, &todo);
+        loadGame(newgame, &p, &invPlayer, &tas, &todo, &sb);
     }
 
     /* COMMAND */
@@ -122,7 +126,7 @@ void startGame(Config newgame, boolean isNewGame) {
             }else if(inventory(currentWord.contents, currentWord.length)){
                 DisplayGadget(&invPlayer,&UANG(p),&tas,todo,tempPsn,&p, newgame.bangunans);
             }else if (wordEquals(currentWord, "SAVE_GAME")) {
-                saveGame(p, invPlayer, tas, todo);
+                saveGame(p, invPlayer, tas, todo, sb);
             }
             else {
                 printf("WRONG INPUT\n");
