@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "gadget.h"
+#include "../../game_header.h"
 
 int main(){
     Pesanan p1,p2,p3;
@@ -14,40 +14,41 @@ int main(){
     enqueuePsn(&psn,p3);
     TDList Td;
     CreateListTD(&Td);
-    CreateTDfromPSN(&Td,&psn,waktu);
+    CreateTDfromPSN(&Td,&psn,10);
     Item a,b;
     CreateItem(&a,2,'A','B','N',-1);
-    CreateItem(&a,3,'D','B','H',-1);
+    CreateItem(&b,3,'D','B','H',-1);
     Tas tas;
     CreateTas(&tas);
     addItem(&tas,a);
     addItem(&tas,b);
     Inventory inv1;
     CreateInv(&inv1);
-    Player p1;
-    CreatePlayer(&p1);
-    UANG(p1) = 10000;
-    WAKTU(p1) = 15;
+    Player pl1;
+    CreatePlayer(&pl1);
+    UANG(pl1) = 10000;
+    WAKTU(pl1) = 15;
     ListPointDin l;
     ListElType val; // list
-    CreateListDin(&l, 5);
+    CreateListPointDin(&l, 5);
     for (int i = 0; i < 5; i++){
         LABEL(val) = 'A'+i;
         KOORX(val) = i;
         KOORY(val) = i+1;
-        insertLast(&l, val);
+        insertLastListPoint(&l, val);
     }
 
-    print("Is Full Inv: %c\n",isFullInv(inv1));
-    BuyGadget(&inv1,&uang);
-    DisplayGadget(&inv1,&WAKTU(p),&tas,&Td,psn,&p1,&l);
-    AddGadget(&inv1,Mesin);
-    DisplayGadget(&inv1,&WAKTU(p1),&tas,Td,psn,&p1,l);
-    UseGadget(Mesin,&WAKTU(p1),&tas,psn,&p1,l);
-    AddGadget(&inv1,Mesin);
-    DisplayGadget(&inv1,&WAKTU(p1),&tas,Td,psn,&p1,l);
+    printf("Is Full Inv: %c\n",isFullInv(inv1));
+    BuyGadget(&inv1,&UANG(pl1));
+    DisplayGadget(&inv1,&WAKTU(pl1),&tas,Td,psn,&pl1,l);
+    AddGadget(&inv1,DaftarGadget[0]);
+    DisplayGadget(&inv1,&WAKTU(pl1),&tas,Td,psn,&pl1,l);
+    boolean flag = false;
+    UseGadget(&flag,DaftarGadget[0],&WAKTU(pl1),&tas,psn,&pl1,l);
+    AddGadget(&inv1,DaftarGadget[0]);
+    DisplayGadget(&inv1,&WAKTU(pl1),&tas,Td,psn,&pl1,l);
     deleteGadget(&inv1, 0);
-    DisplayGadget(&inv1,&WAKTU(p1),&tas,Td,psn,&p1,l);
+    DisplayGadget(&inv1,&WAKTU(pl1),&tas,Td,psn,&pl1,l);
 
     
     return 0;
