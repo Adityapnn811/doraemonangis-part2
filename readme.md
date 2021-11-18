@@ -48,6 +48,9 @@ barang. Permainan ini dibuat dalam bahasa C dengan menggunakan berbagai kumpulan
 ## Instalasi
 (Windows)  
 Jalankan `run.bat` yang terletak pada folder src di terminal vs code.  
+(Linux)  
+Jalankan command `gcc main_program.c -o main.exe && ./m
+ain.exe` di direktori src.
 
 ## Anggota Kelompok
 1.	13520002 – Muhammad Fikri Ranjabi 
