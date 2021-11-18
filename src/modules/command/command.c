@@ -146,10 +146,10 @@ void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, Speedboost *sb)
 
 void dropoffcmd(Player *p, Config *newgame, Tas *tas, Speedboost *sb, TDList *todo)
 {
-    cancelEfekPengecil(tas);
     Item droppeditem = TOP(*tas);
     // dropItemToVal(tas,&droppeditem);
     if (droppeditem.DropOff == curLocLabel(*p, (*newgame))) {
+        cancelEfekPengecil(tas);
         PESANAN_DONE(*p)+=1;
         char tipe_pesanan = droppeditem.ItemType;
         printf("TIPE PESANAN %c\n",tipe_pesanan);
