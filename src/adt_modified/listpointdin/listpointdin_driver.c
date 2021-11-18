@@ -1,11 +1,11 @@
 #include <stdio.h>
-#include "listpointdin.h"
+#include "../../game_header.h"
 
 int main(){
     ListPointDin l;
     ListElType val; // list
     int i;
-    CreateListDin(&l, 5);
+    CreateListPointDin(&l, 5);
     if (isEmptyListPoint(l)){
         printf("List masih kosong\n");
     }
@@ -13,17 +13,17 @@ int main(){
         LABEL(val) = 'A'+i;
         KOORX(val) = i;
         KOORY(val) = i+1;
-        insertLast(&l, val);
+        insertLastListPoint(&l, val);
     }
-    if (isFull(l)){
+    if (isFullListPoint(l)){
         printf("List sudah full\n");
     }
-    displayList(l);
+    displayListPoint(l);
     printf("\n");
-    deleteLast(&l, &val);
-    displayList(l);
+    deleteLastListPoint(&l, &val);
+    displayListPoint(l);
     printf("\n");
-    dealocate(&l);
+    dealocateListPoint(&l);
     if (isEmptyListPoint(l)){
         printf("List masih kosong\n");
     }

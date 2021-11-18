@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "charmachine.h"
+#include "../../game_header.h"
 
 int main(void)
 {

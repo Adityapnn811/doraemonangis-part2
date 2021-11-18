@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "speedboost.h"
+#include "../../game_header.h"
 
 int main(void)
 {

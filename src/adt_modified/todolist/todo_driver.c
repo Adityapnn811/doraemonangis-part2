@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "todolist.h"
+// #include "todolist.h"
 // #include "../pesanan/pesanan.h"
 #include "../../game_header.h"
 
@@ -32,8 +32,6 @@ int main() {
     deleteFirstTD(&td, &p3);
     DisplayListToDo(td, 30);
     deleteLastTD(&td, &p3);
-    DisplayListToDo(td, 30);
-    deleteAtTD(&td, p);
     DisplayListToDo(td, 30);
 
     return 0;

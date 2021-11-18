@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "stack_linked.h"
+#include "../../game_header.h"
 
 int main(){
     Item item1, item2, item3, item4, item5;
@@ -19,14 +19,14 @@ int main(){
 
     StackLinked St;
     createStackLinked(&St);
-    print("is empty : %d\n",isEmpty(St));
+    printf("is empty : %d\n",isEmpty(St));
     push(&St,item1);
     CreateInPrgsFromTas(&St,t);
-    print("%d %c %c %c\n",STACKL_TOP(St).TimeIn,STACKL_TOP(St).PickUp,STACKL_TOP(St).DropOff,STACKL_TOP(St).ItemType);
+    printf("%d %c %c %c\n",STACKL_TOP(St).TimeIn,STACKL_TOP(St).PickUp,STACKL_TOP(St).DropOff,STACKL_TOP(St).ItemType);
     Item temp;
     pop(&St,&temp);
-    print("%d %c %c %c\n",STACKL_TOP(St).TimeIn,STACKL_TOP(St).PickUp,STACKL_TOP(St).DropOff,STACKL_TOP(St).ItemType);
-    DisplayInPrgs(t);
+    printf("%d %c %c %c\n",STACKL_TOP(St).TimeIn,STACKL_TOP(St).PickUp,STACKL_TOP(St).DropOff,STACKL_TOP(St).ItemType);
+    DisplayInPrgs2(t);
     
 
 

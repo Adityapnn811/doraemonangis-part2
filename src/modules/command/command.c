@@ -1,42 +1,5 @@
 #include "../../game_header.h"
 
-// boolean getRelation(Matrix m, ListPointDin l, POINT pt, Player *plyr) {
-//     int counter = getIdxPoint(l, pt);
-    
-//     int nPos=0;
-//     int inputInt;
-//     startWord(stdin);
-//     wordToInt(currentWord, &inputInt);
-
-//     // printf("\nENTER COMMAND: ");
-//     int i=0;
-//     boolean found = false;
-//     if (inputInt == 0) {
-//         found = false;
-//         return false;
-//     }
-//     while((0<COLS(m) && !found)) {
-//         // iterasi setiap kolom matriks yang bernilai 1
-//         if (ELMT(m,counter,i) == 1) {
-//             nPos += 1;
-//             if (inputInt == (nPos % 27)) { 
-//                 setPlayerPrevLoc(plyr,CUR_LOCX(*plyr),CUR_LOCX(*plyr));
-//                 printf("\nMobita sekarang berada di titik %c (%d,%d)!\n", ELMTLABEL(l,i), ELMTX(l,i), ELMTY(l,i));
-//                 setPlayerLoc(plyr,ELMTX(l,i),ELMTY(l,i));
-//                 found = true;
-//                 return true;
-//                 break;
-//             } 
-//             else {
-//                 printf("Masukkan pilihan posisi yang benar!\n");
-//                 return false;
-//                 break;
-//             }
-//         }
-//         i += 1;
-//     }
-// }
-
 boolean getRelation(Matrix m, ListPointDin l, POINT pt, Player *plyr, Config newgame) {
     int counter = getIdxPoint(l, pt);
     
@@ -100,14 +63,9 @@ ListPointDin MakeRelationList(ListPointDin x) {
 void movecmd(Player *p, Config *newgame, TDList *todo, Tas *t, Speedboost *sb)
 /* Mengatur current loc player ke lokasi yang baru */
 {
-    // printf("-----COMMAND MOVE-----\n");
     int inputPos;
     // printf("*INFO* current label %c\n", curLocLabel(p, newgame));
     printf("Posisi yang dapat dicapai:\n");
-
-    
-    // showRelation((*newgame).adjMatrix, (*newgame).bangunans, CUR_LOC(*p));
-    // printf("Posisi yang dipilih? (ketik 0 jika ingin kembali)\n");
 
     // Heavy item di tas
     int sumH = CountHeavy(*t);

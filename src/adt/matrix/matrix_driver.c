@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "matrix.h"
+#include "../../game_header.h"
 
 int main() {
     Matrix m;

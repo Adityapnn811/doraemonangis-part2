@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "wordmachine.h"
+#include "../../game_header.h"
 
 int main(void)
 {
@@ -22,6 +22,15 @@ int main(void)
     i++;
     advWord();
   }
+  printf("%d) ", i);
+
+  int j;
+  for (j = 0; j < currentWord.length; j++)
+  {
+    printf("%c", currentWord.contents[j]);
+  }
+  printf("\n");
+  printf("Jumlah kata: %d\n", i);
 
   return 0;
 }

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "item.h"
+#include "../../game_header.h"
 
 int main() {
     Item p, n, h;
