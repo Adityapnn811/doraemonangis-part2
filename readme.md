@@ -1,6 +1,6 @@
 # Mobilita End Game
 ## Latar Belakang
-> 'Mobita menjadi seorang kurir demi mencari nafkah untuk keluarganya.' Dengan adanya pandemi COVID-19, usaha orang tua Mobita mengalami penurunan
+> 'Mobita menjadi seorang kurir demi mencari nafkah untuk keluarganya.'  Dengan adanya pandemi COVID-19, usaha orang tua Mobita mengalami penurunan
 pendapatan. Setelah diringankannya PPKM, Mobita ingin membantu orang tuanya
 mendapat penghasilan menjadi seorang kurir. Tugas kalian adalah membantu Mobita
 membuatkan aplikasi yang akan membantunya melacak pesanan, navigasi peta, mengambil
@@ -46,8 +46,8 @@ barang. Permainan ini dibuat dalam bahasa C dengan menggunakan berbagai kumpulan
     └── run.bat                    # File script untuk menjalankan main program
 
 ## Instalasi
-(Windows)
-Jalankan `run.bat` yang terletak pada folder src.
+(Windows)  
+Jalankan `run.bat` yang terletak pada folder src di terminal vs code.  
 
 ## Anggota Kelompok
 1.	13520002 – Muhammad Fikri Ranjabi 
