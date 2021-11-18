@@ -5,7 +5,7 @@ boolean loadConfig(char *filename, Config *conf)
   FILE *fp = fopen(filename, "r");
   if (fp == NULL)
   {
-    printf("Oh dear, something went wrong with read()! %s\n", strerror(errno));
+    printf("Gagal membuka file konfigurasi!\n");
     return false;
   }
 
